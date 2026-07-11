@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jerusalén · Padre Rumi — Biblián Vive</title>
+    <meta
+      name="description"
+      content="Padre Rumi, parroquia Jerusalén del cantón Biblián: formaciones rocosas a 3.800 msnm, senderismo, fotografía y naturaleza andina. #MásBiblián"
+    />
+    <meta name="theme-color" content="#3B5F73" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23F99F3F'/><text x='50' y='72' font-size='60' font-weight='bold' font-family='sans-serif' fill='%233B5F73' text-anchor='middle'>B</text></svg>"
+    />
+
+    <!-- Tipografías: Poppins (títulos) + Montserrat (cuerpo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Swiper (autoalojado) -->
+    <link
+      rel="stylesheet"
+      href="../../assets/vendor/swiper/swiper-bundle.min.css"
+    />
+
+    <!-- Estilos del sitio -->
+    <link rel="stylesheet" href="../../assets/css/reset.css" />
+    <link rel="stylesheet" href="../../assets/css/variables.css" />
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/components.css" />
+    <link rel="stylesheet" href="../../assets/css/parroquia.css" />
+  </head>
+  <body>
+    <!-- ===================== HEADER / MENÚ ===================== -->
+    <header class="site-header" id="site-header">
+      <!-- Logo provisional: reemplazar por <img src="../../assets/img/ui/logo.svg" alt="Biblián"> -->
+      <a
+        class="site-header__logo"
+        href="../../index.html"
+        aria-label="Inicio — Biblián Vive"
+        >B</a
+      >
+
+      <div class="site-header__nav">
+        <button
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+          aria-controls="nav"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+        <nav class="nav" id="nav" aria-label="Navegación principal">
+          <a class="nav__link" href="../../index.html#inicio">Inicio</a>
+          <a class="nav__link is-active" href="../../index.html#parroquias"
+            >Parroquias</a
+          >
+          <a class="nav__link" href="../../index.html#datos">Datos</a>
+          <a class="nav__link" href="../../index.html#voces">Voces</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ===================== HERO (efecto tipo armenia.travel) =====================
+           Al hacer scroll: la foto crece hasta llenar la pantalla, pierde las
+           curvas y el título pasa de azul (abajo, fuera de la foto) a blanco
+           (encima de la foto). Controlado por la variable CSS --p (0 → 1). -->
+      <section class="hero-wrap" id="hero-wrap">
+        <div class="hero-sticky">
+          <div class="hero-frame">
+            <img
+              class="hero__bg"
+              src="../../assets/img/parroquias/jerusalen/hero.jpg"
+              alt="Paisaje de páramo con alpacas en Padre Rumi, Jerusalén"
+            />
+          </div>
+          <h1 class="hero__title">Padre Rumi</h1>
+        </div>
+      </section>
+
+      <!-- ===================== DESDE LA RAÍZ (carrusel) ===================== -->
+      <section class="section raiz">
+        <h2 class="raiz__title" data-parallax="0.07">Desde la raíz</h2>
+
+        <div class="swiper raiz-swiper" data-reveal="fade-up">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img
+                src="../../assets/img/parroquias/jerusalen/raiz_1.jpg"
+                alt="Paisaje de Padre Rumi 1"
+              />
+            </div>
+            <div class="swiper-slide">
+              <img
+                src="../../assets/img/parroquias/jerusalen/raiz_2.jpg"
+                alt="Paisaje de Padre Rumi 2"
+              />
+            </div>
+            <div class="swiper-slide">
+              <img
+                src="../../assets/img/parroquias/jerusalen/raiz_3.jpg"
+                alt="Paisaje de Padre Rumi 3"
+              />
+            </div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </section>
+
+      <!-- ===================== 3 TARJETAS DE INFO ===================== -->
+      <section class="section">
+        <div class="info-cards" data-stagger>
+          <article
+            class="info-card info-card--verde"
+            data-reveal="fade-up"
+            style="--i: 0"
+          >
+            <div class="info-card__head">
+              <h3 class="info-card__title">El misterio</h3>
+              <span class="info-card__icon"
+                ><svg viewBox="0 -960 960 960">
+                  <path
+                    d="M515.5-254.5Q530-269 530-290t-14.5-35.5Q501-340 480-340t-35.5 14.5Q430-311 430-290t14.5 35.5Q459-240 480-240t35.5-14.5ZM444-394h74q0-36 8-53t34-43q35-35 49.5-58.5T624-602q0-53-36-85.5T491-720q-55 0-93.5 27T344-618l66 26q7-27 28-43.5t49-16.5q27 0 45 14.5t18 38.5q0 17-11 36t-37 42q-33 29-45.5 55.5T444-394ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"
+                  /></svg
+              ></span>
+            </div>
+            <hr />
+            <p>
+              Obra de civilizaciones antiguas o de otros mundos, como las líneas
+              de Nasca en Perú.
+            </p>
+          </article>
+
+          <article
+            class="info-card info-card--amarillo"
+            data-reveal="fade-up"
+            style="--i: 1"
+          >
+            <div class="info-card__head">
+              <h3 class="info-card__title">La explicación científica</h3>
+              <span class="info-card__icon"
+                ><svg viewBox="0 -960 960 960">
+                  <path
+                    d="M200-120v-80h200v-80q-83 0-141.5-58.5T200-480q0-61 33.5-111t90.5-73q8-34 35.5-55t62.5-21l-22-62 38-14-14-36 76-28 12 38 38-14 110 300-38 14 14 38-76 28-12-38-38 14-24-66q-15 14-34.5 21t-39.5 5q-22-2-41-13.5T338-582q-27 16-42.5 43T280-480q0 50 35 85t85 35h320v80H520v80h240v80H200Zm346-458 36-14-68-188-38 14 70 188Zm-97.5-33.5Q460-623 460-640t-11.5-28.5Q437-680 420-680t-28.5 11.5Q380-657 380-640t11.5 28.5Q403-600 420-600t28.5-11.5ZM546-578Zm-126-62Z"
+                  /></svg
+              ></span>
+            </div>
+            <hr />
+            <p>
+              Geólogos dicen que la naturaleza, erosión, viento, agua y sol
+              moldeó la piedra con los años.
+            </p>
+          </article>
+
+          <article
+            class="info-card info-card--terracota"
+            data-reveal="fade-up"
+            style="--i: 2"
+          >
+            <div class="info-card__head">
+              <h3 class="info-card__title">Un patrón que inquieta</h3>
+              <span class="info-card__icon"
+                ><svg viewBox="0 -960 960 960">
+                  <path
+                    d="M480-360q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35ZM324-111.5Q251-143 197-197t-85.5-127Q80-397 80-480t31.5-156Q143-709 197-763t127-85.5Q397-880 480-880t156 31.5Q709-817 763-763t85.5 127Q880-563 880-480t-31.5 156Q817-251 763-197t-127 85.5Q563-80 480-80t-156-31.5ZM480-160q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Zm0-320Zm141.5 141.5Q680-397 680-480t-58.5-141.5Q563-680 480-680t-141.5 58.5Q280-563 280-480t58.5 141.5Q397-280 480-280t141.5-58.5Z"
+                  /></svg
+              ></span>
+            </div>
+            <hr />
+            <p>
+              Las figuras se repiten: formas humanas y de animales talladas en
+              piedras de río, casi todas.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===================== DONDE LA PIEDRA IMPONE ===================== -->
+      <section class="section">
+        <div class="impone">
+          <div data-reveal="fade-right">
+            <h2 class="impone__title">
+              Donde la <br />
+              piedra <br />
+              <span class="pill">IMPONE</span>
+            </h2>
+            <p class="impone__text">
+              El sitio denominado "Padre Rumi" ubicado en las estribaciones de
+              la cordillera occidental, en la parroquia Jerusalén perteneciente
+              al cantón Biblián, a una altura aproximada de 3.800 msnm. De
+              encanto y belleza natural impresionante. Son formaciones rocosas
+              que presentan innumerables formas llevan a imaginar y pensar la
+              razón de ser de este colosal monumento de piedra.
+            </p>
+          </div>
+          <img
+            class="impone__img"
+            src="../../assets/img/parroquias/jerusalen/impone.jpg"
+            alt="Montañas de Padre Rumi al atardecer"
+            data-reveal="fade-left"
+          />
+        </div>
+      </section>
+
+      <!-- ===================== VIDEO ===================== -->
+      <section class="section" style="padding-inline: 0">
+        <div class="video-block">
+          <img
+            src="../../assets/img/parroquias/jerusalen/video_portada.jpg"
+            alt="Ciclistas en la cima de Padre Rumi"
+            data-reveal="fade-left"
+          />
+          <div class="video-media" id="video-media" data-reveal="fade-right">
+            <!-- Autoplay silencioso en bucle (los navegadores lo permiten si va en muted) -->
+            <video autoplay muted loop playsinline preload="auto">
+              <source
+                src="../../assets/img/parroquias/jerusalen/padre-rumi.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== ¿QUÉ HACEMOS? ===================== -->
+      <section class="section hacemos">
+        <h2 class="hacemos__title" data-reveal="fade-up">
+          ¿Qué <span class="pill">hacemos?</span>
+        </h2>
+
+        <div class="hacemos__rows">
+          <!-- Fila 1: tarjetas (texto + palabra) — aparece desde la izquierda -->
+          <div class="marquee" data-reveal="fade-left">
+            <div class="marquee__track" data-marquee>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--amarillo">
+                      <h3 class="qfront__title">Senderismo</h3>
+                      <p>Área de gran biodiversidad y reserva hídrica</p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--verde">
+                      <span class="qword">VIDA</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--terracota">
+                      <h3 class="qfront__title">Fotografía</h3>
+                      <p>De las formaciones y del paisaje andino</p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--azul">
+                      <span class="qword">AIRE</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--amarillo">
+                      <h3 class="qfront__title">Observación</h3>
+                      <p>Buscar especies sin alterar su hábitat</p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--verde">
+                      <span class="qword">PAZ</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--terracota">
+                      <h3 class="qfront__title">Picnic</h3>
+                      <p>
+                        Compartir llevando de regreso todos los residuos para no
+                        contaminar el ecosistema
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--azul">
+                      <span class="qword">LUZ</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fila 2: fotos (dirección contraria) — aparece desde la derecha -->
+          <div class="marquee marquee--reverse" data-reveal="fade-right">
+            <div class="marquee__track" data-marquee>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      src="../../assets/img/parroquias/jerusalen/hacemos1.jpg"
+                      alt="Actividad en Padre Rumi 1"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      src="../../assets/img/parroquias/jerusalen/hacemos2.jpg"
+                      alt="Actividad en Padre Rumi 2"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      src="../../assets/img/parroquias/jerusalen/hacemos3.jpg"
+                      alt="Actividad en Padre Rumi 3"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      src="../../assets/img/parroquias/jerusalen/hacemos4.jpg"
+                      alt="Actividad en Padre Rumi 4"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      src="../../assets/img/parroquias/jerusalen/hacemos5.jpg"
+                      alt="Actividad en Padre Rumi 5"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      src="../../assets/img/parroquias/jerusalen/hacemos6.jpg"
+                      alt="Actividad en Padre Rumi 6"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      src="../../assets/img/parroquias/jerusalen/hacemos7.jpg"
+                      alt="Actividad en Padre Rumi 7"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      src="../../assets/img/parroquias/jerusalen/hacemos8.jpg"
+                      alt="Actividad en Padre Rumi 8"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      src="../../assets/img/parroquias/jerusalen/hacemos9.jpg"
+                      alt="Actividad en Padre Rumi 9"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      src="../../assets/img/parroquias/jerusalen/hacemos10.jpg"
+                      alt="Actividad en Padre Rumi 10"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      src="../../assets/img/parroquias/jerusalen/hacemos11.jpg"
+                      alt="Actividad en Padre Rumi 11"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer">
+      <div class="footer-left">
+        <div class="footer-photos">
+          <img
+            src="../../assets/img/parroquias/jerusalen/footer_bailarines.jpg"
+            alt="Danza tradicional"
+          />
+          <img
+            src="../../assets/img/parroquias/jerusalen/footer_senoras.jpg"
+            alt="Mujeres con vestimenta tradicional"
+          />
+          <img
+            src="../../assets/img/parroquias/jerusalen/footer_santuario.jpg"
+            alt="Santuario de Biblián"
+          />
+        </div>
+        <p class="footer-copy">
+          © 2026 Biblián Vive. Todos los derechos reservados.
+        </p>
+      </div>
+
+      <div class="footer-contact">
+          <a
+            class="footer-contact__logo"
+            href="../../index.html#inicio"
+            aria-label="Ir al inicio — Biblián Vive"
+            >B</a
+          >
+          <div class="footer-contact__body">
+            <div>
+              <h3>¡Contactarse!</h3>
+              <p>Más historias, más Biblián. Directo a ti.</p>
+              <div class="footer-socials">
+                <a
+                  href="https://w.app/0drsrd"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="WhatsApp"
+                  ><svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.9.9-2.7-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.24-.12-1.4-.7-1.6-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.18-.7-.62-1.18-1.4-1.32-1.64-.14-.24 0-.36.1-.48.1-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.1.16 1.52.1.46-.07 1.4-.57 1.6-1.13.2-.55.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z"
+                    /></svg
+                ></a>
+                <a
+                  href="https://www.facebook.com/share/1BjaVid1wK/?mibextid=wwXIfr"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Facebook"
+                  ><svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.5-1.5h1.6V3.6c-.28-.04-1.24-.12-2.36-.12-2.33 0-3.94 1.42-3.94 4.04v2.26H7.5V13h2.8v8h3.2Z"
+                    /></svg
+                ></a>
+                <a
+                  href="https://www.instagram.com/andre_gerardoo"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Instagram"
+                  ><svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12 2c2.7 0 3 0 4.1.06 1 .05 1.7.22 2.3.46.6.24 1.1.56 1.6 1.05.5.5.8 1 1.05 1.6.24.6.4 1.3.46 2.3.06 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1-.22 1.7-.46 2.3a4.4 4.4 0 0 1-1.05 1.6c-.5.5-1 .8-1.6 1.05-.6.24-1.3.4-2.3.46-1.1.06-1.4.06-4.1.06s-3 0-4.1-.06c-1-.05-1.7-.22-2.3-.46a4.4 4.4 0 0 1-1.6-1.05 4.4 4.4 0 0 1-1.05-1.6c-.24-.6-.4-1.3-.46-2.3C2.4 15 2.4 14.7 2.4 12s0-3 .06-4.1c.05-1 .22-1.7.46-2.3.24-.6.56-1.1 1.05-1.6.5-.5 1-.8 1.6-1.05.6-.24 1.3-.4 2.3-.46C9 2 9.3 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4ZM17.6 5.2a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z"
+                    /></svg
+                ></a>
+              </div>
+            </div>
+            <nav class="footer-nav" aria-label="Navegación del pie">
+              <a href="../../index.html#inicio">Inicio</a>
+              <a href="../../index.html#parroquias">Parroquias</a>
+              <a href="../../index.html#datos">Datos</a>
+              <a href="../../index.html#voces">Voces</a>
+            </nav>
+          </div>
+          <div class="footer-line"></div>
+          <p class="footer-hashtag">#MásBiblián</p>
+        </div>
+    </footer>
+
+    <!-- ===================== SCRIPTS ===================== -->
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

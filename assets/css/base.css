@@ -1,0 +1,74 @@
+/* ============================================================
+   base.css — Estilos globales
+   ============================================================ */
+
+body {
+  font-family: var(--font-texto);
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: var(--fs-body);
+  font-weight: 400;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-titulo);
+  font-weight: var(--peso-extrabold);
+  color: var(--text);
+}
+
+strong { font-weight: 700; }
+
+/* Contenedor centrado */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: var(--space-lg); }
+
+.section__title {
+  font-size: var(--fs-h2);
+  text-align: center;
+  font-weight: var(--peso-extrabold);
+  margin-bottom: var(--space-md);
+}
+
+/* Resaltado tipo "pastilla" (óvalo de color detrás de una palabra) */
+.pill {
+  background-color: var(--acento);
+  color: var(--color-azul);
+  padding: 0.05em 0.45em;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  line-height: 1.15;
+}
+
+/* Accesibilidad: visible solo para lectores de pantalla */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ---- Utilidad de aparición al hacer scroll (fade-in) ----
+   Se activa cuando main.js le añade la clase .is-visible          */
+[data-reveal] {
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+[data-reveal="fade-up"]    { transform: translateY(56px); }
+[data-reveal="fade-in"]    { transform: none; }
+[data-reveal="fade-left"]  { transform: translateX(-64px); }
+[data-reveal="fade-right"] { transform: translateX(64px); }
+
+[data-reveal].is-visible { opacity: 1; transform: none; }
+
+/* Cascada: retrasos escalonados para hijos con [data-reveal] */
+[data-stagger] > * { transition-delay: calc(var(--i, 0) * 120ms); }
+
+/* ---- Parallax con scroll (lo mueve main.js) ---- */
+[data-parallax] { will-change: transform; }

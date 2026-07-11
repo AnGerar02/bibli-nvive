@@ -1,0 +1,371 @@
+/* ============================================================
+   parroquia.css — Secciones de la subpágina de Parroquia
+   (Hero · Desde la raíz · Tarjetas · IMPONE · Video · ¿Qué hacemos?)
+   ============================================================ */
+
+/* ---------- 1) HERO — scroll-driven tipo armenia.travel ----------
+   --p va de 0 (arriba de la página) a 1 (scroll completado).
+   p=0 → foto recortada arriba con curvas; título ABAJO en azul, fuera de la foto.
+   p=1 → foto llena la pantalla, sin curvas; título encima en blanco.        */
+.hero-wrap {
+  --p: 0;
+  --hero-strip: clamp(
+    110px,
+    20vh,
+    185px
+  ); /* franja inferior donde vive el título al inicio */
+  height: 175vh; /* recorrido del efecto */
+  position: relative;
+}
+.hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.hero-frame {
+  position: absolute;
+  inset: 0;
+  /* la foto deja franja abajo al inicio y crece hasta llenar todo */
+  bottom: calc(var(--hero-strip) * (1 - var(--p)));
+  border-radius: 0 0 calc(var(--radius-hero) * (1 - var(--p)))
+    calc(var(--radius-hero) * (1 - var(--p)));
+  overflow: hidden;
+  background: #2b2b2b;
+  /* sombra suave que se desvanece cuando la foto llena la pantalla */
+  box-shadow: 0 18px 45px rgba(59, 95, 115, calc(0.28 * (1 - var(--p))));
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom; /* muestra las alpacas completas */
+}
+.hero-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.08) 45%,
+    rgba(0, 0, 0, 0.38)
+  );
+  opacity: var(--p); /* el oscurecido aparece junto con el título blanco */
+}
+.hero__title {
+  position: absolute;
+  z-index: 2;
+  right: clamp(1.5rem, 5vw, 4rem);
+  bottom: 18px;
+  font-family: var(--font-titulo);
+  font-weight: var(--peso-extrabold);
+  font-size: var(--fs-hero);
+  text-align: right;
+  /* azul al inicio (sobre el crema) → blanco al final (sobre la foto) */
+  color: var(--color-azul); /* fallback para navegadores sin color-mix */
+  color: color-mix(in srgb, #fff calc(var(--p) * 100%), var(--color-azul));
+  text-shadow: 0 6px 24px rgba(0, 0, 0, calc(0.45 * var(--p)));
+}
+
+/* ---------- 2) DESDE LA RAÍZ (carrusel Swiper) ---------- */
+.raiz {
+  text-align: center;
+  background: var(--color-azul); /* fondo azul solo en esta sección */
+}
+.raiz__title {
+  font-size: var(--fs-h2);
+  color: var(--acento); /* título naranja sobre el azul */
+  margin-bottom: var(--space-md);
+}
+.raiz-swiper {
+  max-width: 1250px;
+  margin-inline: auto;
+  padding-block: 10px 36px;
+  overflow: visible; /* deja ver las tarjetas laterales del abanico */
+}
+.raiz-swiper .swiper-slide {
+  width: min(480px, 82vw);
+  transition: opacity 0.4s ease;
+}
+.raiz-swiper .swiper-slide img {
+  width: 100%;
+  height: clamp(420px, 60vh, 640px);
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.raiz-swiper .swiper-slide-shadow-left,
+.raiz-swiper .swiper-slide-shadow-right {
+  border-radius: var(--radius-lg);
+}
+
+/* Puntos de paginación (visibles sobre el fondo azul) */
+.raiz-swiper .swiper-pagination-bullet {
+  background: #fff;
+  opacity: 0.45;
+}
+.raiz-swiper .swiper-pagination-bullet-active {
+  background: var(--acento);
+  opacity: 1;
+}
+
+/* ---------- 3) TARJETAS DE INFO ---------- */
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter); /* mismo aire lateral en todas las secciones */
+}
+.info-card {
+  border-radius: var(--radius-md);
+  padding: 28px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  box-shadow: var(--shadow-card);
+}
+.info-card--verde {
+  background: var(--color-verde);
+}
+.info-card--amarillo {
+  background: var(--acento);
+  color: var(--color-azul);
+}
+.info-card--terracota {
+  background: var(--color-naranja);
+}
+.info-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.info-card__title {
+  font-family: var(--font-titulo);
+  font-weight: 800;
+  font-size: 1.3rem;
+  max-width: 70%;
+  color: inherit; /* toma el color de texto de SU tarjeta (blanco o azul) */
+}
+.info-card__icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+.info-card__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+/* Línea divisora: gruesa y del color del texto de SU tarjeta
+   (blanca en verde y café, azul en la amarilla) */
+.info-card hr {
+  border: none;
+  color: inherit; /* anula el gris que Chrome pone por defecto a <hr> */
+  height: 4px;
+  background: currentColor;
+  border-radius: 999px;
+  margin: 16px 0;
+}
+.info-card p {
+  font-family: var(--font-texto);
+  font-size: 0.98rem;
+}
+
+/* ---------- 4) DONDE LA PIEDRA IMPONE ---------- */
+.impone {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter); /* mismo aire lateral en todas las secciones */
+}
+.impone__title {
+  font-size: var(--fs-h2);
+  color: var(--color-azul);
+  line-height: 1.08;
+  margin-bottom: var(--space-md);
+}
+.impone__title .pill {
+  margin-top: 0.18em;
+  margin-left: -0.45em; /* compensa el relleno de la pastilla → la "I" alinea con el texto */
+}
+.impone__text {
+  font-family: var(--font-texto);
+  max-width: 48ch;
+}
+.impone__img {
+  width: 100%;
+  height: 560px;
+  object-fit: cover;
+  border-radius: var(--radius-hero); /* 4 esquinas iguales */
+  box-shadow: var(--shadow-md);
+}
+
+/* ---------- 5) VIDEO ---------- */
+.video-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%; /* ocupa todo el ancho de la página */
+  border-radius: var(--radius-lg); /* bordes curvos del bloque completo */
+  overflow: hidden;
+}
+.video-block > img,
+.video-media video {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  display: block;
+}
+.video-media {
+  position: relative;
+}
+
+/* ---------- 6) ¿QUÉ HACEMOS? ---------- */
+.hacemos {
+  overflow: hidden;
+}
+.hacemos__title {
+  font-size: var(--fs-h2);
+  color: var(--color-azul);
+  max-width: var(--container);
+  margin: 0 auto var(--space-lg);
+  padding-inline: var(--gutter);
+}
+.hacemos__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+/* Entrada dramática de las filas (tipo armenia.travel): recorrido más
+   largo que el resto de reveals. Solo aplica ANTES de hacerse visibles. */
+.hacemos__rows [data-reveal="fade-left"]:not(.is-visible)  { transform: translateX(-120px); }
+.hacemos__rows [data-reveal="fade-right"]:not(.is-visible) { transform: translateX(120px); }
+
+/* Item de tarjeta (texto o palabra) */
+.q-item {
+  width: 300px;
+  height: 165px;
+}
+.q-item--word {
+  width: 240px;
+}
+.q-photo {
+  width: 320px;
+  height: 200px;   /* altura fija para toda la fila */
+}
+/* Anchos variados (patrón de 4, como el wireframe): misma altura, distinto ancho */
+.marquee__track .q-photo:nth-child(4n + 1) { width: 300px; }
+.marquee__track .q-photo:nth-child(4n + 2) { width: 230px; }
+.marquee__track .q-photo:nth-child(4n + 3) { width: 470px; }
+.marquee__track .q-photo:nth-child(4n)     { width: 380px; }
+
+.flip__inner,
+.flip__front {
+  height: 100%;
+}
+.flip__front > * {
+  height: 100%;
+}
+
+.qfront {
+  width: 100%;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.qfront--amarillo {
+  background: var(--acento);
+  color: var(--color-azul);
+}
+.qfront--verde {
+  background: var(--color-verde);
+  color: #fff;
+}
+.qfront--terracota {
+  background: var(--color-naranja);
+  color: #fff;
+}
+.qfront--azul {
+  background: var(--color-azul);
+  color: #fff;
+}
+.qfront__title {
+  font-family: var(--font-titulo);
+  font-weight: 800;
+  font-size: 1.25rem;
+  margin-bottom: 6px;
+  color: inherit; /* el título sigue el color de texto de SU tarjeta */
+}
+.qfront p {
+  font-family: var(--font-texto);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.q-item--word .qfront { padding: 10px; } /* menos relleno → la palabra llega casi al borde */
+.qword {
+  font-family: var(--font-titulo);
+  font-weight: 800;
+  font-size: 5.2rem;               /* la palabra llena la tarjeta (como el wireframe) */
+  letter-spacing: -0.01em;
+  color: var(--color-fondo);       /* crema, como en el diseño */
+  display: grid;
+  place-items: center;
+  height: 100%;
+}
+
+.q-photo .flip__front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Reverso de las tarjetas giratorias */
+.flip__back {
+  background: var(--color-azul);
+  color: var(--acento);
+  font-family: var(--font-titulo);
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+.q-photo .flip__back {
+  background: var(--acento);
+  color: var(--color-azul);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 860px) {
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+  .impone {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  .impone__img {
+    height: 380px;
+  }
+  .video-block {
+    grid-template-columns: 1fr;
+  }
+  .video-block > img {
+    height: 260px;
+  }
+  .video-media video {
+    height: 300px;
+  }
+  .raiz-swiper {
+    overflow: hidden;
+  }
+}

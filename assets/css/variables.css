@@ -1,0 +1,60 @@
+/* ============================================================
+   variables.css — Tokens de diseño (colores + tipografía)
+   ------------------------------------------------------------
+   👉 Fuente única de la verdad. Cambia aquí y afecta a TODO el sitio.
+   Valores confirmados desde Figma.
+   ============================================================ */
+
+:root {
+  /* ---------- COLORES (confirmados) ---------- */
+  --color-fondo:    #FFF9ED;  /* Fondo crema                */
+  --color-azul:     #3B5F73;  /* Azul pizarra (texto)       */
+  --color-naranja:  #CC6228;  /* Naranja / terracota        */
+  --color-verde:    #627742;  /* Verde oliva                */
+  --color-amarillo: #F99F3F;  /* Amarillo / naranja claro (acento) */
+  --color-blanco:   #FFFFFF;
+
+  /* ---------- Roles semánticos ---------- */
+  --bg:        var(--color-fondo);
+  --text:      var(--color-azul);
+  --acento:    var(--color-amarillo);  /* menú activo, resaltados, footer */
+  --footer-bg: var(--color-amarillo);
+
+  /* ---------- TIPOGRAFÍA (Google Fonts) ----------
+     Títulos → Poppins  (Bold 700 / ExtraBold 800)
+     Cuerpo  → Montserrat
+     Los <link> van en el <head> de cada página HTML.               */
+  --font-titulo: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-texto:  "Montserrat", system-ui, -apple-system, sans-serif;
+
+  --peso-bold:      700;
+  --peso-extrabold: 800;
+
+  /* ---------- Escala tipográfica ---------- */
+  --fs-hero:  clamp(3.5rem, 10vw, 7.5rem);
+  --fs-h2:    clamp(2.6rem, 6vw, 4.6rem);
+  --fs-h3:    clamp(1.25rem, 2.5vw, 1.6rem);
+  --fs-body:  1rem;
+  --fs-small: 0.875rem;
+
+  /* ---------- Espaciado ---------- */
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 3rem;
+  --space-xl: 4rem;
+
+  /* ---------- Radios (esquinas redondeadas) ---------- */
+  --radius-sm:   12px;
+  --radius-md:   24px;
+  --radius-lg:   40px;
+  --radius-hero: 72px;   /* curva grande del hero */
+  --radius-pill: 999px;
+
+  /* ---------- Layout ---------- */
+  --container: 1200px;
+  --gutter:    1.5rem;
+
+  /* ---------- Otros ---------- */
+  --shadow-md: 0 12px 30px rgba(0, 0, 0, .15);
+  --shadow-card: 0 8px 22px rgba(59, 95, 115, 0.20);  /* sombra suave para cards y fotos */
+}
