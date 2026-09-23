@@ -1,60 +1,175 @@
 /* ============================================================
-   variables.css — Tokens de diseño (colores + tipografía)
+   variables.css — Tokens de diseño (base Material Design 3)
    ------------------------------------------------------------
-   👉 Fuente única de la verdad. Cambia aquí y afecta a TODO el sitio.
-   Valores confirmados desde Figma.
+   Fuente única de la verdad: DESIGN_SYSTEM.md.
+   Todos los valores de color, tipografía, espaciado, forma y
+   elevación del sitio salen de aquí. Mobile-first: los valores
+   base son de móvil; se amplían en ≥ 600 px y ≥ 840 px.
    ============================================================ */
 
 :root {
-  /* ---------- COLORES (confirmados) ---------- */
-  --color-fondo:    #FFF9ED;  /* Fondo crema                */
-  --color-azul:     #3B5F73;  /* Azul pizarra (texto)       */
-  --color-naranja:  #CC6228;  /* Naranja / terracota        */
-  --color-verde:    #627742;  /* Verde oliva                */
-  --color-amarillo: #F99F3F;  /* Amarillo / naranja claro (acento) */
-  --color-blanco:   #FFFFFF;
+  /* ================= COLOR (roles M3) ================= */
+  --md-primary:             #3B5F73;  /* Azul pizarra */
+  --md-on-primary:          #FFFFFF;
+  --md-secondary:           #627742;  /* Verde oliva */
+  --md-on-secondary:        #FFFFFF;
+  --md-tertiary:            #AC4B10;  /* Terracota (con texto) */
+  --md-on-tertiary:         #FFFFFF;
+  --md-tertiary-deco:       #CC6228;  /* Terracota original: solo decoración */
+  --md-accent:              #F99F3F;  /* Amarillo (color extendido) */
+  --md-on-accent:           #0A3447;
+  --md-surface:             #FFF9ED;  /* Crema */
+  --md-on-surface:          #0A3447;
+  --md-on-surface-variant:  #4A473D;
 
-  /* ---------- Roles semánticos ---------- */
-  --bg:        var(--color-fondo);
-  --text:      var(--color-azul);
-  --acento:    var(--color-amarillo);  /* menú activo, resaltados, footer */
-  --footer-bg: var(--color-amarillo);
+  --md-primary-container:        #C3E8FF;
+  --md-on-primary-container:     #001E2C;
+  --md-secondary-container:      #D3EBAB;
+  --md-on-secondary-container:   #121F00;
+  --md-tertiary-container:       #FFDBCC;
+  --md-on-tertiary-container:    #351000;
+  --md-accent-container:         #FFDCBF;
+  --md-on-accent-container:      #2D1600;
+  --md-surface-container-low:    #F9F3E5;
+  --md-surface-container:        #F3EDE0;
+  --md-surface-container-high:   #EEE8DA;
+  --md-outline:                  #7B776C;
+  --md-outline-variant:          #CBC6B9;
 
-  /* ---------- TIPOGRAFÍA (Google Fonts) ----------
-     Títulos → Poppins  (Bold 700 / ExtraBold 800)
-     Cuerpo  → Montserrat
-     Los <link> van en el <head> de cada página HTML.               */
+  /* Canal RGB del azul profundo (#0A3447) para sombras y degradados */
+  --md-scrim-rgb: 10, 52, 71;
+
+  /* ================= TIPOGRAFÍA ================= */
   --font-titulo: "Poppins", system-ui, -apple-system, sans-serif;
   --font-texto:  "Montserrat", system-ui, -apple-system, sans-serif;
 
+  --peso-regular:   400;
+  --peso-medium:    500;
   --peso-bold:      700;
   --peso-extrabold: 800;
 
-  /* ---------- Escala tipográfica ---------- */
-  --fs-hero:  clamp(3.5rem, 10vw, 7.5rem);
-  --fs-h2:    clamp(2.6rem, 6vw, 4.6rem);
-  --fs-h3:    clamp(1.25rem, 2.5vw, 1.6rem);
-  --fs-body:  1rem;
-  --fs-small: 0.875rem;
+  /* Escala M3 (valores móviles) */
+  --fs-display-lg:  2.8125rem;  /* 45 px — nombre del lugar (hero) */
+  --fs-display-md:  2.25rem;    /* 36 px — palabras gráficas */
+  --fs-display-sm:  2rem;       /* 32 px — títulos de sección */
+  --fs-headline-md: 1.75rem;    /* 28 px — menú móvil */
+  --fs-headline-sm: 1.5rem;     /* 24 px — títulos del footer */
+  --fs-title-lg:    1.375rem;   /* 22 px — títulos de tarjeta */
+  --fs-body-lg:     1rem;       /* 16 px — párrafos */
+  --fs-body-md:     0.875rem;   /* 14 px — texto de tarjetas */
+  --fs-body-sm:     0.75rem;    /* 12 px — copyright */
+  --fs-label-lg:    0.875rem;   /* 14 px — menú, botones */
+  --fs-label-md:    0.75rem;    /* 12 px — hashtags, etiquetas */
 
-  /* ---------- Espaciado ---------- */
-  --space-sm: 1rem;
-  --space-md: 2rem;
-  --space-lg: 3rem;
-  --space-xl: 4rem;
+  --lh-tight: 1.15;
+  --lh-body:  1.6;
 
-  /* ---------- Radios (esquinas redondeadas) ---------- */
-  --radius-sm:   12px;
-  --radius-md:   24px;
-  --radius-lg:   40px;
-  --radius-hero: 72px;   /* curva grande del hero */
-  --radius-pill: 999px;
+  /* ================= ESPACIADO (grilla de 4 px) ================= */
+  --space-xxs: 4px;
+  --space-xs:  8px;
+  --space-s:   12px;
+  --space-m:   16px;
+  --space-l:   24px;
+  --space-xl:  32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
 
-  /* ---------- Layout ---------- */
-  --container: 1200px;
-  --gutter:    1.5rem;
+  --space-section: var(--space-2xl);  /* entre secciones (móvil) */
+  --space-card:    var(--space-m);    /* padding de tarjetas (móvil) */
+  --space-grid:    var(--space-m);    /* gap de grillas (móvil) */
 
-  /* ---------- Otros ---------- */
-  --shadow-md: 0 12px 30px rgba(0, 0, 0, .15);
-  --shadow-card: 0 8px 22px rgba(59, 95, 115, 0.20);  /* sombra suave para cards y fotos */
+  /* ================= LAYOUT ================= */
+  --container:  1200px;
+  --gutter:     var(--space-m);  /* margen lateral (móvil) */
+  --size-touch: 48px;            /* área táctil mínima */
+  --size-icon:  24px;            /* íconos de interfaz */
+  --size-icon-card: 48px;        /* íconos de tarjetas de información */
+
+  /* ================= FORMA (esquinas) ================= */
+  --radius-m:    12px;   /* fotos pequeñas, chips */
+  --radius-xl:   28px;   /* tarjetas y fotos del carrusel */
+  --radius-2xl:  48px;   /* hero, footer, secciones con fondo propio */
+  --radius-full: 999px;  /* botones, menú, redes, logo */
+
+  /* ================= ELEVACIÓN ================= */
+  --elev-1: 0 4px 12px rgba(var(--md-scrim-rgb), 0.15);
+  --elev-2: 0 8px 22px rgba(var(--md-scrim-rgb), 0.20);
+  --elev-3: 0 16px 40px rgba(var(--md-scrim-rgb), 0.28);
+  /* Geometrías sueltas para sombras cuya opacidad se anima (hero) */
+  --elev-2-shape:      0 8px 22px;
+  --text-shadow-shape: 0 4px 24px;
+
+  /* ================= ESTADOS (capas M3) ================= */
+  --state-hover:   8%;
+  --state-focus:   10%;
+  --state-pressed: 10%;
+  --focus-ring:    2px;
+  --layer-on-primary-hover:   color-mix(in srgb, var(--md-on-primary) var(--state-hover), transparent);
+  --layer-on-primary-pressed: color-mix(in srgb, var(--md-on-primary) var(--state-pressed), transparent);
+  --layer-on-surface-hover:   color-mix(in srgb, var(--md-on-surface) var(--state-hover), transparent);
+  --layer-on-surface-pressed: color-mix(in srgb, var(--md-on-surface) var(--state-pressed), transparent);
+  --layer-on-accent-hover:    color-mix(in srgb, var(--md-on-accent) var(--state-hover), transparent);
+  --layer-on-accent-pressed:  color-mix(in srgb, var(--md-on-accent) var(--state-pressed), transparent);
+
+  /* ================= TRAZOS ================= */
+  --stroke:         2px;  /* bordes (botón outlined) */
+  --stroke-divider: 4px;  /* líneas divisorias */
+
+  /* ================= MOVIMIENTO ================= */
+  --dur-flip:    0.6s;
+  --dur-cascade: 0.35s;
+  --ease-out:    cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* ============================================================
+     ALIAS DE COMPATIBILIDAD (nombres anteriores → roles M3)
+     No borrar: mantienen funcionando el código existente.
+     ============================================================ */
+  --color-fondo:    var(--md-surface);
+  --color-azul:     var(--md-primary);
+  --color-naranja:  var(--md-tertiary);
+  --color-verde:    var(--md-secondary);
+  --color-amarillo: var(--md-accent);
+  --color-blanco:   var(--md-on-primary);
+  --bg:             var(--md-surface);
+  --text:           var(--md-on-surface);
+  --acento:         var(--md-accent);
+  --footer-bg:      var(--md-accent);
+
+  --fs-hero:  var(--fs-display-lg);
+  --fs-h2:    var(--fs-display-sm);
+  --fs-h3:    var(--fs-title-lg);
+  --fs-body:  var(--fs-body-lg);
+  --fs-small: var(--fs-body-sm);
+
+  --space-sm: var(--space-m);
+  --space-md: var(--space-xl);
+  --space-lg: var(--space-2xl);
+
+  --radius-sm:   var(--radius-m);
+  --radius-md:   var(--radius-xl);
+  --radius-lg:   var(--radius-2xl);
+  --radius-hero: var(--radius-2xl);
+  --radius-pill: var(--radius-full);
+
+  --shadow-card: var(--elev-1);
+  --shadow-md:   var(--elev-1);
+}
+
+/* Tablet (600–839 px): márgenes y gutters de 24 px */
+@media (min-width: 600px) {
+  :root {
+    --gutter:     var(--space-l);
+    --space-grid: var(--space-l);
+    --space-card: var(--space-l);
+  }
+}
+
+/* Escritorio (≥ 840 px) */
+@media (min-width: 840px) {
+  :root {
+    --fs-display-lg: 3.5625rem;  /* 57 px */
+    --fs-display-md: 2.8125rem;  /* 45 px */
+    --fs-display-sm: 2.25rem;    /* 36 px */
+    --space-section: var(--space-3xl);
+  }
 }

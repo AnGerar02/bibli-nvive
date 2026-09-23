@@ -4,21 +4,23 @@
 
 body {
   font-family: var(--font-texto);
-  background-color: var(--bg);
-  color: var(--text);
-  font-size: var(--fs-body);
-  font-weight: 400;
+  background-color: var(--md-surface);
+  color: var(--md-on-surface);
+  font-size: var(--fs-body-lg);
+  font-weight: var(--peso-regular);
+  line-height: var(--lh-body);
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-titulo);
   font-weight: var(--peso-extrabold);
-  color: var(--text);
+  color: var(--md-primary);
+  line-height: var(--lh-tight);
 }
 
-strong { font-weight: 700; }
+strong { font-weight: var(--peso-bold); }
 
-/* Contenedor centrado */
+/* Contenedor centrado: el texto nunca va a sangre */
 .container {
   width: 100%;
   max-width: var(--container);
@@ -26,23 +28,23 @@ strong { font-weight: 700; }
   padding-inline: var(--gutter);
 }
 
-.section { padding-block: var(--space-lg); }
+/* Mismo espacio vertical para todas las secciones */
+.section { padding-block: var(--space-section); }
 
 .section__title {
-  font-size: var(--fs-h2);
+  font-size: var(--fs-display-sm);
   text-align: center;
-  font-weight: var(--peso-extrabold);
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-xl);
 }
 
-/* Resaltado tipo "pastilla" (óvalo de color detrás de una palabra) */
+/* Palabra resaltada en pastilla amarilla (una por sección) */
 .pill {
-  background-color: var(--acento);
-  color: var(--color-azul);
-  padding: 0.05em 0.45em;
-  border-radius: var(--radius-pill);
+  background-color: var(--md-accent);
+  color: var(--md-on-accent);
+  padding: 0 var(--space-m);
+  border-radius: var(--radius-full);
   display: inline-block;
-  line-height: 1.15;
+  line-height: var(--lh-tight);
 }
 
 /* Accesibilidad: visible solo para lectores de pantalla */
@@ -52,12 +54,10 @@ strong { font-weight: 700; }
   clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
 
-/* ---- Utilidad de aparición al hacer scroll (fade-in) ----
-   Se activa cuando main.js le añade la clase .is-visible          */
+/* ---- Aparición al hacer scroll (main.js añade .is-visible) ---- */
 [data-reveal] {
   opacity: 0;
-  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
   will-change: opacity, transform;
 }
 [data-reveal="fade-up"]    { transform: translateY(56px); }

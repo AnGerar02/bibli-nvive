@@ -23,7 +23,7 @@ ul, ol { list-style: none; }
 
 h1, h2, h3, h4, h5, h6 { line-height: 1.1; }
 
-:focus-visible { outline: 3px solid var(--color-azul); outline-offset: 3px; }
+:focus-visible { outline: var(--focus-ring) solid var(--md-primary); outline-offset: var(--focus-ring); }
 
 /* Respeta la preferencia de "reducir movimiento" (accesibilidad) */
 @media (prefers-reduced-motion: reduce) {
