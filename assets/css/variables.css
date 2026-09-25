@@ -11,15 +11,16 @@
   /* ================= COLOR (roles M3) ================= */
   --md-primary:             #3B5F73;  /* Azul pizarra */
   --md-on-primary:          #FFFFFF;
-  --md-secondary:           #627742;  /* Verde oliva */
+  /* PRUEBA (sep-2026): verde reemplazado por el azul. Verde original: #627742 */
+  --md-secondary:           var(--md-primary);
   --md-on-secondary:        #FFFFFF;
   --md-tertiary:            #AC4B10;  /* Terracota (con texto) */
   --md-on-tertiary:         #FFFFFF;
   --md-tertiary-deco:       #CC6228;  /* Terracota original: solo decoración */
   --md-accent:              #F99F3F;  /* Amarillo (color extendido) */
-  --md-on-accent:           #0A3447;
+  --md-on-accent:           var(--md-primary);  /* un solo azul para todo el texto */
   --md-surface:             #FFF9ED;  /* Crema */
-  --md-on-surface:          #0A3447;
+  --md-on-surface:          var(--md-primary);
   --md-on-surface-variant:  #4A473D;
 
   --md-primary-container:        #C3E8FF;
