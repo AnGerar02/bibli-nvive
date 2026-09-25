@@ -1,20 +1,20 @@
 /* ============================================================
    parroquia.css — Secciones de la subpágina de Parroquia
-   (Hero · Desde la raíz · Tarjetas · IMPONE · Video · ¿Qué hacemos?)
+   Hero · Desde la raíz · Tarjetas · Texto + imagen · Video · ¿Qué hacemos?
+   Mobile-first: estilos base = móvil; se amplían en ≥ 600 / ≥ 840 px.
    ============================================================ */
 
-/* ---------- 1) HERO — scroll-driven tipo armenia.travel ----------
-   --p va de 0 (arriba de la página) a 1 (scroll completado).
-   p=0 → foto recortada arriba con curvas; título ABAJO en azul, fuera de la foto.
-   p=1 → foto llena la pantalla, sin curvas; título encima en blanco.        */
+/* ---------- 1) HERO (§7.4) — scroll-driven ----------
+   --p va de 0 (arriba) a 1 (efecto completado), lo calcula main.js.
+   p=0 → foto con curva inferior; título abajo en azul sobre el crema.
+   p=1 → foto a pantalla completa, sin curva; título blanco sobre degradado. */
 .hero-wrap {
   --p: 0;
-  --hero-strip: clamp(
-    110px,
-    20vh,
-    185px
-  ); /* franja inferior donde vive el título al inicio */
-  height: 175vh; /* recorrido del efecto */
+  /* franja inferior donde vive el título al inicio */
+  --hero-strip: calc(
+    var(--fs-display-lg) * var(--lh-tight) + var(--space-l) * 2
+  );
+  height: 175vh;
   position: relative;
 }
 .hero-sticky {
@@ -26,14 +26,14 @@
 .hero-frame {
   position: absolute;
   inset: 0;
-  /* la foto deja franja abajo al inicio y crece hasta llenar todo */
   bottom: calc(var(--hero-strip) * (1 - var(--p)));
-  border-radius: 0 0 calc(var(--radius-hero) * (1 - var(--p)))
-    calc(var(--radius-hero) * (1 - var(--p)));
+  border-radius: 0 0 calc(var(--radius-2xl) * (1 - var(--p)))
+    calc(var(--radius-2xl) * (1 - var(--p)));
   overflow: hidden;
-  background: #2b2b2b;
-  /* sombra suave que se desvanece cuando la foto llena la pantalla */
-  box-shadow: 0 18px 45px rgba(59, 95, 115, calc(0.28 * (1 - var(--p))));
+  background: var(--md-primary);
+  /* elevación 2 que se desvanece cuando la foto llena la pantalla */
+  box-shadow: var(--elev-2-shape)
+    rgba(var(--md-scrim-rgb), calc(0.2 * (1 - var(--p))));
 }
 .hero__bg {
   position: absolute;
@@ -43,118 +43,145 @@
   object-fit: cover;
   object-position: center bottom; /* muestra las alpacas completas */
 }
+/* Degradado #0A3447 al 0 → 55 % bajo el texto (aparece con el título blanco) */
 .hero-frame::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.08) 45%,
-    rgba(0, 0, 0, 0.38)
+    rgba(var(--md-scrim-rgb), 0) 40%,
+    rgba(var(--md-scrim-rgb), 0.55)
   );
-  opacity: var(--p); /* el oscurecido aparece junto con el título blanco */
+  opacity: var(--p);
 }
 .hero__title {
   position: absolute;
   z-index: 2;
-  right: clamp(1.5rem, 5vw, 4rem);
-  bottom: 18px;
-  font-family: var(--font-titulo);
+  /* alineado con el borde del contenido (1200 px), nunca a sangre */
+  right: max(
+    var(--gutter),
+    calc((100% - var(--container)) / 2 + var(--gutter))
+  );
+  bottom: var(--space-l);
+  font-size: var(--fs-display-lg);
   font-weight: var(--peso-extrabold);
-  font-size: var(--fs-hero);
   text-align: right;
-  /* azul al inicio (sobre el crema) → blanco al final (sobre la foto) */
-  color: var(--color-azul); /* fallback para navegadores sin color-mix */
-  color: color-mix(in srgb, #fff calc(var(--p) * 100%), var(--color-azul));
-  text-shadow: 0 6px 24px rgba(0, 0, 0, calc(0.45 * var(--p)));
+  color: var(--md-primary); /* respaldo para navegadores sin color-mix */
+  color: color-mix(
+    in srgb,
+    var(--md-on-primary) calc(var(--p) * 100%),
+    var(--md-primary)
+  );
+  text-shadow: var(--text-shadow-shape)
+    rgba(var(--md-scrim-rgb), calc(0.45 * var(--p)));
 }
 
-/* ---------- 2) DESDE LA RAÍZ (carrusel Swiper) ---------- */
+/* ---------- 2) DESDE LA RAÍZ (§7.5) — carrusel Swiper ---------- */
 .raiz {
   text-align: center;
-  background: var(--color-azul); /* fondo azul solo en esta sección */
+  background: var(--md-primary);
+}
+.raiz :focus-visible {
+  outline-color: var(--md-accent);
 }
 .raiz__title {
-  font-size: var(--fs-h2);
-  color: var(--acento); /* título naranja sobre el azul */
-  margin-bottom: var(--space-md);
+  font-size: var(--fs-display-sm);
+  color: var(--md-surface);
+  margin-bottom: var(--space-xl);
 }
 .raiz-swiper {
-  max-width: 1250px;
+  max-width: var(--container);
   margin-inline: auto;
-  padding-block: 10px 36px;
-  overflow: visible; /* deja ver las tarjetas laterales del abanico */
+  padding-block: var(--space-xs) var(--space-2xl);
+  overflow: hidden;
+  --swiper-pagination-bullet-size: var(--space-xs);
+  --swiper-pagination-bullet-horizontal-gap: var(--space-l);
 }
 .raiz-swiper .swiper-slide {
-  width: min(480px, 82vw);
+  width: min(480px, 80vw);
   transition: opacity 0.4s ease;
 }
 .raiz-swiper .swiper-slide img {
   width: 100%;
-  height: clamp(420px, 60vh, 640px);
+  aspect-ratio: 3 / 4;
   object-fit: cover;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elev-1);
 }
 .raiz-swiper .swiper-slide-shadow-left,
 .raiz-swiper .swiper-slide-shadow-right {
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
 }
 
-/* Puntos de paginación (visibles sobre el fondo azul) */
+/* Paginación: puntos blancos al 45 %, activo amarillo */
 .raiz-swiper .swiper-pagination-bullet {
-  background: #fff;
+  position: relative;
+  background: var(--md-on-primary);
   opacity: 0.45;
 }
+/* Área táctil de 48 × 48 px alrededor de cada punto */
+.raiz-swiper .swiper-pagination-bullet::after {
+  content: "";
+  position: absolute;
+  inset: calc((var(--size-touch) - var(--space-xs)) / -2);
+}
 .raiz-swiper .swiper-pagination-bullet-active {
-  background: var(--acento);
+  background: var(--md-accent);
   opacity: 1;
 }
 
-/* ---------- 3) TARJETAS DE INFO ---------- */
+/* ---------- 3) TARJETAS DE INFORMACIÓN (§7.6) ---------- */
 .info-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: 1fr;
+  gap: var(--space-grid);
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: var(--gutter); /* mismo aire lateral en todas las secciones */
+  padding-inline: var(--gutter);
 }
 .info-card {
-  border-radius: var(--radius-md);
-  padding: 28px;
-  min-height: 240px;
   display: flex;
   flex-direction: column;
-  color: #fff;
-  box-shadow: var(--shadow-card);
+  padding: var(--space-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elev-1);
+  transition: box-shadow 0.3s ease;
 }
+@media (hover: hover) {
+  .info-card:hover {
+    box-shadow: var(--elev-2);
+  }
+}
+/* Variantes en orden fijo: verde · amarillo · terracota */
 .info-card--verde {
-  background: var(--color-verde);
+  background: var(--md-secondary);
+  color: var(--md-on-secondary);
 }
 .info-card--amarillo {
-  background: var(--acento);
-  color: var(--color-azul);
+  background: var(--md-accent);
+  color: var(--md-on-accent);
 }
 .info-card--terracota {
-  background: var(--color-naranja);
+  background: var(--md-tertiary);
+  color: var(--md-on-tertiary);
 }
+
 .info-card__head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-s);
 }
 .info-card__title {
-  font-family: var(--font-titulo);
-  font-weight: 800;
-  font-size: 1.3rem;
   max-width: 70%;
-  color: inherit; /* toma el color de texto de SU tarjeta (blanco o azul) */
+  font-size: var(--fs-title-lg);
+  font-weight: var(--peso-bold);
+  color: inherit;
 }
 .info-card__icon {
-  width: 48px;
-  height: 48px;
+  width: var(--size-icon-card);
+  height: var(--size-icon-card);
   flex-shrink: 0;
 }
 .info-card__icon svg {
@@ -162,165 +189,194 @@
   height: 100%;
   fill: currentColor;
 }
-/* Línea divisora: gruesa y del color del texto de SU tarjeta
-   (blanca en verde y café, azul en la amarilla) */
 .info-card hr {
   border: none;
-  color: inherit; /* anula el gris que Chrome pone por defecto a <hr> */
-  height: 4px;
+  color: inherit; /* anula el gris por defecto de <hr> */
+  height: var(--stroke-divider);
   background: currentColor;
-  border-radius: 999px;
-  margin: 16px 0;
+  border-radius: var(--radius-full);
+  margin: var(--space-s) 0;
 }
 .info-card p {
-  font-family: var(--font-texto);
-  font-size: 0.98rem;
+  font-size: var(--fs-body-md);
 }
 
-/* ---------- 4) DONDE LA PIEDRA IMPONE ---------- */
+/* ---------- 4) BLOQUE TEXTO + IMAGEN (§7.7) ---------- */
 .impone {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
   align-items: center;
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: var(--gutter); /* mismo aire lateral en todas las secciones */
+  padding-inline: var(--gutter);
 }
 .impone__title {
-  font-size: var(--fs-h2);
-  color: var(--color-azul);
-  line-height: 1.08;
-  margin-bottom: var(--space-md);
+  font-size: var(--fs-display-sm);
+  margin-bottom: var(--space-l);
 }
 .impone__title .pill {
-  margin-top: 0.18em;
-  margin-left: -0.45em; /* compensa el relleno de la pastilla → la "I" alinea con el texto */
+  margin-top: var(--space-xxs);
+  margin-left: calc(
+    -1 * var(--space-m)
+  ); /* la "I" alinea con el resto del título */
 }
 .impone__text {
-  font-family: var(--font-texto);
-  max-width: 48ch;
+  max-width: 65ch;
 }
 .impone__img {
   width: 100%;
-  height: 560px;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: var(--radius-hero); /* 4 esquinas iguales */
-  box-shadow: var(--shadow-md);
+  object-position: center 65%;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elev-1);
 }
 
-/* ---------- 5) VIDEO ---------- */
+/* ---------- 5) VIDEO (§7.8) — portada + play, sin autoplay ---------- */
 .video-block {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: 100%; /* ocupa todo el ancho de la página */
-  border-radius: var(--radius-lg); /* bordes curvos del bloque completo */
+  grid-template-columns: 1fr;
+  width: 100%;
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 .video-block > img,
 .video-media video {
-  width: 100%;
-  height: 480px;
-  object-fit: cover;
   display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 .video-media {
   position: relative;
 }
+.video-media__btn {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: calc(var(--size-touch) * 2);
+  height: calc(var(--size-touch) * 2);
+  border-radius: var(--radius-full);
+  background: var(--md-on-primary);
+  box-shadow: var(--elev-2);
+  display: grid;
+  place-items: center;
+  transition: transform 0.15s ease;
+}
+.video-media__btn:hover {
+  transform: scale(1.06);
+}
+.video-media__btn:active {
+  transform: scale(0.97);
+}
+.video-media__btn svg {
+  width: var(--size-touch);
+  height: var(--size-touch);
+  fill: var(--md-primary);
+  margin-left: var(--space-xxs);
+}
+.video-media.is-playing .video-media__btn {
+  display: none;
+}
 
-/* ---------- 6) ¿QUÉ HACEMOS? ---------- */
+/* ---------- 6) ¿QUÉ HACEMOS? — franjas en movimiento (§7.9 / §7.10) ---------- */
 .hacemos {
   overflow: hidden;
 }
 .hacemos__title {
-  font-size: var(--fs-h2);
-  color: var(--color-azul);
+  font-size: var(--fs-display-sm);
   max-width: var(--container);
-  margin: 0 auto var(--space-lg);
+  margin: 0 auto var(--space-xl);
   padding-inline: var(--gutter);
 }
 .hacemos__rows {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: var(--space-grid);
 }
-/* Entrada dramática de las filas (tipo armenia.travel): recorrido más
-   largo que el resto de reveals. Solo aplica ANTES de hacerse visibles. */
-.hacemos__rows [data-reveal="fade-left"]:not(.is-visible)  { transform: translateX(-120px); }
-.hacemos__rows [data-reveal="fade-right"]:not(.is-visible) { transform: translateX(120px); }
+/* Entrada amplia de las filas (solo antes de hacerse visibles) */
+.hacemos__rows [data-reveal="fade-left"]:not(.is-visible) {
+  transform: translateX(-120px);
+}
+.hacemos__rows [data-reveal="fade-right"]:not(.is-visible) {
+  transform: translateX(120px);
+}
 
-/* Item de tarjeta (texto o palabra) */
+/* Tamaños de las tarjetas: todas las variantes de una fila, igual alto */
 .q-item {
   width: 300px;
-  height: 165px;
+  height: 168px;
 }
 .q-item--word {
-  width: 240px;
+  width: 200px;
 }
 .q-photo {
-  width: 320px;
-  height: 200px;   /* altura fija para toda la fila */
+  width: 300px;
+  height: 200px;
 }
-/* Anchos variados (patrón de 4, como el wireframe): misma altura, distinto ancho */
-.marquee__track .q-photo:nth-child(4n + 1) { width: 300px; }
-.marquee__track .q-photo:nth-child(4n + 2) { width: 230px; }
-.marquee__track .q-photo:nth-child(4n + 3) { width: 470px; }
-.marquee__track .q-photo:nth-child(4n)     { width: 380px; }
+/* Anchos variados de las fotos (patrón de 4) */
+.marquee__track .q-photo:nth-child(4n + 1) {
+  width: 300px;
+}
+.marquee__track .q-photo:nth-child(4n + 2) {
+  width: 228px;
+}
+.marquee__track .q-photo:nth-child(4n + 3) {
+  width: 468px;
+}
+.marquee__track .q-photo:nth-child(4n) {
+  width: 380px;
+}
 
-.flip__inner,
-.flip__front {
-  height: 100%;
-}
 .flip__front > * {
   height: 100%;
 }
 
 .qfront {
   width: 100%;
-  padding: 22px;
+  padding: var(--space-card);
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 .qfront--amarillo {
-  background: var(--acento);
-  color: var(--color-azul);
+  background: var(--md-accent);
+  color: var(--md-on-accent);
 }
 .qfront--verde {
-  background: var(--color-verde);
-  color: #fff;
+  background: var(--md-secondary);
+  color: var(--md-on-secondary);
 }
 .qfront--terracota {
-  background: var(--color-naranja);
-  color: #fff;
+  background: var(--md-tertiary);
+  color: var(--md-on-tertiary);
 }
 .qfront--azul {
-  background: var(--color-azul);
-  color: #fff;
+  background: var(--md-primary);
+  color: var(--md-on-primary);
 }
 .qfront__title {
-  font-family: var(--font-titulo);
-  font-weight: 800;
-  font-size: 1.25rem;
-  margin-bottom: 6px;
-  color: inherit; /* el título sigue el color de texto de SU tarjeta */
+  font-size: var(--fs-title-lg);
+  font-weight: var(--peso-bold);
+  margin-bottom: var(--space-s);
+  color: inherit;
 }
 .qfront p {
-  font-family: var(--font-texto);
-  font-size: 0.92rem;
-  line-height: 1.4;
+  font-size: var(--fs-body-md);
 }
 
-.q-item--word .qfront { padding: 10px; } /* menos relleno → la palabra llega casi al borde */
+.q-item--word .qfront {
+  padding: var(--space-xs);
+}
 .qword {
-  font-family: var(--font-titulo);
-  font-weight: 800;
-  font-size: 5.2rem;               /* la palabra llena la tarjeta (como el wireframe) */
-  letter-spacing: -0.01em;
-  color: var(--color-fondo);       /* crema, como en el diseño */
   display: grid;
   place-items: center;
   height: 100%;
+  font-family: var(--font-titulo);
+  font-weight: var(--peso-extrabold);
+  font-size: var(--fs-display-md);
+  line-height: var(--lh-tight);
 }
 
 .q-photo .flip__front img {
@@ -329,43 +385,41 @@
   object-fit: cover;
 }
 
-/* Reverso de las tarjetas giratorias */
+/* Reverso: solo #MásBiblián */
 .flip__back {
-  background: var(--color-azul);
-  color: var(--acento);
+  background: var(--md-primary);
+  color: var(--md-on-primary);
   font-family: var(--font-titulo);
-  font-weight: 800;
-  font-size: 1.15rem;
+  font-weight: var(--peso-extrabold);
+  font-size: var(--fs-title-lg);
 }
 .q-photo .flip__back {
-  background: var(--acento);
-  color: var(--color-azul);
+  background: var(--md-accent);
+  color: var(--md-on-accent);
 }
 
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 860px) {
+@media (min-width: 600px) {
+  .video-block {
+    grid-template-columns: 1fr 1fr;
+  }
+  .video-block > img,
+  .video-media video {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (min-width: 840px) {
+  .raiz-swiper {
+    overflow: visible;
+  } /* deja ver las tarjetas laterales del abanico */
   .info-cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
   .impone {
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
-  }
-  .impone__img {
-    height: 380px;
-  }
-  .video-block {
-    grid-template-columns: 1fr;
-  }
-  .video-block > img {
-    height: 260px;
-  }
-  .video-media video {
-    height: 300px;
-  }
-  .raiz-swiper {
-    overflow: hidden;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
   }
 }
