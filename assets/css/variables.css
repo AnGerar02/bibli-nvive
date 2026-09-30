@@ -8,16 +8,19 @@
    ============================================================ */
 
 :root {
-  /* ================= COLOR (roles M3) ================= */
-  --md-primary:             #3B5F73;  /* Azul pizarra */
+  /* ================= COLOR (roles M3) =================
+     PRUEBA "Paleta A" (sep-2026): mismos tonos, más saturación.
+     Valores anteriores anotados al lado para poder volver. */
+  --md-primary:             #056287;  /* Azul (antes #3B5F73) */
   --md-on-primary:          #FFFFFF;
-  /* PRUEBA (sep-2026): verde reemplazado por el azul. Verde original: #627742 */
+  /* PRUEBA: verde reemplazado por el azul.
+     Verde original: #627742 · verde paleta A: #597C03 */
   --md-secondary:           var(--md-primary);
   --md-on-secondary:        #FFFFFF;
-  --md-tertiary:            #AC4B10;  /* Terracota (con texto) */
+  --md-tertiary:            #C24E00;  /* Terracota con texto (antes #AC4B10) */
   --md-on-tertiary:         #FFFFFF;
-  --md-tertiary-deco:       #CC6228;  /* Terracota original: solo decoración */
-  --md-accent:              #F99F3F;  /* Amarillo (color extendido) */
+  --md-tertiary-deco:       #D55A01;  /* Terracota decorativa (antes #CC6228) */
+  --md-accent:              #FE9C29;  /* Amarillo (antes #F99F3F) */
   --md-on-accent:           var(--md-primary);  /* un solo azul para todo el texto */
   --md-surface:             #FFF9ED;  /* Crema */
   --md-on-surface:          var(--md-primary);
@@ -41,18 +44,21 @@
   --md-scrim-rgb: 10, 52, 71;
 
   /* ================= TIPOGRAFÍA ================= */
-  --font-titulo: "Poppins", system-ui, -apple-system, sans-serif;
+  /* Títulos: Gala (Adobe Fonts, kit hjp6vej). Antes: Poppins */
+  --font-titulo: "gala", system-ui, -apple-system, sans-serif;
   --font-texto:  "Montserrat", system-ui, -apple-system, sans-serif;
 
   --peso-regular:   400;
   --peso-medium:    500;
   --peso-bold:      700;
-  --peso-extrabold: 800;
+  --peso-extrabold: 700;  /* Gala solo tiene 400 y 700 (antes 800 con Poppins) */
 
-  /* Escala M3 (valores móviles) */
-  --fs-display-lg:  2.8125rem;  /* 45 px — nombre del lugar (hero) */
-  --fs-display-md:  2.25rem;    /* 36 px — palabras gráficas */
-  --fs-display-sm:  2rem;       /* 32 px — títulos de sección */
+  /* Escala M3 (valores móviles).
+     Display ampliado para Gala, que es condensada y se ve más chica
+     que Poppins al mismo tamaño (antes 45 / 36 / 32 px). */
+  --fs-display-lg:  3.25rem;    /* 52 px — nombre del lugar (hero) */
+  --fs-display-md:  2.75rem;    /* 44 px — palabras gráficas */
+  --fs-display-sm:  2.25rem;    /* 36 px — títulos de sección */
   --fs-headline-md: 1.75rem;    /* 28 px — menú móvil */
   --fs-headline-sm: 1.5rem;     /* 24 px — títulos del footer */
   --fs-title-lg:    1.375rem;   /* 22 px — títulos de tarjeta */
@@ -61,6 +67,9 @@
   --fs-body-sm:     0.75rem;    /* 12 px — copyright */
   --fs-label-lg:    0.875rem;   /* 14 px — menú, botones */
   --fs-label-md:    0.75rem;    /* 12 px — hashtags, etiquetas */
+
+  /* Interletrado: Gala es condensada y en tamaños chicos las letras se juntan */
+  --tracking-label: 0.08em;  /* menú y etiquetas (Label Large) */
 
   --lh-tight: 1.15;
   --lh-body:  1.6;
@@ -85,6 +94,11 @@
   --size-touch: 48px;            /* área táctil mínima */
   --size-icon:  24px;            /* íconos de interfaz */
   --size-icon-card: 48px;        /* íconos de tarjetas de información */
+  --nav-badge:      64px;        /* círculo del ícono en el menú móvil */
+  --nav-badge-ring: 8px;         /* aro crema alrededor del círculo */
+  --nav-card-max:   128px;       /* alto máximo de cada tarjeta del menú móvil */
+  --peel-rest: 56px;             /* esquina doblada en reposo */
+  --peel-open: 70cqi;            /* esquina abierta en móvil/tablet: < 75 % para que la punta quede dentro de la foto 4:3 */
 
   /* ================= FORMA (esquinas) ================= */
   --radius-m:    12px;   /* fotos pequeñas, chips */
@@ -93,11 +107,12 @@
   --radius-full: 999px;  /* botones, menú, redes, logo */
 
   /* ================= ELEVACIÓN ================= */
-  --elev-1: 0 4px 12px rgba(var(--md-scrim-rgb), 0.15);
-  --elev-2: 0 8px 22px rgba(var(--md-scrim-rgb), 0.20);
-  --elev-3: 0 16px 40px rgba(var(--md-scrim-rgb), 0.28);
+  /* Sombras más marcadas (revisión de tesis, sep-2026) */
+  --elev-1: 0 6px 16px rgba(var(--md-scrim-rgb), 0.25);
+  --elev-2: 0 12px 28px rgba(var(--md-scrim-rgb), 0.35);
+  --elev-3: 0 20px 44px rgba(var(--md-scrim-rgb), 0.40);
   /* Geometrías sueltas para sombras cuya opacidad se anima (hero) */
-  --elev-2-shape:      0 8px 22px;
+  --elev-2-shape:      0 12px 28px;
   --text-shadow-shape: 0 4px 24px;
 
   /* ================= ESTADOS (capas M3) ================= */
@@ -117,6 +132,7 @@
   --stroke-divider: 4px;  /* líneas divisorias */
 
   /* ================= MOVIMIENTO ================= */
+  --dur-reveal:  0.9s;   /* aparición al hacer scroll */
   --dur-flip:    0.6s;
   --dur-cascade: 0.35s;
   --ease-out:    cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -168,9 +184,9 @@
 /* Escritorio (≥ 840 px) */
 @media (min-width: 840px) {
   :root {
-    --fs-display-lg: 3.5625rem;  /* 57 px */
-    --fs-display-md: 2.8125rem;  /* 45 px */
-    --fs-display-sm: 2.25rem;    /* 36 px */
+    --fs-display-lg: 4.5rem;     /* 72 px (antes 57) */
+    --fs-display-md: 3.5rem;     /* 56 px (antes 45) */
+    --fs-display-sm: 3rem;       /* 48 px (antes 36) */
     --space-section: var(--space-3xl);
   }
 }

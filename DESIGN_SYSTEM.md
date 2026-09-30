@@ -50,22 +50,24 @@ Containers (tono 90) y on-containers (tono 10) de referencia:
 
 ## 3. Tipografía
 
-- Títulos: **Poppins** 700 / 800
+- Títulos: **Gala** 700 (Adobe Fonts, kit `hjp6vej`; la familia solo trae pesos 400 y 700). Antes: Poppins.
 - Texto: **Montserrat** 400 / 500
 
 | Rol M3 | Fuente | Móvil | Escritorio | Uso |
 |---|---|---|---|---|
-| Display Large | Poppins 800 | 45 px | 57 px | Nombre del lugar en el hero |
-| Display Medium | Poppins 800 | 36 px | 45 px | Palabras gráficas (VIDA, AIRE, PAZ, LUZ) |
-| Display Small | Poppins 800 | 32 px | 36 px | Títulos de sección |
-| Headline Medium | Poppins 800 | 28 px | 28 px | Ítems del menú móvil |
-| Headline Small | Poppins 700 | 24 px | 24 px | Títulos del footer |
-| Title Large | Poppins 700 | 22 px | 22 px | Títulos de tarjeta |
+| Display Large | Gala 700 | 52 px | 72 px | Nombre del lugar en el hero |
+| Display Medium | Gala 700 | 44 px | 56 px | Palabras gráficas (VIDA, AIRE, PAZ, LUZ) |
+| Display Small | Gala 700 | 36 px | 48 px | Títulos de sección |
+| Headline Medium | Gala 700 | 28 px | 28 px | Ítems del menú móvil |
+| Headline Small | Gala 700 | 24 px | 24 px | Títulos del footer |
+| Title Large | Gala 700 | 22 px | 22 px | Títulos de tarjeta |
 | Body Large | Montserrat 400 | 16 px | 16 px | Párrafos |
 | Body Medium | Montserrat 400 | 14 px | 14 px | Texto de tarjetas |
 | Body Small | Montserrat 400 | 12 px | 12 px | Copyright |
-| Label Large | Poppins 700 | 14 px | 14 px | Menú, botones |
+| Label Large | Gala 700 | 14 px | 14 px | Menú, botones |
 | Label Medium | Montserrat 500 | 12 px | 12 px | Hashtags, etiquetas |
+
+Los tamaños Display se ampliaron (sep-2026) para compensar que Gala es condensada: al mismo tamaño se veía más chica que Poppins.
 
 **Reglas**
 - Máximo tres tamaños por pantalla.
@@ -131,12 +133,12 @@ Todo elemento tocable: mínimo **48 × 48 px**.
 | Nivel | Recurso | Uso |
 |---|---|---|
 | 0 | Sin sombra | Fondo, secciones |
-| 1 | Sombra suave teñida de azul: `0 4px 12px rgba(10,52,71,.15)` | Tarjetas y fotos en reposo |
-| 2 | Sombra media: `0 8px 22px rgba(10,52,71,.20)` | Hover de tarjetas; header con scroll |
+| 1 | Sombra teñida de azul: `0 6px 16px rgba(10,52,71,.25)` | Tarjetas y fotos en reposo |
+| 2 | Sombra marcada: `0 12px 28px rgba(10,52,71,.35)` | Hover de tarjetas; header con scroll |
 | 3 | Sombra marcada o fondo sólido | Menú móvil abierto |
 
 **Reglas**
-- Sombras teñidas de azul, nunca negro puro.
+- Sombras teñidas de azul, nunca negro puro. Deben apreciarse claramente (ajuste de la revisión de tesis, sep-2026).
 - Solo se sube de nivel con interacción.
 - Máximo dos niveles visibles a la vez.
 
@@ -162,9 +164,9 @@ El estado nunca se comunica solo con color: acompañar con forma, peso o contorn
 - Fijo arriba. Nunca se esconde con el menú móvil abierto ni cuando algo del header tiene foco.
 
 ### 7.2 Navegación
-**Escritorio y tablet (≥ 600 px):** logo a la izquierda alineado con el margen del contenido (1200 px) y menú centrado. Ítems Label Large, padding 12 × 24 px, hover con capa 8 %. En el tope: ítems blancos sin fondo, activo subrayado. Al reaparecer (sobre la barra crema): ítems azules `#3B5F73`, activo en pastilla azul con texto blanco.
+**Escritorio y tablet (≥ 600 px):** logo a la izquierda alineado con el margen del contenido (1200 px) y menú centrado. Cinco ítems: Inicio, Parroquias, Datos, Voces, Actívate (sección deportiva: caminatas, ciclismo, senderismo). Ítems Label Large con interletrado de 0.08 em (Gala es condensada y a 14 px las letras se juntan), padding 12 × 24 px en escritorio y 12 × 16 px en tablet, hover con capa 8 %. En el tope: ítems blancos sin fondo, activo subrayado. Al reaparecer (sobre la barra crema): ítems azules `#3B5F73`, activo en pastilla azul con texto blanco.
 
-**Móvil:** hamburguesa circular crema de 48 px (ícono azul, elevación 1) que se vuelve X; menú de pantalla completa con franjas a todo el ancho en Headline Medium (28 px). Franjas azul, amarillo, verde y terracota, cada una con su "on" correcto (**franja amarilla con texto azul `#3B5F73`**). Entrada en cascada de 0.35 s. Cierra con X, al tocar un ítem o con Esc.
+**Móvil:** botón "Menú" arriba a la derecha, alineado con el logo: pastilla crema (alto 48 px, elevación 2) con tres rayas en los colores de la marca (azul, amarillo, terracota; de distinto largo) y la palabra "Menú" en Label Large azul. Al abrir, la raya del medio desaparece y las otras dos se cruzan formando una X. Se esconde y reaparece con el header. Menú de pantalla completa con cinco tarjetas escalonadas (azul, amarillo, terracota, azul, amarillo) que alternan de lado; cada una lleva su ícono Material Symbols Rounded (48 px) en un círculo de 64 px del mismo color con aro crema de 8 px que sobresale del borde. Texto Headline Medium con su color "on" (azul sobre amarillo, blanco sobre azul y terracota). Toda la tarjeta es tocable. Entrada en cascada desde el lado de cada tarjeta (0.35 s). Cierra con el botón, al tocar un ítem o con Esc.
 
 ### 7.3 Botón
 - Filled (principal): pastilla amarilla, texto `#3B5F73`, Label Large, alto mínimo 48 px, padding horizontal 24 px. Pressed: escala 0.97.
@@ -195,8 +197,15 @@ El estado nunca se comunica solo con color: acompañar con forma, peso o contorn
 - Escritorio: dos columnas. Móvil: texto arriba, imagen abajo.
 
 ### 7.8 Video
-- Portada primero; el video solo se carga al tocar play.
-- Nunca autoplay con sonido. Controles visibles; botón play mínimo 48 px.
+- Disposición: franja azul a todo el ancho con el video a la izquierda y, a la derecha, título (Display Small, crema) y párrafo (Body Large, crema, máx. 60 palabras), en 7/12 y 5/12 columnas, solo desde 1120 px: con menos ancho la columna de texto queda muy angosta para el título largo. Por debajo de 1120 px: texto arriba, video abajo.
+- El video (radio 28 px, elevación 2; 4:3 en dos columnas, 16:9 apilado) sobresale 64 px por debajo de la franja, sobre el fondo crema. En dos columnas, el video arranca alineado con el título (mismo tope) y la franja crece hasta lo que sea más alto. El texto siempre queda dentro de la parte azul.
+- Franja holgada: 1.5 veces el espacio entre secciones sobre el título, y al menos 32 px bajo el texto antes del borde de la franja.
+- Título largo y párrafo corto: el título carga el mensaje, el párrafo lo complementa en una o dos frases.
+- Se reproduce solo, silenciado y en bucle, cuando se ve al menos la mitad del video; se pausa al salir de pantalla y se reanuda al volver (decisión de diseño, sep-2026).
+- El archivo se descarga recién al llegar a la sección (preload none), no al abrir la página.
+- Si la persona lo pausa, no vuelve a arrancar solo. Controles visibles mientras se reproduce (WCAG 2.2.2: poder pausar lo que se mueve más de 5 s).
+- Con "reducir movimiento", ahorro de datos o autoplay bloqueado por el navegador: portada con botón play (mínimo 48 px).
+- Nunca autoplay con sonido.
 
 ### 7.9 Tarjeta giratoria (flip card)
 - Variantes de igual alto: texto (Title Large + Body Medium), palabra (Display Medium), foto.
@@ -213,8 +222,18 @@ El estado nunca se comunica solo con color: acompañar con forma, peso o contorn
 - Dos paneles con radio superior de 48 px.
 - Panel amarillo: collage de 3 fotos (2 arriba + 1 ancha) y copyright en Body Small `#3B5F73`.
 - Panel azul: logo, título (Headline Small), frase, redes, navegación, línea amarilla y #MásBiblián (Display Small).
+- La navegación del footer lleva su propio título "Sobre nosotros" (Headline Small, igual que "¡Escríbenos!"). Las dos columnas (contacto | Sobre nosotros) van juntas con 64 px de separación, no repartidas a los extremos.
 - Íconos de redes: círculo amarillo de 48 px con ícono de 24 px.
 - En móvil se apilan: primero azul, luego amarillo.
+- Aparición al hacer scroll: fotos del collage en cascada; en el panel azul, logo, texto con redes, línea y #MásBiblián en cascada; copyright con fundido. Se animan apenas el footer se asoma (está al final de la página y no sube lo suficiente para la regla general).
+
+### 7.12 Esquina que se despega (foto del bloque texto + imagen)
+- La esquina superior derecha de la foto aparece doblada (solapa crema de 56 px con elevación 2). La punta de la solapa es redondeada, como el resto de esquinas del sitio (hasta 28 px).
+- Al pasar el mouse, con foco de teclado o al tocar en móvil, se despega en diagonal (62 % del ancho en escritorio, 70 % en móvil y tablet: siempre menos del 75 % para que la punta quede dentro de la foto 4:3) y deja ver una frase sobre fondo azul.
+- Tamaño de la frase: 16 px en móvil, 22 px en tablet, 24 px en escritorio.
+- Frase: Gala 700 en crema, alineada a la derecha, en líneas que acortan siguiendo la diagonal. Actual: "3.800 msnm y una sola pregunta: ¿quién las talló?".
+- La frase es un complemento: nunca información importante solo detrás de la foto.
+- Evoca la piedra tallada de Padre Rumi (esquina cortada en diagonal).
 
 ---
 
@@ -276,4 +295,4 @@ Alguien joven de aquí que te cuenta con orgullo lo que tienes cerca. Insight: *
 - [ ] Focus visible en todos los elementos interactivos.
 - [ ] Textos `alt` descriptivos.
 - [ ] Footer: "¡Contactarse!" → "¡Escríbenos!".
-- [ ] Recortar el párrafo de "Donde la piedra impone" a 60 palabras máx. (propuesta de redacción, **pedir aprobación antes de cambiar textos**).
+- [x] Recortar el párrafo de "Donde la piedra impone" a 60 palabras máx. (aprobado: versión de 51 palabras).

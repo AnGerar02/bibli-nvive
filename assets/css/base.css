@@ -55,9 +55,12 @@ strong { font-weight: var(--peso-bold); }
 }
 
 /* ---- Aparición al hacer scroll (main.js añade .is-visible) ---- */
+/* OJO: si un componente animado define su propia "transition" (hover, etc.),
+   debe incluir también opacity y transform con --dur-reveal, o su regla
+   reemplaza a esta y el elemento aparece de golpe. */
 [data-reveal] {
   opacity: 0;
-  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
   will-change: opacity, transform;
 }
 [data-reveal="fade-up"]    { transform: translateY(56px); }
@@ -72,3 +75,6 @@ strong { font-weight: var(--peso-bold); }
 
 /* ---- Parallax con scroll (lo mueve main.js) ---- */
 [data-parallax] { will-change: transform; }
+/* Si además aparece con fundido, solo se anima la opacidad:
+   el movimiento del parallax debe seguir al scroll sin retraso */
+[data-parallax][data-reveal] { transition: opacity var(--dur-reveal) var(--ease-out); }

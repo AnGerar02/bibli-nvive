@@ -33,7 +33,7 @@
   background: var(--md-primary);
   /* elevación 2 que se desvanece cuando la foto llena la pantalla */
   box-shadow: var(--elev-2-shape)
-    rgba(var(--md-scrim-rgb), calc(0.2 * (1 - var(--p))));
+    rgba(var(--md-scrim-rgb), calc(0.35 * (1 - var(--p))));
 }
 .hero__bg {
   position: absolute;
@@ -146,7 +146,15 @@
   padding: var(--space-card);
   border-radius: var(--radius-xl);
   box-shadow: var(--elev-1);
-  transition: box-shadow 0.3s ease;
+  /* aparición (opacity + transform) + sombra en hover */
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out),
+    box-shadow 0.3s ease;
+}
+/* La cascada retrasa solo la aparición, no la sombra del hover */
+[data-stagger] > .info-card {
+  transition-delay: calc(var(--i, 0) * 120ms), calc(var(--i, 0) * 120ms), 0s;
 }
 @media (hover: hover) {
   .info-card:hover {
@@ -225,31 +233,198 @@
   max-width: 65ch;
 }
 .impone__img {
+  display: block;
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   object-position: center 65%;
-  border-radius: var(--radius-xl);
-  box-shadow: var(--elev-1);
 }
 
-/* ---------- 5) VIDEO (§7.8) — portada + play, sin autoplay ---------- */
-.video-block {
-  display: grid;
-  grid-template-columns: 1fr;
-  width: 100%;
+/* ---------- 4b) ESQUINA QUE SE DESPEGA (peel) ----------
+   La foto tiene la esquina superior derecha cortada en diagonal.
+   Detrás está el fondo azul con la frase; encima, la solapa doblada.
+   --open se anima de 0 (cerrada) a 1 (abierta); cada pieza calcula
+   el tamaño real de la esquina (--fold) dentro del contenedor .peel,
+   para que "cqi" se mida con el ancho de la foto y no de la pantalla. */
+@property --open {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+.peel {
+  --open: 0;
+  position: relative;
+  container-type: inline-size;
   border-radius: var(--radius-xl);
   overflow: hidden;
+  background: var(--md-primary);
+  box-shadow: var(--elev-1);
+  cursor: pointer;
+  /* esquina + sombra + aparición al hacer scroll */
+  transition:
+    --open 0.6s var(--ease-out),
+    box-shadow 0.3s ease,
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
 }
-.video-block > img,
+@media (hover: hover) {
+  .peel:hover {
+    --open: 1;
+    box-shadow: var(--elev-2);
+  }
+}
+.peel:focus-visible,
+.peel.is-open {
+  --open: 1;
+  box-shadow: var(--elev-2);
+}
+
+.peel__img,
+.peel__fold {
+  --fold: calc(
+    var(--peel-rest) + (var(--peel-open) - var(--peel-rest)) * var(--open)
+  );
+}
+.peel__img {
+  position: relative;
+  z-index: 1;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--fold)) 0,
+    100% var(--fold),
+    100% 100%,
+    0 100%
+  );
+}
+
+/* Frase detrás de la foto, en la esquina que se abre */
+.peel__back {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: var(--space-l);
+  font-family: var(--font-titulo);
+  font-weight: var(--peso-bold);
+  font-size: var(
+    --fs-body-lg
+  ); /* móvil: 16 px para que quepa en el triángulo */
+  line-height: var(--lh-tight);
+  text-align: right;
+  color: var(--md-surface);
+  opacity: 0; /* invisible con la esquina cerrada: no asoma cortada */
+  transition: opacity 0.3s ease;
+}
+.peel__back span {
+  white-space: nowrap;
+}
+@media (hover: hover) {
+  .peel:hover .peel__back {
+    opacity: 1;
+    transition-delay: 0.15s;
+  }
+}
+.peel:focus-visible .peel__back,
+.peel.is-open .peel__back {
+  opacity: 1;
+  transition-delay: 0.15s;
+}
+
+@media (min-width: 600px) {
+  .peel__back {
+    font-size: var(--fs-title-lg);
+  }
+}
+/* Escritorio: la foto ocupa media pantalla → se abre menos y la letra crece */
+@media (min-width: 840px) {
+  .peel {
+    --peel-open: 62cqi;
+  }
+  .peel__back {
+    font-size: var(--fs-headline-sm);
+  }
+}
+
+/* Solapa doblada: mitad inferior izquierda del cuadrado de la esquina */
+.peel__fold {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  width: var(--fold);
+  height: var(--fold);
+  filter: drop-shadow(var(--elev-2-shape) rgba(var(--md-scrim-rgb), 0.35));
+  pointer-events: none;
+}
+.peel__fold::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Solo la mitad inferior izquierda es papel (corte en el 50 % del degradado);
+     la punta se redondea como el resto de esquinas del sitio.
+     El radio crece con la solapa: más suave cerrada, 28 px abierta. */
+  border-bottom-left-radius: min(var(--radius-xl), calc(var(--fold) * 0.35));
+  background: linear-gradient(
+    to top right,
+    var(--md-surface) 0%,
+    var(--md-surface-container-high) 49.5%,
+    transparent 50%
+  );
+}
+
+/* ---------- 5) VIDEO (§7.8) — franja azul con texto + video ----------
+   La franja de color (::before) termina antes del final de la sección,
+   así el video sobresale por debajo sobre el fondo crema. */
+.video-feature {
+  --overhang: var(--space-3xl); /* cuánto sobresale el video bajo la franja */
+  position: relative;
+  padding-top: calc(var(--space-section) * 1.5); /* franja más holgada arriba */
+}
+.video-feature::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 var(--overhang) 0;
+  background: var(--md-primary);
+}
+.video-feature__inner {
+  position: relative; /* por encima de la franja */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.video-feature__text {
+  color: var(--md-surface);
+}
+.video-feature__text p {
+  max-width: 65ch;
+}
+.video-feature__title {
+  font-size: var(--fs-display-sm);
+  color: var(--md-surface);
+  margin-bottom: var(--space-l);
+}
+.video-feature :focus-visible {
+  outline-color: var(--md-accent);
+}
+
+.video-media {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--elev-2);
+}
 .video-media video {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-}
-.video-media {
-  position: relative;
 }
 .video-media__btn {
   position: absolute;
@@ -401,11 +576,32 @@
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (min-width: 600px) {
-  .video-block {
-    grid-template-columns: 1fr 1fr;
+/* Sección de video: dos columnas solo desde 1120 px. Con menos ancho,
+   la columna de texto queda muy angosta para el título largo y el video
+   ya no alcanza a sobresalir de la franja; ahí se apila como en móvil. */
+@media (min-width: 1120px) {
+  /* Video a la izquierda (7 de 12 columnas), texto a la derecha (5 de 12) */
+  /* Dos filas: la 1ª es la parte azul, la 2ª (--overhang) es lo que sobresale.
+     El video ocupa las dos y arranca arriba, alineado con el título;
+     la franja crece hasta lo que sea más alto (texto o video). */
+  .video-feature__inner {
+    grid-template-columns: 7fr 5fr;
+    grid-template-rows: auto var(--overhang);
+    column-gap: var(--space-2xl);
+    row-gap: 0;
+    align-items: start;
   }
-  .video-block > img,
+  .video-feature__text {
+    grid-column: 2;
+    grid-row: 1;
+    padding-bottom: var(
+      --space-xl
+    ); /* aire bajo el texto dentro de la franja */
+  }
+  .video-media {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
   .video-media video {
     aspect-ratio: 4 / 3;
   }

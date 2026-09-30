@@ -167,23 +167,22 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ---------- 4) APARICIÓN AL HACER SCROLL (fade-in) ---------- */
   const revealEls = document.querySelectorAll("[data-reveal]");
   if ("IntersectionObserver" in window && revealEls.length) {
-    const io = new IntersectionObserver(
-      (entries) => {
+    const makeObserver = (options) =>
+      new IntersectionObserver((entries, obs) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
-            io.unobserve(entry.target);
+            obs.unobserve(entry.target);
           }
         });
-      },
-      {
-        // El elemento debe haber entrado un 30% y superado el 15% inferior
-        // de la pantalla antes de animarse → se aprecia completo.
-        threshold: 0.3,
-        rootMargin: "0px 0px -15% 0px",
-      }
-    );
-    revealEls.forEach((el) => io.observe(el));
+      }, options);
+    // Contenido: el elemento debe haber entrado un 30% y superado el 15%
+    // inferior de la pantalla antes de animarse → se aprecia completo.
+    const io = makeObserver({ threshold: 0.3, rootMargin: "0px 0px -15% 0px" });
+    // Footer: está al final de la página y nunca sube tanto; se anima
+    // apenas se asoma (si no, el copyright y el hashtag no aparecerían).
+    const ioFooter = makeObserver({ threshold: 0.1 });
+    revealEls.forEach((el) => (el.closest(".site-footer") ? ioFooter : io).observe(el));
   } else {
     revealEls.forEach((el) => el.classList.add("is-visible"));
   }
@@ -247,16 +246,64 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ---------- 7) VIDEO: portada + play; el archivo se descarga al tocar ---------- */
+  /* ---------- 6b) ESQUINA QUE SE DESPEGA: abrir/cerrar al tocar ----------
+     En escritorio se abre con hover o con foco de teclado (CSS);
+     en táctil, cada toque la abre o la cierra. */
+  const peel = document.getElementById("peel");
+  if (peel) {
+    peel.addEventListener("pointerup", (e) => {
+      if (e.pointerType !== "mouse") peel.classList.toggle("is-open");
+    });
+    peel.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        peel.classList.toggle("is-open");
+      }
+    });
+  }
+
+  /* ---------- 7) VIDEO ----------
+     Se reproduce solo (silenciado, en bucle) cuando se ve al menos la mitad,
+     y se pausa al salir de pantalla. Si la persona lo pausa, no vuelve a
+     arrancar solo. Con "reducir movimiento" o ahorro de datos, o si el
+     navegador bloquea el autoplay, queda la portada con el botón de play. */
   const videoMedia = document.getElementById("video-media");
   const videoBtn = document.getElementById("video-btn");
   if (videoMedia && videoBtn) {
     const video = videoMedia.querySelector("video");
+    const saveData = navigator.connection && navigator.connection.saveData;
+
+    const startVideo = () =>
+      video.play().then(() => {
+        videoMedia.classList.add("is-playing");
+        video.setAttribute("controls", "");
+      });
+
     videoBtn.addEventListener("click", () => {
-      videoMedia.classList.add("is-playing");
-      video.setAttribute("controls", "");
-      video.play();
+      startVideo().catch(() => {});
       video.focus();
     });
+
+    if (!reduceMotion && !saveData && "IntersectionObserver" in window) {
+      let userPaused = false;
+      let autoPausing = false;
+      video.addEventListener("pause", () => {
+        if (!autoPausing) userPaused = true; // pausa hecha por la persona
+        autoPausing = false;
+      });
+      video.addEventListener("play", () => { userPaused = false; });
+
+      new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            if (!userPaused) startVideo().catch(() => {}); // si se bloquea, queda el botón
+          } else if (!video.paused) {
+            autoPausing = true;
+            video.pause();
+          }
+        },
+        { threshold: 0.5 }
+      ).observe(videoMedia);
+    }
   }
 });
