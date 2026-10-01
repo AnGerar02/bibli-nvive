@@ -44,8 +44,17 @@
   --md-scrim-rgb: 10, 52, 71;
 
   /* ================= TIPOGRAFÍA ================= */
-  /* Títulos: Gala (Adobe Fonts, kit hjp6vej). Antes: Poppins */
-  --font-titulo: "gala", system-ui, -apple-system, sans-serif;
+  /* Títulos: Please Bold (fuente variable de Adobe Fonts, kit hjp6vej).
+     Eje de grosor 300–900; el grosor se fija con --wght-titulo (base.css),
+     porque el kit declara la fuente como si fuera solo 300.
+     Alternativa de la misma familia para títulos grandes: "please-display-vf".
+     Historial: Poppins → Gala → Please. */
+  /* PRUEBA (1-oct-2026): Galindo (Google Fonts, un solo grosor 400).
+     Probadas antes: Bourbon Lines, El Paso, Wigwag Deluxe, JAF Zalamander,
+     Confiteria Script, Tarif, Mochiy Pop P One, Asimovian.
+     Para volver: "please-vf". */
+  --font-titulo: "Galindo", "please-vf", system-ui, -apple-system, sans-serif;
+  --wght-titulo: 700;  /* Bold (solo actúa en fuentes variables como Please) */
   --font-texto:  "Montserrat", system-ui, -apple-system, sans-serif;
 
   --peso-regular:   400;
@@ -70,6 +79,8 @@
 
   /* Interletrado: Gala es condensada y en tamaños chicos las letras se juntan */
   --tracking-label: 0.08em;  /* menú y etiquetas (Label Large) */
+
+  --pill-cola: 0.3em;  /* largo de las colas (p, g, q, y) en la fuente de títulos; ver .pill--cola */
 
   --lh-tight: 1.15;
   --lh-body:  1.6;
@@ -135,6 +146,10 @@
   --dur-reveal:  0.9s;   /* aparición al hacer scroll */
   --dur-flip:    0.6s;
   --dur-cascade: 0.35s;
+  /* Entrada en abanico del carrusel "Desde la raíz" (main.js) */
+  --dur-fan-center: 0.6s;  /* aparece la foto del centro */
+  --delay-fan:      0.3s;  /* espera antes de que salgan las laterales */
+  --dur-fan:        0.9s;  /* las laterales salen desde detrás hacia los lados */
   --ease-out:    cubic-bezier(0.2, 0.8, 0.2, 1);
 
   /* ============================================================

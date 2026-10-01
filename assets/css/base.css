@@ -9,6 +9,9 @@ body {
   font-size: var(--fs-body-lg);
   font-weight: var(--peso-regular);
   line-height: var(--lh-body);
+  /* Si la fuente de títulos no trae negrita, se usa tal cual está dibujada
+     en vez de engordarla artificialmente (se vería deformada) */
+  font-synthesis-weight: none;
 }
 
 h1, h2, h3, h4 {
@@ -19,6 +22,15 @@ h1, h2, h3, h4 {
 }
 
 strong { font-weight: var(--peso-bold); }
+
+/* Grosor de la fuente variable de títulos. Se aplica a todo lo que usa
+   --font-titulo (solo afecta fuentes con eje "wght"; Montserrat no está aquí). */
+h1, h2, h3, h4,
+.pill, .qword, .qfront__title, .info-card__title, .flip__back,
+.peel__back, .footer-hashtag, .nav__link, .nav-toggle, .btn,
+.site-header__logo, .footer-contact__logo {
+  font-variation-settings: "wght" var(--wght-titulo);
+}
 
 /* Contenedor centrado: el texto nunca va a sangre */
 .container {
@@ -45,6 +57,20 @@ strong { font-weight: var(--peso-bold); }
   border-radius: var(--radius-full);
   display: inline-block;
   line-height: var(--lh-tight);
+}
+/* Centrado óptico: cada fuente deja distinto aire arriba y abajo de las
+   letras. Se recorta la caja a la altura de las mayúsculas y se pone el
+   mismo margen arriba y abajo (los navegadores sin soporte quedan igual). */
+@supports (text-box: trim-both cap alphabetic) {
+  .pill {
+    text-box: trim-both cap alphabetic;
+    padding-block: var(--space-xs);
+  }
+  /* Palabras con letras que bajan (p, g, q, y, j): se suma la cola abajo
+     para que no se salga de la pastilla y la palabra quede centrada */
+  .pill--cola {
+    padding-bottom: calc(var(--space-xs) + var(--pill-cola));
+  }
 }
 
 /* Accesibilidad: visible solo para lectores de pantalla */

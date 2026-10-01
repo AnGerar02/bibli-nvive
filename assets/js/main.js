@@ -91,6 +91,72 @@ document.addEventListener("DOMContentLoaded", () => {
         paginationBulletMessage: "Ir a la foto {{index}}",
       },
     });
+
+    /* Entrada en abanico (como landonorris.com): al entrar en pantalla aparece
+       primero la foto del centro y luego las laterales salen desde detrás de
+       ella hacia su lugar. Se usa la propiedad "translate", que se suma al
+       "transform" que Swiper pone en cada foto sin pisarlo. */
+    const fan = document.querySelector(".raiz-swiper[data-fan]");
+    if (fan && !reduceMotion && "IntersectionObserver" in window && fan.animate) {
+      fan.classList.add("is-fan-pending");
+      new IntersectionObserver(
+        (entries, obs) => {
+          if (!entries[0].isIntersecting) return;
+          obs.disconnect();
+
+          const css = getComputedStyle(document.documentElement);
+          const ms = (token) => parseFloat(css.getPropertyValue(token)) * 1000; // tokens en segundos
+          const easing = css.getPropertyValue("--ease-out").trim();
+          const slides = Array.from(fan.querySelectorAll(".swiper-slide"));
+          const active = Math.max(0, slides.findIndex((s) => s.classList.contains("swiper-slide-active")));
+          const center = slides[active].getBoundingClientRect();
+          const centerX = center.left + center.width / 2;
+
+          fan.classList.remove("is-fan-pending");
+          slides.forEach((slide, i) => {
+            const distance = Math.abs(i - active); // 0 = centro, 1 = vecinas, 2…
+            if (distance === 0) {
+              slide.animate(
+                [{ opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1 }],
+                { duration: ms("--dur-fan-center"), easing, fill: "backwards" }
+              );
+              return;
+            }
+            // Arranca escondida detrás del centro. La perspectiva 3D achica el
+            // desplazamiento en pantalla, así que se mide y se compensa.
+            const r = slide.getBoundingClientRect();
+            const startX = r.left + r.width / 2;
+            let dx = centerX - startX;
+            slide.style.translate = `${dx}px 0`;
+            const moved = slide.getBoundingClientRect().left + r.width / 2 - startX;
+            slide.style.translate = "";
+            if (Math.abs(moved) > 1) dx *= dx / moved;
+            slide.animate(
+              [
+                { opacity: 0, translate: `${dx}px 0` },
+                { opacity: 1, offset: 0.15 },
+                { opacity: 1, translate: "0 0" },
+              ],
+              {
+                duration: ms("--dur-fan"),
+                delay: ms("--delay-fan") * distance, // las más lejanas salen después
+                easing,
+                fill: "backwards",
+              }
+            );
+          });
+          const dots = fan.querySelector(".swiper-pagination");
+          if (dots) {
+            dots.animate([{ opacity: 0 }, { opacity: 1 }], {
+              duration: ms("--dur-fan-center"),
+              delay: ms("--delay-fan") + ms("--dur-fan") * 0.5,
+              fill: "backwards",
+            });
+          }
+        },
+        { threshold: 0.3, rootMargin: "0px 0px -15% 0px" } // igual que los demás reveals
+      ).observe(fan);
+    }
   }
 
   /* ---------- 3a) HERO scroll-driven ----------

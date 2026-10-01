@@ -50,24 +50,24 @@ Containers (tono 90) y on-containers (tono 10) de referencia:
 
 ## 3. Tipografía
 
-- Títulos: **Gala** 700 (Adobe Fonts, kit `hjp6vej`; la familia solo trae pesos 400 y 700). Antes: Poppins.
+- Títulos: **Please** Bold (Adobe Fonts, kit `hjp6vej`). Es una fuente variable (eje de grosor 300–900); el Bold (700) se fija con `font-variation-settings` porque el kit la declara como si fuera solo 300. Historial: Poppins → Gala → Please (oct-2026, tras probar Comba, Chaloops, Marvin, Brim Narrow, Sisters, Variex, Tomarik y Temeraire).
 - Texto: **Montserrat** 400 / 500
 
 | Rol M3 | Fuente | Móvil | Escritorio | Uso |
 |---|---|---|---|---|
-| Display Large | Gala 700 | 52 px | 72 px | Nombre del lugar en el hero |
-| Display Medium | Gala 700 | 44 px | 56 px | Palabras gráficas (VIDA, AIRE, PAZ, LUZ) |
-| Display Small | Gala 700 | 36 px | 48 px | Títulos de sección |
-| Headline Medium | Gala 700 | 28 px | 28 px | Ítems del menú móvil |
-| Headline Small | Gala 700 | 24 px | 24 px | Títulos del footer |
-| Title Large | Gala 700 | 22 px | 22 px | Títulos de tarjeta |
+| Display Large | Please Bold | 52 px | 72 px | Nombre del lugar en el hero |
+| Display Medium | Please Bold | 44 px | 56 px | Palabras gráficas (VIDA, AIRE, PAZ, LUZ) |
+| Display Small | Please Bold | 36 px | 48 px | Títulos de sección |
+| Headline Medium | Please Bold | 28 px | 28 px | Ítems del menú móvil |
+| Headline Small | Please Bold | 24 px | 24 px | Títulos del footer |
+| Title Large | Please Bold | 22 px | 22 px | Títulos de tarjeta |
 | Body Large | Montserrat 400 | 16 px | 16 px | Párrafos |
 | Body Medium | Montserrat 400 | 14 px | 14 px | Texto de tarjetas |
 | Body Small | Montserrat 400 | 12 px | 12 px | Copyright |
-| Label Large | Gala 700 | 14 px | 14 px | Menú, botones |
+| Label Large | Please Bold | 14 px | 14 px | Menú, botones |
 | Label Medium | Montserrat 500 | 12 px | 12 px | Hashtags, etiquetas |
 
-Los tamaños Display se ampliaron (sep-2026) para compensar que Gala es condensada: al mismo tamaño se veía más chica que Poppins.
+Los tamaños Display están ampliados respecto a M3 (se calibraron para Gala, condensada) y funcionan igual con Please, también condensada.
 
 **Reglas**
 - Máximo tres tamaños por pantalla.
@@ -164,7 +164,7 @@ El estado nunca se comunica solo con color: acompañar con forma, peso o contorn
 - Fijo arriba. Nunca se esconde con el menú móvil abierto ni cuando algo del header tiene foco.
 
 ### 7.2 Navegación
-**Escritorio y tablet (≥ 600 px):** logo a la izquierda alineado con el margen del contenido (1200 px) y menú centrado. Cinco ítems: Inicio, Parroquias, Datos, Voces, Actívate (sección deportiva: caminatas, ciclismo, senderismo). Ítems Label Large con interletrado de 0.08 em (Gala es condensada y a 14 px las letras se juntan), padding 12 × 24 px en escritorio y 12 × 16 px en tablet, hover con capa 8 %. En el tope: ítems blancos sin fondo, activo subrayado. Al reaparecer (sobre la barra crema): ítems azules `#3B5F73`, activo en pastilla azul con texto blanco.
+**Escritorio y tablet (≥ 600 px):** logo a la izquierda alineado con el margen del contenido (1200 px) y menú centrado. Cinco ítems: Inicio, Parroquias, Datos, Voces, Actívate (sección deportiva: caminatas, ciclismo, senderismo). Ítems Label Large con interletrado de 0.08 em (la fuente de títulos es condensada y a 14 px las letras se juntan), padding 12 × 24 px en escritorio y 12 × 16 px en tablet, hover con capa 8 %. En el tope: ítems blancos sin fondo, activo subrayado. Al reaparecer (sobre la barra crema): ítems azules `#3B5F73`, activo en pastilla azul con texto blanco.
 
 **Móvil:** botón "Menú" arriba a la derecha, alineado con el logo: pastilla crema (alto 48 px, elevación 2) con tres rayas en los colores de la marca (azul, amarillo, terracota; de distinto largo) y la palabra "Menú" en Label Large azul. Al abrir, la raya del medio desaparece y las otras dos se cruzan formando una X. Se esconde y reaparece con el header. Menú de pantalla completa con cinco tarjetas escalonadas (azul, amarillo, terracota, azul, amarillo) que alternan de lado; cada una lleva su ícono Material Symbols Rounded (48 px) en un círculo de 64 px del mismo color con aro crema de 8 px que sobresale del borde. Texto Headline Medium con su color "on" (azul sobre amarillo, blanco sobre azul y terracota). Toda la tarjeta es tocable. Entrada en cascada desde el lado de cada tarjeta (0.35 s). Cierra con el botón, al tocar un ítem o con Esc.
 
@@ -183,6 +183,7 @@ El estado nunca se comunica solo con color: acompañar con forma, peso o contorn
 - Fotos 3:4 con radio 28 px.
 - Paginación: puntos blancos al 45 %, activo amarillo.
 - No avanza solo; si lo hace, necesita botón de pausa.
+- Entrada en abanico (referencia: landonorris.com): al entrar en pantalla aparece primero la foto del centro (0,6 s, crece de 90 % a 100 %) y luego las laterales salen desde detrás de ella hacia su lugar (0,9 s, 0,3 s después; las más lejanas salen más tarde). Los puntos aparecen al final. Tokens `--dur-fan-center`, `--delay-fan`, `--dur-fan`. Con "reducir movimiento" no se anima.
 
 ### 7.6 Tarjeta de información
 - Anatomía: ícono 48 px + título (Title Large) + línea divisoria de 4 px + texto (Body Medium).
@@ -231,7 +232,7 @@ El estado nunca se comunica solo con color: acompañar con forma, peso o contorn
 - La esquina superior derecha de la foto aparece doblada (solapa crema de 56 px con elevación 2). La punta de la solapa es redondeada, como el resto de esquinas del sitio (hasta 28 px).
 - Al pasar el mouse, con foco de teclado o al tocar en móvil, se despega en diagonal (62 % del ancho en escritorio, 70 % en móvil y tablet: siempre menos del 75 % para que la punta quede dentro de la foto 4:3) y deja ver una frase sobre fondo azul.
 - Tamaño de la frase: 16 px en móvil, 22 px en tablet, 24 px en escritorio.
-- Frase: Gala 700 en crema, alineada a la derecha, en líneas que acortan siguiendo la diagonal. Actual: "3.800 msnm y una sola pregunta: ¿quién las talló?".
+- Frase: Please Bold en crema, alineada a la derecha, en líneas que acortan siguiendo la diagonal. Actual: "3.800 msnm y una sola pregunta: ¿quién las talló?".
 - La frase es un complemento: nunca información importante solo detrás de la foto.
 - Evoca la piedra tallada de Padre Rumi (esquina cortada en diagonal).
 

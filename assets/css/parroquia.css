@@ -102,6 +102,13 @@
   width: min(480px, 80vw);
   transition: opacity 0.4s ease;
 }
+/* Entrada en abanico: mientras espera a entrar en pantalla, las fotos y los
+   puntos quedan ocultos; main.js quita la clase y las anima (solo con JS
+   y sin "reducir movimiento", así nunca quedan escondidas por error). */
+.raiz-swiper.is-fan-pending .swiper-slide,
+.raiz-swiper.is-fan-pending .swiper-pagination {
+  opacity: 0;
+}
 .raiz-swiper .swiper-slide img {
   width: 100%;
   aspect-ratio: 3 / 4;
@@ -209,6 +216,13 @@
   font-size: var(--fs-body-md);
 }
 
+/* "Donde la piedra impone" con más aire, igual arriba y abajo:
+   arriba ya suma el relleno de las tarjetas + el suyo (2 × sección),
+   así que abajo se duplica el suyo para igualarlo antes de la franja azul. */
+.section:has(> .impone) {
+  padding-bottom: calc(var(--space-section) * 2);
+}
+
 /* ---------- 4) BLOQUE TEXTO + IMAGEN (§7.7) ---------- */
 .impone {
   display: grid;
@@ -306,12 +320,12 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding: var(--space-l);
+  padding: var(--space-m);
   font-family: var(--font-titulo);
   font-weight: var(--peso-bold);
   font-size: var(
-    --fs-body-lg
-  ); /* móvil: 16 px para que quepa en el triángulo */
+    --fs-body-md
+  ); /* móvil: 14 px para que quepa en el triángulo */
   line-height: var(--lh-tight);
   text-align: right;
   color: var(--md-surface);
@@ -333,18 +347,17 @@
   transition-delay: 0.15s;
 }
 
+/* Tablet y escritorio: 16 px y más margen (la foto es más grande) */
 @media (min-width: 600px) {
   .peel__back {
-    font-size: var(--fs-title-lg);
+    padding: var(--space-l);
+    font-size: var(--fs-body-lg);
   }
 }
-/* Escritorio: la foto ocupa media pantalla → se abre menos y la letra crece */
+/* Escritorio: la foto ocupa media pantalla → la esquina se abre menos */
 @media (min-width: 840px) {
   .peel {
     --peel-open: 62cqi;
-  }
-  .peel__back {
-    font-size: var(--fs-headline-sm);
   }
 }
 
