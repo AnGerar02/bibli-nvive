@@ -1,11 +1,556 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Biblián — Biblián Vive</title>
-</head>
-<body>
-  <!-- SUBPÁGINA DE PARROQUIA — Biblián. Misma plantilla que jerusalen.html. Pendiente. -->
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biblián · Virgen del Rocío — Biblián Vive</title>
+    <meta
+      name="description"
+      content="Santuario de la Virgen del Rocío, Monte Zhalao, cantón Biblián: historia, fe, escalinatas de piedra y miradores. #MásBiblián"
+    />
+    <meta name="theme-color" content="#056287" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/img/ui/favicon.svg" />
+
+    <!-- Tipografías: Momo Trust Display (títulos, PRUEBA) + Montserrat (cuerpo), Google Fonts.
+         El kit de Adobe queda solo como respaldo mientras se prueba. -->
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="stylesheet" href="https://use.typekit.net/hjp6vej.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Asimovian&family=Galindo&family=Mochiy+Pop+P+One&family=Momo+Trust+Display&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Estilos del sitio -->
+    <link rel="stylesheet" href="../../assets/css/reset.css" />
+    <link rel="stylesheet" href="../../assets/css/variables.css" />
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/components.css" />
+    <link rel="stylesheet" href="../../assets/css/parroquia.css" />
+  </head>
+  <body>
+    <!-- ===================== HEADER / MENÚ ===================== -->
+    <header class="site-header" id="site-header">
+      <!-- Logo: assets/img/ui/logo.svg (se pinta del color del header, ver .logo en components.css) -->
+      <a
+        class="site-header__logo"
+        href="../../index.html"
+        aria-label="Inicio — Biblián Vive"
+        ><span class="logo" aria-hidden="true"></span></a>
+
+      <div class="site-header__nav">
+        <!-- En móvil: tarjetas escalonadas de colores, solo con texto.
+             En tablet/escritorio: barra de texto. -->
+        <nav class="nav" id="nav" aria-label="Navegación principal">
+          <a class="nav__link" href="../../index.html#inicio">
+            <span class="nav__label">Inicio</span>
+          </a>
+          <!-- "Parroquias" lleva a la sección de parroquias del inicio (empieza en Turupamba) -->
+          <a class="nav__link is-active" href="../../index.html#parroquias"><span class="nav__label">Parroquias</span></a>
+          <a class="nav__link" href="../../index.html#datos">
+            <span class="nav__label">Datos</span>
+          </a>
+          <a class="nav__link" href="../../index.html#voces">
+            <span class="nav__label">Voces</span>
+          </a>
+          <a class="nav__link" href="../../index.html#activate">
+            <span class="nav__label">Actívate</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Botón del menú (solo móvil): pastilla crema con la palabra "Menú"
+           (solo texto) -->
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="nav"
+      >
+        <span class="nav-toggle__label" aria-hidden="true">Menú</span>
+      </button>
+    </header>
+
+    <main>
+      <!-- ===================== HERO (efecto tipo armenia.travel) =====================
+           Misma plantilla que jerusalen.html (ver comentarios allí). -->
+      <section class="hero-wrap" id="hero-wrap">
+        <div class="hero-sticky">
+          <div class="hero-frame">
+            <img
+              fetchpriority="high"
+              class="hero__bg"
+              src="../../assets/img/parroquias/biblian/hero.jpg"
+              alt="Santuario de la Virgen del Rocío visto desde el aire, con su torre de techo azul y su fachada gótica de piedra"
+            />
+          </div>
+          <h1 class="hero__title">Virgen del Rocío</h1>
+        </div>
+      </section>
+
+      <!-- ===================== TALLADO EN LA ROCA (carrusel) ===================== -->
+      <section class="section raiz">
+        <h2 class="raiz__title" data-parallax="0.07" data-reveal="fade-in">
+          Tallado en la roca
+        </h2>
+
+        <ul class="raiz-cartas" data-cartas>
+          <li class="raiz-carta">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="../../assets/img/parroquias/biblian/Tallado_1.jpg"
+              alt="Detalle de la fachada de piedra tallada del santuario, con un rosetón y ventanas góticas"
+            />
+          </li>
+          <li class="raiz-carta">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="../../assets/img/parroquias/biblian/Tallado_2.jpg"
+              alt="Torre del santuario con su techo azul, vista desde el aire junto a la carretera que sube al Zhalao"
+            />
+          </li>
+          <li class="raiz-carta">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="../../assets/img/parroquias/biblian/Tallado_3.jpg"
+              alt="Vista desde arriba de la cúpula azul octogonal del santuario"
+            />
+          </li>
+        </ul>
+      </section>
+
+      <!-- ===================== 3 TARJETAS DE INFO ===================== -->
+      <section class="section">
+        <div class="info-cards" data-stagger>
+          <article
+            class="info-card info-card--verde"
+            data-reveal="fade-up"
+            style="--i: 0"
+          >
+            <h3 class="info-card__title">La gran sequía</h3>
+            <hr />
+            <p>
+              En 1893 una sequía golpeó al austro y la gente moría de hambre. El
+              párroco Daniel Muñoz decidió subir al monte.
+            </p>
+          </article>
+
+          <article
+            class="info-card info-card--amarillo"
+            data-reveal="fade-up"
+            style="--i: 1"
+          >
+            <h3 class="info-card__title">El milagro de la lluvia</h3>
+            <hr />
+            <p>
+              El 20 de enero de 1894 dejaron una imagen de la Virgen en una
+              gruta del Zhalao y, cuenta la tradición, empezó a llover.
+            </p>
+          </article>
+
+          <article
+            class="info-card info-card--terracota"
+            data-reveal="fade-up"
+            style="--i: 2"
+          >
+            <h3 class="info-card__title">Señora de la Paz</h3>
+            <hr />
+            <p>
+              Según la leyenda, en 1896 la Virgen detuvo la guerra entre
+              conservadores y liberales. Por eso también la llaman “la
+              Liberala”.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===================== DONDE LA FE SE HIZO PIEDRA ===================== -->
+      <section class="section">
+        <div class="impone">
+          <div data-reveal="fade-right">
+            <h2 class="impone__title">
+              Donde<br />
+              la fe se hizo<br />
+              <span class="pill">PIEDRA</span>
+            </h2>
+            <p class="impone__text">
+              El santuario se levanta sobre el Monte Zhalao, al oeste de
+              Biblián, y se ve desde casi todo el cantón, incluso desde el
+              Cojitambo. Su fachada gótica está hecha de piedra tallada, única
+              en su tipo. Adentro guarda la urna de la Virgen y cuadros antiguos
+              que cuentan más de un siglo de historia.
+            </p>
+          </div>
+          <!-- Esquina que se despega: al pasar el mouse (o tocar) se abre
+               y deja ver la frase que está detrás de la foto -->
+          <figure class="peel" id="peel" tabindex="0" data-reveal="fade-left">
+            <figcaption class="peel__back">
+              <span>20 de enero de 1894</span>
+              <span>6 de la mañana</span>
+              <span>y empezó a llover</span>
+            </figcaption>
+            <img
+              loading="lazy"
+              decoding="async"
+              class="impone__img peel__img"
+              src="../../assets/img/parroquias/biblian/piedra.jpg"
+              alt="Santuario de la Virgen del Rocío y las escalinatas que suben por el Monte Zhalao hasta la capilla de la cima"
+            />
+            <span class="peel__fold" aria-hidden="true"></span>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ===================== VIDEO (franja azul + texto + video) ===================== -->
+      <section class="video-feature">
+        <div class="video-feature__inner">
+          <div class="video-feature__text" data-reveal="fade-right">
+            <h2 class="video-feature__title">
+              Una subida por las escalinatas del Zhalao hasta el Rocío
+            </h2>
+            <p>
+              Entre paredes de roca granítica y escalinatas de piedra, el Monte
+              Zhalao es también un punto de encuentro para escaladores y
+              caminantes. Desde la cima ves Azogues y Biblián en todo su
+              esplendor.
+            </p>
+          </div>
+          <div class="video-media" id="video-media" data-reveal="fade-left">
+            <video
+              preload="none"
+              muted
+              loop
+              playsinline
+              poster="../../assets/img/parroquias/biblian/Santuario-portada.jpg"
+              aria-label="Video: el santuario de la Virgen del Rocío en el Monte Zhalao"
+            >
+              <source
+                src="../../assets/img/parroquias/biblian/Santuario.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== ¿QUÉ PODEMOS HACER? ===================== -->
+      <section class="section hacemos">
+        <h2 class="hacemos__title" data-reveal="fade-up">
+          ¿Qué <span class="pill pill--cola">podemos</span> hacer?
+        </h2>
+
+        <div class="hacemos__rows">
+          <!-- Fila 1: tarjetas (texto + palabra) — aparece desde la izquierda -->
+          <div class="marquee" data-reveal="fade-left">
+            <div class="marquee__track" data-marquee>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--amarillo">
+                      <h3 class="qfront__title">Escalada</h3>
+                      <p>Subir por las paredes de roca del Monte Zhalao</p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--verde">
+                      <span class="qword">ROCA</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--terracota">
+                      <h3 class="qfront__title">Escalinatas</h3>
+                      <p>
+                        Llegar a la cima paso a paso por la escalera de piedra
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--azul">
+                      <span class="qword">FE</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--amarillo">
+                      <h3 class="qfront__title">Miradores</h3>
+                      <p>Ver Biblián y todos los alrededores del cantón</p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--verde">
+                      <span class="qword">CIMA</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--terracota">
+                      <h3 class="qfront__title">Historia</h3>
+                      <p>
+                        Conocer la urna y los cuadros antiguos del santuario
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--azul">
+                      <span class="qword">ROCÍO</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fila 2: fotos (dirección contraria) — aparece desde la derecha -->
+          <div class="marquee marquee--reverse" data-reveal="fade-right">
+            <div class="marquee__track" data-marquee>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/biblian/hacemos_1.jpg"
+                      alt="Visitantes con paraguas frente a una fachada de piedra durante una celebración"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/biblian/hacemos_2.jpg"
+                      alt="Capilla blanca en la cima del Monte Zhalao junto a una antena, con vista al valle"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/biblian/hacemos_3.jpg"
+                      alt="Vista aérea de la ciudad de Biblián con el santuario en la ladera"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/biblian/hacemos_4.jpg"
+                      alt="Procesión con la imagen de la Virgen cargada por fieles en las calles de Biblián"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/biblian/hacemos_5.jpg"
+                      alt="Santuario de la Virgen del Rocío sobre el Monte Zhalao, con las escalinatas hacia la cima"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/biblian/hacemos_6.jpg"
+                      alt="Santuario de la Virgen del Rocío bajo un cielo azul, con cerros al fondo"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/biblian/hacemos_7.jpg"
+                      alt="Torre azul del santuario vista desde arriba, junto a la carretera que sube al Zhalao"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/biblian/hacemos_8.jpg"
+                      alt="Vista lejana del santuario entre el bosque del Monte Zhalao y los valles de Biblián"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer">
+      <div class="footer-left">
+        <div class="footer-photos" data-stagger>
+          <img
+            loading="lazy"
+            decoding="async"
+            data-reveal="fade-up"
+            style="--i: 0"
+            src="../../assets/img/parroquias/jerusalen/footer_bailarines.jpg"
+            alt="Dos danzantes con trajes tradicionales bailan con palos frente a un monumento de piedra en Biblián"
+          />
+          <img
+            loading="lazy"
+            decoding="async"
+            data-reveal="fade-up"
+            style="--i: 1"
+            src="../../assets/img/parroquias/jerusalen/footer_senoras.jpg"
+            alt="Dos mujeres con polleras y sombreros tejen lana junto a alpacas en el páramo de Biblián"
+          />
+          <img
+            loading="lazy"
+            decoding="async"
+            data-reveal="fade-up"
+            style="--i: 2"
+            src="../../assets/img/parroquias/jerusalen/footer_santuario.jpg"
+            alt="Santuario de la Virgen del Rocío iluminado de noche sobre la ciudad de Biblián"
+          />
+        </div>
+        <p class="footer-copy" data-reveal="fade-in">
+          © 2026 Biblián Vive. Todos los derechos reservados.
+        </p>
+      </div>
+
+      <div class="footer-contact" data-stagger>
+        <a
+          class="footer-contact__logo"
+          data-reveal="fade-in"
+          style="--i: 0"
+          href="../../index.html#inicio"
+          aria-label="Ir al inicio — Biblián Vive"
+          ><span class="logo" aria-hidden="true"></span></a>
+        <div class="footer-contact__body" data-reveal="fade-up" style="--i: 1">
+          <div>
+            <h3>¡Escríbenos!</h3>
+            <p>Más historias, más Biblián. Directo a ti.</p>
+            <div class="footer-socials">
+              <a
+                href="https://w.app/0drsrd"
+                target="_blank"
+                rel="noopener"
+                aria-label="WhatsApp"
+                ><svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.9.9-2.7-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.24-.12-1.4-.7-1.6-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.18-.7-.62-1.18-1.4-1.32-1.64-.14-.24 0-.36.1-.48.1-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.1.16 1.52.1.46-.07 1.4-.57 1.6-1.13.2-.55.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z"
+                  /></svg
+              ></a>
+              <a
+                href="https://www.facebook.com/share/1BjaVid1wK/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener"
+                aria-label="Facebook"
+                ><svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.5-1.5h1.6V3.6c-.28-.04-1.24-.12-2.36-.12-2.33 0-3.94 1.42-3.94 4.04v2.26H7.5V13h2.8v8h3.2Z"
+                  /></svg
+              ></a>
+              <a
+                href="https://www.instagram.com/andre_gerardoo"
+                target="_blank"
+                rel="noopener"
+                aria-label="Instagram"
+                ><svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2c2.7 0 3 0 4.1.06 1 .05 1.7.22 2.3.46.6.24 1.1.56 1.6 1.05.5.5.8 1 1.05 1.6.24.6.4 1.3.46 2.3.06 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1-.22 1.7-.46 2.3a4.4 4.4 0 0 1-1.05 1.6c-.5.5-1 .8-1.6 1.05-.6.24-1.3.4-2.3.46-1.1.06-1.4.06-4.1.06s-3 0-4.1-.06c-1-.05-1.7-.22-2.3-.46a4.4 4.4 0 0 1-1.6-1.05 4.4 4.4 0 0 1-1.05-1.6c-.24-.6-.4-1.3-.46-2.3C2.4 15 2.4 14.7 2.4 12s0-3 .06-4.1c.05-1 .22-1.7.46-2.3.24-.6.56-1.1 1.05-1.6.5-.5 1-.8 1.6-1.05.6-.24 1.3-.4 2.3-.46C9 2 9.3 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4ZM17.6 5.2a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z"
+                  /></svg
+              ></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h3 id="footer-nav-title">Sobre nosotros</h3>
+            <nav class="footer-nav" aria-labelledby="footer-nav-title">
+              <a href="../../index.html#inicio">Inicio</a>
+              <a href="../../index.html#parroquias">Parroquias</a>
+              <a href="../../index.html#datos">Datos</a>
+              <a href="../../index.html#voces">Voces</a>
+              <a href="../../index.html#activate">Actívate</a>
+            </nav>
+          </div>
+        </div>
+        <div class="footer-line" data-reveal="fade-in" style="--i: 2"></div>
+        <p class="footer-hashtag" data-reveal="fade-up" style="--i: 3">
+          #MásBiblián
+        </p>
+      </div>
+    </footer>
+
+    <!-- ===================== SCRIPTS ===================== -->
+    <script src="../../assets/js/main.js"></script>
+  </body>
 </html>

@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Caminata al páramo Tuñi Sagre — Biblián Vive</title>
+    <meta
+      name="description"
+      content="Caminata guiada desde Nazón hasta el páramo de Tuñi Sagre. 19 y 20 de enero. #MásBiblián"
+    />
+    <meta name="theme-color" content="#056287" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/img/ui/favicon.svg" />
+
+    <!-- Tipografías: Momo Trust Display (títulos, PRUEBA) + Montserrat (cuerpo), Google Fonts.
+         El kit de Adobe queda solo como respaldo mientras se prueba. -->
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="stylesheet" href="https://use.typekit.net/hjp6vej.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Asimovian&family=Galindo&family=Mochiy+Pop+P+One&family=Momo+Trust+Display&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Estilos del sitio: inicio.css se reutiliza por las cartas de eventos -->
+    <link rel="stylesheet" href="../../assets/css/reset.css" />
+    <link rel="stylesheet" href="../../assets/css/variables.css" />
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/components.css" />
+    <link rel="stylesheet" href="../../assets/css/inicio.css" />
+    <link rel="stylesheet" href="../../assets/css/evento.css" />
+  </head>
+  <body class="evento-pagina">
+    <!-- ===================== HEADER / MENÚ ===================== -->
+    <!-- Sin foto arriba: barra azul siempre visible, como en el inicio -->
+    <header class="site-header scrolled" id="site-header" data-solid>
+      <!-- Logo: assets/img/ui/logo.svg (se pinta del color del header, ver .logo en components.css) -->
+      <a
+        class="site-header__logo"
+        href="../../index.html"
+        aria-label="Inicio — Biblián Vive"
+        ><span class="logo" aria-hidden="true"></span></a>
+
+      <div class="site-header__nav">
+        <!-- En móvil: tarjetas escalonadas de colores, solo con texto.
+             En tablet/escritorio: barra de texto. -->
+        <nav class="nav" id="nav" aria-label="Navegación principal">
+          <a class="nav__link" href="../../index.html#inicio">
+            <span class="nav__label">Inicio</span>
+          </a>
+          <!-- "Parroquias" lleva a la sección de parroquias del inicio (empieza en Turupamba) -->
+          <a class="nav__link" href="../../index.html#parroquias"><span class="nav__label">Parroquias</span></a>
+          <a class="nav__link" href="../../index.html#datos">
+            <span class="nav__label">Datos</span>
+          </a>
+          <a class="nav__link" href="../../index.html#voces">
+            <span class="nav__label">Voces</span>
+          </a>
+          <!-- Las subpáginas de eventos marcan "Actívate" como activo -->
+          <a class="nav__link is-active" href="../../index.html#activate">
+            <span class="nav__label">Actívate</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Botón del menú (solo móvil): pastilla crema con la palabra "Menú"
+           (solo texto) -->
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="nav"
+      >
+        <span class="nav-toggle__label" aria-hidden="true">Menú</span>
+      </button>
+    </header>
+
+    <main>
+      <!-- ===================== ¿DE QUÉ SE TRATA? + FICHAS ===================== -->
+      <section class="section evento-top" aria-labelledby="trata-titulo">
+        <h1 class="sr-only">Caminata al páramo Tuñi Sagre</h1>
+        <div class="evento-intro">
+          <div data-reveal="fade-right">
+            <h2 class="evento-intro__titulo" id="trata-titulo">
+              ¿De qué<br />se <span class="pill">trata?</span>
+            </h2>
+            <p class="evento-intro__texto">
+              Una caminata guiada desde el centro de Nazón hasta el páramo de Tuñi Sagre, entre potreros, bosque y neblina. Es un lugar que la parroquia recién empieza a dar a conocer: tiene venados, vertientes de agua y un clima templado. Lleva abrigo y ganas de subir.
+            </p>
+            <img
+              class="evento-intro__foto"
+              src="../../assets/img/eventos/caminata-tuni-sagre/portada.jpg"
+              alt="Frailejones con flores amarillas y pajonal entre rocas en el páramo"
+              fetchpriority="high"
+            />
+          </div>
+
+          <div class="evento-lado" data-reveal="fade-left">
+            <aside class="ficha" aria-label="Datos del evento">
+              <dl class="ficha__datos">
+              <div class="ficha__dato">
+                <dt>Fecha</dt>
+                <dd><time datetime="2027-01-19">19 y 20 de enero</time></dd>
+              </div>
+              <div class="ficha__dato">
+                <dt>Lugar</dt>
+                <dd>Tuñi Sagre, Nazón</dd>
+              </div>
+              <div class="ficha__dato">
+                <dt>Se sube por</dt>
+                <dd>40 minutos desde el centro de Nazón</dd>
+              </div>
+              <div class="ficha__dato">
+                <dt>Tipo</dt>
+                <dd>Caminata guiada</dd>
+              </div>
+              </dl>
+              <a
+                class="ficha__whatsapp"
+                href="https://wa.me/593983723673"
+                target="_blank"
+                rel="noopener"
+                aria-label="Escribir por WhatsApp al 0983723673"
+                ><span class="ficha__whatsapp-icono" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.9.9-2.7-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.24-.12-1.4-.7-1.6-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.18-.7-.62-1.18-1.4-1.32-1.64-.14-.24 0-.36.1-.48.1-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.1.16 1.52.1.46-.07 1.4-.57 1.6-1.13.2-.55.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z" /></svg></span
+                >0983723673</a
+              >
+            </aside>
+
+            <h3 class="ficha-titulo">¿Te gustaría ir por tu cuenta?</h3>
+            <aside class="ficha ficha--objetivo" aria-label="Ir por tu cuenta">
+              <dl class="ficha__datos">
+                <div class="ficha__dato">
+                  <dt>Objetivo</dt>
+                  <dd>Observar todo el páramo</dd>
+                </div>
+              </dl>
+              <a
+                class="btn"
+                href="https://www.google.com/maps/search/?api=1&query=Naz%C3%B3n%2C+Bibli%C3%A1n%2C+Ca%C3%B1ar%2C+Ecuador"
+                target="_blank"
+                rel="noopener"
+                aria-label="Cómo llegar (se abre Google Maps)"
+                >Cómo llegar</a
+              >
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== ANTES DE IR (franja azul) ===================== -->
+      <section class="section antes" aria-labelledby="antes-titulo">
+        <h2 class="section__title" id="antes-titulo" data-reveal="fade-up">
+          Antes de <span class="pill">ir</span>
+        </h2>
+        <ul class="consejos" data-stagger>
+          <li class="consejo" data-reveal="fade-up" style="--i: 0">
+            <span class="consejo__icono" aria-hidden="true"><span style="-webkit-mask-image: url('../../assets/img/eventos/caminata-tuni-sagre/iconos/neblina.svg'); mask-image: url('../../assets/img/eventos/caminata-tuni-sagre/iconos/neblina.svg')"></span></span>
+            <p>Ve temprano: en la tarde baja la neblina y ya no se ve el paisaje.</p>
+          </li>
+          <li class="consejo" data-reveal="fade-up" style="--i: 1">
+            <span class="consejo__icono" aria-hidden="true"><span style="-webkit-mask-image: url('../../assets/img/eventos/caminata-tuni-sagre/iconos/siguelasenal.svg'); mask-image: url('../../assets/img/eventos/caminata-tuni-sagre/iconos/siguelasenal.svg')"></span></span>
+            <p>Sigue la señalética nueva: con ella llegas fácil.</p>
+          </li>
+          <li class="consejo" data-reveal="fade-up" style="--i: 2">
+            <span class="consejo__icono" aria-hidden="true"><span style="-webkit-mask-image: url('../../assets/img/eventos/caminata-tuni-sagre/iconos/animales.svg'); mask-image: url('../../assets/img/eventos/caminata-tuni-sagre/iconos/animales.svg')"></span></span>
+            <p>Camina en silencio cerca de los caminos: ahí bajan los animales.</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ===================== OTROS EVENTOS (las mismas cartas del inicio) ===================== -->
+      <section class="section eventos" aria-labelledby="otros-titulo">
+        <div class="container">
+          <h2 class="section__title" id="otros-titulo" data-reveal="fade-up">
+            Otros <span class="pill">eventos</span>
+          </h2>
+          <div class="eventos__lista eventos__lista--otros" data-stagger>
+            <article class="evento" data-reveal="fade-up" style="--i: 0">
+              <div class="evento__media"><img class="evento__foto evento__foto--pregon" src="../../assets/img/inicio/eventos/pregon-virgen-rocio.jpg" alt="" loading="lazy" decoding="async" /></div>
+              <div class="evento__cuerpo">
+                <h3 class="evento__titulo"><a class="evento__enlace" href="pregon-virgen-rocio.html">Pregón de fiestas de la Virgen del Rocío</a></h3>
+                <p class="evento__texto">Procesión desde el barrio San Antonio hasta el Santuario en honor a la Virgen del Rocío.</p>
+                <p class="evento__datos">
+                  <time class="evento__fecha" datetime="2027-09-01">1 – 30 sep</time>
+                  <span class="evento__lugar">Santuario de la Virgen del Rocío, Biblián</span>
+                </p>
+              </div>
+            </article>
+            <article class="evento" data-reveal="fade-up" style="--i: 1">
+              <div class="evento__media"><img class="evento__foto evento__foto--zonas-frias" src="../../assets/img/inicio/eventos/ruta-zonas-frias.jpg" alt="" loading="lazy" decoding="async" /></div>
+              <div class="evento__cuerpo">
+                <h3 class="evento__titulo"><a class="evento__enlace" href="ruta-zonas-frias.html">Ruta a las zonas frías</a></h3>
+                <p class="evento__texto">Senderismo y trail de unos 12 km, ida y vuelta, por Cubilán en Sageo.</p>
+                <p class="evento__datos">
+                  <time class="evento__fecha" datetime="2027-02-14">14 – 20 feb</time>
+                  <span class="evento__lugar">Cubilán, Sageo</span>
+                </p>
+              </div>
+            </article>
+            <article class="evento" data-reveal="fade-up" style="--i: 2">
+              <div class="evento__media"><img class="evento__foto evento__foto--camping" src="../../assets/img/inicio/eventos/camping-padre-rumi.jpg" alt="" loading="lazy" decoding="async" /></div>
+              <div class="evento__cuerpo">
+                <h3 class="evento__titulo"><a class="evento__enlace" href="camping-padre-rumi.html">Camping + pachamanca en Padre Rumi</a></h3>
+                <p class="evento__texto">Dos días de campamento en el páramo de Padre Rumi, con una pachamanca: comida andina cocinada bajo tierra con piedras calientes.</p>
+                <p class="evento__datos">
+                  <time class="evento__fecha" datetime="2026-11-29">29 – 30 nov</time>
+                  <span class="evento__lugar">Padre Rumi, Jerusalén</span>
+                </p>
+              </div>
+            </article>
+            <article class="evento" data-reveal="fade-up" style="--i: 3">
+              <div class="evento__media"><img class="evento__foto evento__foto--shuriray" src="../../assets/img/inicio/eventos/caminata-shuriray.jpg" alt="" loading="lazy" decoding="async" /></div>
+              <div class="evento__cuerpo">
+                <h3 class="evento__titulo"><a class="evento__enlace" href="caminata-shuriray.html">Caminata ecoturística al cerro Shuriray</a></h3>
+                <p class="evento__texto">Caminata a la cueva del Señor de Belén y al mirador del cerro Shuriray.</p>
+                <p class="evento__datos">
+                  <time class="evento__fecha" datetime="2026-12-08">8 – 10 dic</time>
+                  <span class="evento__lugar">Gruta Señor de Belén, Turupamba</span>
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer">
+      <div class="footer-left">
+        <div class="footer-photos" data-stagger>
+          <img
+            loading="lazy"
+            decoding="async"
+            data-reveal="fade-up"
+            style="--i: 0"
+            src="../../assets/img/parroquias/jerusalen/footer_bailarines.jpg"
+            alt="Dos danzantes con trajes tradicionales bailan con palos frente a un monumento de piedra en Biblián"
+          />
+          <img
+            loading="lazy"
+            decoding="async"
+            data-reveal="fade-up"
+            style="--i: 1"
+            src="../../assets/img/parroquias/jerusalen/footer_senoras.jpg"
+            alt="Dos mujeres con polleras y sombreros tejen lana junto a alpacas en el páramo de Biblián"
+          />
+          <img
+            loading="lazy"
+            decoding="async"
+            data-reveal="fade-up"
+            style="--i: 2"
+            src="../../assets/img/parroquias/jerusalen/footer_santuario.jpg"
+            alt="Santuario de la Virgen del Rocío iluminado de noche sobre la ciudad de Biblián"
+          />
+        </div>
+        <p class="footer-copy" data-reveal="fade-in">
+          © 2026 Biblián Vive. Todos los derechos reservados.
+        </p>
+      </div>
+
+      <div class="footer-contact" data-stagger>
+        <a
+          class="footer-contact__logo"
+          data-reveal="fade-in"
+          style="--i: 0"
+          href="../../index.html#inicio"
+          aria-label="Ir al inicio — Biblián Vive"
+          ><span class="logo" aria-hidden="true"></span></a>
+        <div class="footer-contact__body" data-reveal="fade-up" style="--i: 1">
+          <div>
+            <h3>¡Escríbenos!</h3>
+            <p>Más historias, más Biblián. Directo a ti.</p>
+            <div class="footer-socials">
+              <a
+                href="https://w.app/0drsrd"
+                target="_blank"
+                rel="noopener"
+                aria-label="WhatsApp"
+                ><svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.9.9-2.7-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.24-.12-1.4-.7-1.6-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.18-.7-.62-1.18-1.4-1.32-1.64-.14-.24 0-.36.1-.48.1-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.1.16 1.52.1.46-.07 1.4-.57 1.6-1.13.2-.55.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z"
+                  /></svg
+              ></a>
+              <a
+                href="https://www.facebook.com/share/1BjaVid1wK/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener"
+                aria-label="Facebook"
+                ><svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.5-1.5h1.6V3.6c-.28-.04-1.24-.12-2.36-.12-2.33 0-3.94 1.42-3.94 4.04v2.26H7.5V13h2.8v8h3.2Z"
+                  /></svg
+              ></a>
+              <a
+                href="https://www.instagram.com/andre_gerardoo"
+                target="_blank"
+                rel="noopener"
+                aria-label="Instagram"
+                ><svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2c2.7 0 3 0 4.1.06 1 .05 1.7.22 2.3.46.6.24 1.1.56 1.6 1.05.5.5.8 1 1.05 1.6.24.6.4 1.3.46 2.3.06 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1-.22 1.7-.46 2.3a4.4 4.4 0 0 1-1.05 1.6c-.5.5-1 .8-1.6 1.05-.6.24-1.3.4-2.3.46-1.1.06-1.4.06-4.1.06s-3 0-4.1-.06c-1-.05-1.7-.22-2.3-.46a4.4 4.4 0 0 1-1.6-1.05 4.4 4.4 0 0 1-1.05-1.6c-.24-.6-.4-1.3-.46-2.3C2.4 15 2.4 14.7 2.4 12s0-3 .06-4.1c.05-1 .22-1.7.46-2.3.24-.6.56-1.1 1.05-1.6.5-.5 1-.8 1.6-1.05.6-.24 1.3-.4 2.3-.46C9 2 9.3 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4ZM17.6 5.2a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z"
+                  /></svg
+              ></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h3 id="footer-nav-title">Sobre nosotros</h3>
+            <nav class="footer-nav" aria-labelledby="footer-nav-title">
+              <a href="../../index.html#inicio">Inicio</a>
+              <a href="../../index.html#parroquias">Parroquias</a>
+              <a href="../../index.html#datos">Datos</a>
+              <a href="../../index.html#voces">Voces</a>
+              <a href="../../index.html#activate">Actívate</a>
+            </nav>
+          </div>
+        </div>
+        <div class="footer-line" data-reveal="fade-in" style="--i: 2"></div>
+        <p class="footer-hashtag" data-reveal="fade-up" style="--i: 3">
+          #MásBiblián
+        </p>
+      </div>
+    </footer>
+
+    <!-- ===================== SCRIPTS ===================== -->
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

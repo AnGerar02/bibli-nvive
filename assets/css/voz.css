@@ -1,1 +1,187 @@
-/* voz.css — Estilos de la plantilla de subpágina de Voz / Habitante. (Pendiente) */
+/* ============================================================
+   voz.css — Subpágina de cada voz local (§7.17), pages/voces/
+   Una entrevista en una sola franja azul (foto + nombre + frase +
+   historia + preguntas y respuestas) y debajo "Otras voces".
+   La silueta de John viene de inicio.css (.voz__silueta).
+   ============================================================ */
+
+/* ---------- 1) LA ENTREVISTA: franja azul ----------
+   Empieza bajo el header (no hay foto a sangre arriba). Móvil: todo
+   apilado. Escritorio: foto a la izquierda (fija al bajar) y el relato
+   a la derecha. */
+.voz-entrevista {
+  padding: calc(var(--header-alto) + var(--space-section)) 0 var(--space-section);
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+}
+.voz-entrevista :focus-visible { outline-color: var(--md-surface); }
+.voz-entrevista__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* una palabra larga no ensancha la columna */
+  gap: var(--space-xl);
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+/* Perfil: foto, parroquia, cargo y botón a la parroquia */
+.voz-perfil {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+.voz-perfil__foto {
+  display: block;
+  width: min(100%, var(--voz-foto-grande));
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--elev-2);
+}
+/* Sin foto todavía (John): la misma silueta de "Voces" */
+.voz-perfil__foto--pendiente {
+  display: grid;
+  place-items: center;
+  background-color: var(--md-surface-container-high);
+}
+.voz-perfil__datos {
+  display: grid;
+  gap: var(--space-m);
+}
+.voz-perfil__datos dt {
+  font-size: var(--fs-label-md);
+  font-weight: var(--peso-medium);
+  letter-spacing: var(--tracking-label);
+}
+.voz-perfil__datos dd {
+  margin: var(--space-xxs) 0 0;
+  font-weight: var(--peso-bold);
+}
+.voz-perfil .btn {
+  --btn-color: var(--md-surface);
+  --btn-on: var(--md-primary);
+  align-self: start;
+}
+
+/* Cabecera: nombre (Display Large) y frase principal (28 px) */
+.voz-cabecera__nombre {
+  font-size: var(--fs-display-md); /* móvil: con 52 px "Murudumbay" no cabía en 360 px */
+  color: var(--md-on-primary);
+  margin-bottom: var(--space-l);
+}
+@media (min-width: 600px) {
+  .voz-cabecera__nombre { font-size: var(--fs-display-lg); }
+}
+.voz-cabecera__cita p {
+  font-family: var(--font-titulo);
+  font-size: var(--fs-headline-md);
+  font-weight: var(--peso-bold);
+  font-variation-settings: "wght" var(--wght-titulo);
+  line-height: var(--lh-tight);
+  max-width: 30ch;
+}
+/* Relato: historia y preguntas */
+.voz-relato__historia { max-width: 65ch; }
+
+/* Preguntas y respuestas, separadas por líneas crema al 24 %.
+   Cada pregunta lleva encima una rayita amarilla. */
+.voz-preguntas { margin-top: var(--space-2xl); }
+.voz-pregunta {
+  padding-block: var(--space-l);
+  border-top: var(--stroke) solid
+    color-mix(in srgb, var(--md-on-primary) 24%, transparent);
+}
+.voz-pregunta dt {
+  font-family: var(--font-titulo);
+  font-weight: var(--peso-bold);
+  font-variation-settings: "wght" var(--wght-titulo);
+  line-height: var(--lh-tight);
+}
+.voz-pregunta dt::before {
+  content: "";
+  display: block;
+  width: var(--space-xl);
+  height: var(--stroke-divider);
+  margin-bottom: var(--space-s);
+  border-radius: var(--radius-full);
+  background-color: var(--md-accent);
+}
+.voz-pregunta dd {
+  margin: var(--space-xs) 0 0;
+  max-width: 65ch;
+}
+
+@media (min-width: 840px) {
+  /* La foto ocupa las dos filas de la izquierda; a la derecha, la
+     cabecera arriba y el relato debajo */
+  .voz-entrevista__inner {
+    grid-template-columns: var(--voz-foto-grande) 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "perfil cabecera"
+      "perfil relato";
+    column-gap: var(--space-3xl);
+    row-gap: var(--space-l);
+    align-items: start;
+  }
+  .voz-cabecera { grid-area: cabecera; }
+  .voz-relato   { grid-area: relato; }
+  .voz-perfil {
+    grid-area: perfil;
+    position: sticky;
+    top: calc(var(--header-alto) + var(--space-xl));
+  }
+}
+
+/* ---------- 2) OTRAS VOCES: foto 3:4 + nombre + parroquia ----------
+   Dos columnas en móvil, cuatro desde 840 px. Toda la tarjeta es un
+   enlace; con el mouse la foto sube 4 px y gana sombra (como el botón). */
+.voces-mini {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-grid);
+}
+.voz-mini {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+  border-radius: var(--radius);
+  color: var(--md-primary);
+  text-decoration: none;
+}
+.voz-mini__foto {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  margin-bottom: var(--space-s);
+  border-radius: var(--radius);
+  box-shadow: var(--elev-1);
+  transition: box-shadow var(--dur-btn) var(--ease-out),
+    translate var(--dur-btn) var(--ease-out);
+}
+/* Sin foto (John): silueta centrada */
+.voz-mini__foto--pendiente {
+  display: grid;
+  place-items: center;
+  background-color: var(--md-surface-container-high);
+}
+.voz-mini__nombre {
+  font-family: var(--font-titulo);
+  font-size: var(--fs-title-lg);
+  font-weight: var(--peso-bold);
+  font-variation-settings: "wght" var(--wght-titulo);
+  line-height: var(--lh-tight);
+}
+.voz-mini__lugar {
+  font-size: var(--fs-body-md);
+  color: var(--md-on-surface-variant);
+}
+@media (hover: hover) {
+  .voz-mini:hover .voz-mini__foto { box-shadow: var(--elev-2); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .voz-mini:hover .voz-mini__foto { translate: 0 calc(-1 * var(--space-xxs)); }
+}
+@media (min-width: 840px) {
+  .voces-mini { grid-template-columns: repeat(4, 1fr); }
+}

@@ -4,138 +4,47 @@
    Mobile-first: estilos base = móvil; se amplían en ≥ 600 / ≥ 840 px.
    ============================================================ */
 
-/* ---------- 1) HERO (§7.4) — scroll-driven ----------
-   --p va de 0 (arriba) a 1 (efecto completado), lo calcula main.js.
-   p=0 → foto con curva inferior; título abajo en azul sobre el crema.
-   p=1 → foto a pantalla completa, sin curva; título blanco sobre degradado. */
-.hero-wrap {
-  --p: 0;
-  /* franja inferior donde vive el título al inicio */
-  --hero-strip: calc(
-    var(--fs-display-lg) * var(--lh-tight) + var(--space-l) * 2
-  );
-  height: 175vh;
-  position: relative;
-}
-.hero-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
-}
-.hero-frame {
-  position: absolute;
-  inset: 0;
-  bottom: calc(var(--hero-strip) * (1 - var(--p)));
-  border-radius: 0 0 calc(var(--radius-2xl) * (1 - var(--p)))
-    calc(var(--radius-2xl) * (1 - var(--p)));
-  overflow: hidden;
-  background: var(--md-primary);
-  /* elevación 2 que se desvanece cuando la foto llena la pantalla */
-  box-shadow: var(--elev-2-shape)
-    rgba(var(--md-scrim-rgb), calc(0.35 * (1 - var(--p))));
-}
-.hero__bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center bottom; /* muestra las alpacas completas */
-}
-/* Degradado #0A3447 al 0 → 55 % bajo el texto (aparece con el título blanco) */
-.hero-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(var(--md-scrim-rgb), 0) 40%,
-    rgba(var(--md-scrim-rgb), 0.55)
-  );
-  opacity: var(--p);
-}
-.hero__title {
-  position: absolute;
-  z-index: 2;
-  /* alineado con el borde del contenido (1200 px), nunca a sangre */
-  right: max(
-    var(--gutter),
-    calc((100% - var(--container)) / 2 + var(--gutter))
-  );
-  bottom: var(--space-l);
-  font-size: var(--fs-display-lg);
-  font-weight: var(--peso-extrabold);
-  text-align: right;
-  color: var(--md-primary); /* respaldo para navegadores sin color-mix */
-  color: color-mix(
-    in srgb,
-    var(--md-on-primary) calc(var(--p) * 100%),
-    var(--md-primary)
-  );
-  text-shadow: var(--text-shadow-shape)
-    rgba(var(--md-scrim-rgb), calc(0.45 * var(--p)));
-}
+/* ---------- 1) HERO (§7.4) ----------
+   Vive en components.css: lo comparten las parroquias y el inicio. */
 
-/* ---------- 2) DESDE LA RAÍZ (§7.5) — carrusel Swiper ---------- */
+/* ---------- 2) DESDE LA RAÍZ (§7.5) — 3 fotos en cartas ----------
+   Oct-2026 (referencia: neutomni.com): ya no es un carrusel para deslizar.
+   Las tres fotos quedan a la vista y entran como cartas (main.js §3).
+   Móvil: una debajo de otra, en zigzag. ≥ 600 px: las tres en fila. */
 .raiz {
   text-align: center;
   background: var(--md-primary);
-}
-.raiz :focus-visible {
-  outline-color: var(--md-accent);
 }
 .raiz__title {
   font-size: var(--fs-display-sm);
   color: var(--md-surface);
   margin-bottom: var(--space-xl);
 }
-.raiz-swiper {
-  max-width: var(--container);
+.raiz-cartas {
+  display: grid;
+  gap: var(--space-grid);
+  max-width: calc(var(--raiz-ancho) + var(--gutter) * 2);
   margin-inline: auto;
-  padding-block: var(--space-xs) var(--space-2xl);
-  overflow: hidden;
-  --swiper-pagination-bullet-size: var(--space-xs);
-  --swiper-pagination-bullet-horizontal-gap: var(--space-l);
+  padding-inline: var(--gutter);
 }
-.raiz-swiper .swiper-slide {
-  width: min(480px, 80vw);
-  transition: opacity 0.4s ease;
+.raiz-carta {
+  width: var(--raiz-carta-movil);
 }
-/* Entrada en abanico: mientras espera a entrar en pantalla, las fotos y los
-   puntos quedan ocultos; main.js quita la clase y las anima (solo con JS
-   y sin "reducir movimiento", así nunca quedan escondidas por error). */
-.raiz-swiper.is-fan-pending .swiper-slide,
-.raiz-swiper.is-fan-pending .swiper-pagination {
-  opacity: 0;
+.raiz-carta:nth-child(even) {
+  justify-self: end;
 }
-.raiz-swiper .swiper-slide img {
+.raiz-carta img {
   width: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   border-radius: var(--radius-xl);
   box-shadow: var(--elev-1);
 }
-.raiz-swiper .swiper-slide-shadow-left,
-.raiz-swiper .swiper-slide-shadow-right {
-  border-radius: var(--radius-xl);
-}
-
-/* Paginación: puntos blancos al 45 %, activo amarillo */
-.raiz-swiper .swiper-pagination-bullet {
-  position: relative;
-  background: var(--md-on-primary);
-  opacity: 0.45;
-}
-/* Área táctil de 48 × 48 px alrededor de cada punto */
-.raiz-swiper .swiper-pagination-bullet::after {
-  content: "";
-  position: absolute;
-  inset: calc((var(--size-touch) - var(--space-xs)) / -2);
-}
-.raiz-swiper .swiper-pagination-bullet-active {
-  background: var(--md-accent);
-  opacity: 1;
+/* Mientras esperan a entrar en pantalla quedan ocultas; main.js quita la
+   clase al animarlas (solo con JS y sin "reducir movimiento", así nunca
+   quedan escondidas por error). */
+.raiz-carta.is-carta-pendiente {
+  opacity: 0;
 }
 
 /* ---------- 3) TARJETAS DE INFORMACIÓN (§7.6) ---------- */
@@ -182,27 +91,11 @@
   color: var(--md-on-tertiary);
 }
 
-.info-card__head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-s);
-}
+/* Sin ícono (se quitó en oct-2026): el título ocupa todo el ancho */
 .info-card__title {
-  max-width: 70%;
   font-size: var(--fs-title-lg);
   font-weight: var(--peso-bold);
   color: inherit;
-}
-.info-card__icon {
-  width: var(--size-icon-card);
-  height: var(--size-icon-card);
-  flex-shrink: 0;
-}
-.info-card__icon svg {
-  width: 100%;
-  height: 100%;
-  fill: currentColor;
 }
 .info-card hr {
   border: none;
@@ -216,12 +109,11 @@
   font-size: var(--fs-body-md);
 }
 
-/* "Donde la piedra impone" con más aire, igual arriba y abajo:
-   arriba ya suma el relleno de las tarjetas + el suyo (2 × sección),
-   así que abajo se duplica el suyo para igualarlo antes de la franja azul. */
-.section:has(> .impone) {
-  padding-bottom: calc(var(--space-section) * 2);
-}
+/* Un solo espacio de sección entre las tarjetas y "Donde la piedra
+   impone" (oct-2026: antes se sumaban dos, arriba 128 px, y para igualarlo
+   también abajo; se veía demasiado vacío). Las tarjetas no llevan margen
+   inferior y el bloque texto + imagen queda con el normal arriba y abajo. */
+.section:has(> .info-cards) { padding-bottom: 0; }
 
 /* ---------- 4) BLOQUE TEXTO + IMAGEN (§7.7) ---------- */
 .impone {
@@ -240,8 +132,8 @@
 .impone__title .pill {
   margin-top: var(--space-xxs);
   margin-left: calc(
-    -1 * var(--space-m)
-  ); /* la "I" alinea con el resto del título */
+    -1 * var(--pill-aire-x)
+  ); /* la palabra alinea con el resto del título (la pastilla sobresale) */
 }
 .impone__text {
   max-width: 65ch;
@@ -292,6 +184,10 @@
   --open: 1;
   box-shadow: var(--elev-2);
 }
+/* Variante amarilla (Sageo): fondo amarillo y frase en azul */
+.peel--amarillo { background: var(--md-accent); }
+.peel--amarillo .peel__back { color: var(--md-on-accent); }
+.peel--amarillo:focus-visible { outline-color: var(--md-primary); }
 
 .peel__img,
 .peel__fold {
@@ -300,12 +196,16 @@
   );
 }
 .peel__img {
+  /* La foto se corta un poco más adentro que la solapa: el borde difuminado
+     de la solapa (el 0,5 % del degradado, ver .peel__fold) queda sobre el
+     color de fondo y no sobre la foto, que si no asoma como una línea. */
+  --seam: calc(var(--fold) * 0.01 + 1px);
   position: relative;
   z-index: 1;
   clip-path: polygon(
     0 0,
-    calc(100% - var(--fold)) 0,
-    100% var(--fold),
+    calc(100% - var(--fold) - var(--seam)) 0,
+    100% calc(var(--fold) + var(--seam)),
     100% 100%,
     0 100%
   );
@@ -323,9 +223,7 @@
   padding: var(--space-m);
   font-family: var(--font-titulo);
   font-weight: var(--peso-bold);
-  font-size: var(
-    --fs-body-md
-  ); /* móvil: 14 px para que quepa en el triángulo */
+  font-size: var(--fs-body-sm); /* móvil: 12 px para que las frases largas quepan en el triángulo */
   line-height: var(--lh-tight);
   text-align: right;
   color: var(--md-surface);
@@ -348,6 +246,16 @@
 }
 
 /* Tablet y escritorio: 16 px y más margen (la foto es más grande) */
+@media (min-width: 600px) {
+  .raiz-cartas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .raiz-carta,
+  .raiz-carta:nth-child(even) {
+    width: auto;
+    justify-self: stretch;
+  }
+}
 @media (min-width: 600px) {
   .peel__back {
     padding: var(--space-l);
@@ -439,34 +347,6 @@
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
-.video-media__btn {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: calc(var(--size-touch) * 2);
-  height: calc(var(--size-touch) * 2);
-  border-radius: var(--radius-full);
-  background: var(--md-on-primary);
-  box-shadow: var(--elev-2);
-  display: grid;
-  place-items: center;
-  transition: transform 0.15s ease;
-}
-.video-media__btn:hover {
-  transform: scale(1.06);
-}
-.video-media__btn:active {
-  transform: scale(0.97);
-}
-.video-media__btn svg {
-  width: var(--size-touch);
-  height: var(--size-touch);
-  fill: var(--md-primary);
-  margin-left: var(--space-xxs);
-}
-.video-media.is-playing .video-media__btn {
-  display: none;
-}
 
 /* ---------- 6) ¿QUÉ HACEMOS? — franjas en movimiento (§7.9 / §7.10) ---------- */
 .hacemos {
@@ -496,8 +376,10 @@
   width: 300px;
   height: 168px;
 }
+/* Palabra: 200 px como mínimo; crece si la palabra es más larga (ROCÍO) */
 .q-item--word {
-  width: 200px;
+  width: auto;
+  min-width: 200px;
 }
 .q-photo {
   width: 300px;
@@ -555,7 +437,7 @@
 }
 
 .q-item--word .qfront {
-  padding: var(--space-xs);
+  padding: var(--space-xs) var(--space-l);
 }
 .qword {
   display: grid;
@@ -621,9 +503,6 @@
 }
 
 @media (min-width: 840px) {
-  .raiz-swiper {
-    overflow: visible;
-  } /* deja ver las tarjetas laterales del abanico */
   .info-cards {
     grid-template-columns: repeat(3, 1fr);
   }

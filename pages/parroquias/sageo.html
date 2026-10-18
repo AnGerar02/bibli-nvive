@@ -1,11 +1,546 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sageo — Biblián Vive</title>
-</head>
-<body>
-  <!-- SUBPÁGINA DE PARROQUIA — Sageo. Misma plantilla que jerusalen.html. Pendiente. -->
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sageo · Bosque Protector Cubilán — Biblián Vive</title>
+    <meta
+      name="description"
+      content="Bosque Protector Cubilán, parroquia San Francisco de Sageo, cantón Biblián: bosque nublado a 3.500 msnm, aves, senderos y naturaleza andina. #MásBiblián"
+    />
+    <meta name="theme-color" content="#056287" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/img/ui/favicon.svg" />
+
+    <!-- Tipografías: Momo Trust Display (títulos, PRUEBA) + Montserrat (cuerpo), Google Fonts.
+         El kit de Adobe queda solo como respaldo mientras se prueba. -->
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="stylesheet" href="https://use.typekit.net/hjp6vej.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Asimovian&family=Galindo&family=Mochiy+Pop+P+One&family=Momo+Trust+Display&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Estilos del sitio -->
+    <link rel="stylesheet" href="../../assets/css/reset.css" />
+    <link rel="stylesheet" href="../../assets/css/variables.css" />
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/components.css" />
+    <link rel="stylesheet" href="../../assets/css/parroquia.css" />
+  </head>
+  <body>
+    <!-- ===================== HEADER / MENÚ ===================== -->
+    <header class="site-header" id="site-header">
+      <!-- Logo: assets/img/ui/logo.svg (se pinta del color del header, ver .logo en components.css) -->
+      <a
+        class="site-header__logo"
+        href="../../index.html"
+        aria-label="Inicio — Biblián Vive"
+        ><span class="logo" aria-hidden="true"></span></a>
+
+      <div class="site-header__nav">
+        <!-- En móvil: tarjetas escalonadas de colores, solo con texto.
+             En tablet/escritorio: barra de texto. -->
+        <nav class="nav" id="nav" aria-label="Navegación principal">
+          <a class="nav__link" href="../../index.html#inicio">
+            <span class="nav__label">Inicio</span>
+          </a>
+          <!-- "Parroquias" lleva a la sección de parroquias del inicio (empieza en Turupamba) -->
+          <a class="nav__link is-active" href="../../index.html#parroquias"><span class="nav__label">Parroquias</span></a>
+          <a class="nav__link" href="../../index.html#datos">
+            <span class="nav__label">Datos</span>
+          </a>
+          <a class="nav__link" href="../../index.html#voces">
+            <span class="nav__label">Voces</span>
+          </a>
+          <a class="nav__link" href="../../index.html#activate">
+            <span class="nav__label">Actívate</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Botón del menú (solo móvil): pastilla crema con la palabra "Menú"
+           (solo texto) -->
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="nav"
+      >
+        <span class="nav-toggle__label" aria-hidden="true">Menú</span>
+      </button>
+    </header>
+
+    <main>
+      <!-- ===================== HERO (efecto tipo armenia.travel) =====================
+           Misma plantilla que jerusalen.html (ver comentarios allí). -->
+      <section class="hero-wrap" id="hero-wrap">
+        <div class="hero-sticky">
+          <div class="hero-frame">
+            <img
+              fetchpriority="high"
+              class="hero__bg"
+              src="../../assets/img/parroquias/sageo/hero.jpg"
+              alt="Vista aérea del Bosque Protector Cubilán, con bosque nativo y árboles de distintos verdes"
+            />
+          </div>
+          <h1 class="hero__title">Cubilán</h1>
+        </div>
+      </section>
+
+      <!-- ===================== BAJO LAS NUBES (carrusel) ===================== -->
+      <section class="section raiz">
+        <h2 class="raiz__title" data-parallax="0.07" data-reveal="fade-in">
+          Bajo las nubes
+        </h2>
+
+        <ul class="raiz-cartas" data-cartas>
+          <li class="raiz-carta">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="../../assets/img/parroquias/sageo/nubes_1.jpg"
+              alt="Montañas cubiertas de bosque nublado en Cubilán, con la neblina sobre las cumbres"
+            />
+          </li>
+          <li class="raiz-carta">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="../../assets/img/parroquias/sageo/nubes_2.jpg"
+              alt="Copa de los árboles del bosque nublado de Cubilán vista desde arriba, con ramas cubiertas de musgo"
+            />
+          </li>
+          <li class="raiz-carta">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="../../assets/img/parroquias/sageo/nubes_3.jpg"
+              alt="Sendero de tierra que atraviesa el bosque de Cubilán, visto desde el aire"
+            />
+          </li>
+        </ul>
+      </section>
+
+      <!-- ===================== 3 TARJETAS DE INFO ===================== -->
+      <section class="section">
+        <div class="info-cards" data-stagger>
+          <article
+            class="info-card info-card--verde"
+            data-reveal="fade-up"
+            style="--i: 0"
+          >
+            <h3 class="info-card__title">Un bosque entre nubes</h3>
+            <hr />
+            <p>
+              A 3.500 msnm, la neblina lo cubre casi siempre y le da ese aire místico que cambia el paisaje a cada paso.
+            </p>
+          </article>
+
+          <article
+            class="info-card info-card--amarillo"
+            data-reveal="fade-up"
+            style="--i: 1"
+          >
+            <h3 class="info-card__title">Protegido desde 1982</h3>
+            <hr />
+            <p>
+              Fue declarado bosque protector para cuidar su biodiversidad y las fuentes de agua que nacen en él.
+            </p>
+          </article>
+
+          <article
+            class="info-card info-card--terracota"
+            data-reveal="fade-up"
+            style="--i: 2"
+          >
+            <h3 class="info-card__title">990 hectáreas de vida</h3>
+            <hr />
+            <p>
+              Bosque húmedo, matorral y páramo con flora y fauna andina que no encuentras en la ciudad.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===================== DONDE LA NEBLINA MANDA ===================== -->
+      <section class="section">
+        <div class="impone">
+          <div data-reveal="fade-right">
+            <h2 class="impone__title">
+              Donde<br />
+              la neblina<br />
+              <span class="pill">MANDA</span>
+            </h2>
+            <p class="impone__text">
+              Cubilán está entre Biblián y Azogues, en la parroquia San
+              Francisco de Sageo, a 21 km de la cabecera cantonal. Son 990
+              hectáreas de bosque nublado a 3.500 msnm, donde la neblina cambia
+              el paisaje a cada paso. Camina sus senderos, escucha a las aves y
+              descubre por qué lo llaman pulmón verde del Cañar.
+            </p>
+          </div>
+          <!-- Esquina que se despega (variante amarilla): al pasar el mouse
+               (o tocar) se abre y deja ver la frase que está detrás de la foto -->
+          <figure class="peel peel--amarillo" id="peel" tabindex="0" data-reveal="fade-left">
+            <figcaption class="peel__back">
+              <span>3.500 msnm</span>
+              <span>990 hectáreas</span>
+              <span>y la neblina de guía</span>
+            </figcaption>
+            <img
+              loading="lazy"
+              decoding="async"
+              class="impone__img peel__img"
+              src="../../assets/img/parroquias/sageo/manda.jpg"
+              alt="Claro de pasto rodeado de bosque nublado y un camino de tierra en Cubilán, visto desde el aire"
+            />
+            <span class="peel__fold" aria-hidden="true"></span>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ===================== VIDEO (franja azul + texto + video) ===================== -->
+      <section class="video-feature">
+        <div class="video-feature__inner">
+          <div class="video-feature__text" data-reveal="fade-right">
+            <h2 class="video-feature__title">
+              Una caminata entre la neblina por el pulmón verde del Cañar
+            </h2>
+            <p>
+              Senderos ecológicos, aves andinas y paisajes cubiertos de nubes:
+              un lugar para desconectarte y respirar distinto.
+            </p>
+          </div>
+          <div class="video-media" id="video-media" data-reveal="fade-left">
+            <video
+              preload="none"
+              muted
+              loop
+              playsinline
+              poster="../../assets/img/parroquias/sageo/bosque-portada.jpg"
+              aria-label="Video: vuelo sobre el Bosque Protector Cubilán"
+            >
+              <source
+                src="../../assets/img/parroquias/sageo/bosque.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== ¿QUÉ PODEMOS HACER? ===================== -->
+      <section class="section hacemos">
+        <h2 class="hacemos__title" data-reveal="fade-up">
+          ¿Qué <span class="pill pill--cola">podemos</span> hacer?
+        </h2>
+
+        <div class="hacemos__rows">
+          <!-- Fila 1: tarjetas (texto + palabra) — aparece desde la izquierda -->
+          <div class="marquee" data-reveal="fade-left">
+            <div class="marquee__track" data-marquee>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--amarillo">
+                      <h3 class="qfront__title">Acampar</h3>
+                      <p>Pasar la noche en el bosque sin dejar rastro de tu visita</p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--verde">
+                      <span class="qword">NUBE</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--terracota">
+                      <h3 class="qfront__title">Aviturismo</h3>
+                      <p>Escuchar y reconocer las aves del bosque nublado</p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--azul">
+                      <span class="qword">VERDE</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--amarillo">
+                      <h3 class="qfront__title">Meditación</h3>
+                      <p>Respirar en silencio entre la neblina y los árboles</p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--verde">
+                      <span class="qword">AGUA</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--terracota">
+                      <h3 class="qfront__title">Botánica</h3>
+                      <p>Descubrir las plantas nativas del bosque y del páramo</p>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-item q-item--word">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <div class="qfront qfront--azul">
+                      <span class="qword">CALMA</span>
+                    </div>
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fila 2: fotos (dirección contraria) — aparece desde la derecha -->
+          <div class="marquee marquee--reverse" data-reveal="fade-right">
+            <div class="marquee__track" data-marquee>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/sageo/hacemos_1.jpg"
+                      alt="Casas de campo y huertos en una ladera junto al bosque de Cubilán"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/sageo/hacemos_2.jpg"
+                      alt="Camino de tierra y un pequeño claro en medio del bosque, vistos desde el aire"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/sageo/hacemos_3.jpg"
+                      alt="Valle con potreros verdes entre colinas de bosque y neblina al fondo"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/sageo/hacemos_4.jpg"
+                      alt="Bosque de árboles altos y tupidos visto desde arriba"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/sageo/hacemos_5.jpg"
+                      alt="Sendero que sube entre el bosque nativo y un claro de pasto"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/sageo/hacemos_6.jpg"
+                      alt="Cerro cubierto de bosque con un poblado en el valle bajo un cielo nublado"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/sageo/hacemos_7.jpg"
+                      alt="Cordillera de Cubilán cubierta de bosque bajo nubes grises"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+              <div class="flip q-photo">
+                <div class="flip__inner">
+                  <div class="flip__front">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      src="../../assets/img/parroquias/sageo/hacemos_8.jpg"
+                      alt="Ladera con bosque nativo y potreros verdes en los alrededores de Cubilán"
+                    />
+                  </div>
+                  <div class="flip__back">#MásBiblián</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer">
+      <div class="footer-left">
+        <div class="footer-photos" data-stagger>
+          <img
+            loading="lazy"
+            decoding="async"
+            data-reveal="fade-up"
+            style="--i: 0"
+            src="../../assets/img/parroquias/jerusalen/footer_bailarines.jpg"
+            alt="Dos danzantes con trajes tradicionales bailan con palos frente a un monumento de piedra en Biblián"
+          />
+          <img
+            loading="lazy"
+            decoding="async"
+            data-reveal="fade-up"
+            style="--i: 1"
+            src="../../assets/img/parroquias/jerusalen/footer_senoras.jpg"
+            alt="Dos mujeres con polleras y sombreros tejen lana junto a alpacas en el páramo de Biblián"
+          />
+          <img
+            loading="lazy"
+            decoding="async"
+            data-reveal="fade-up"
+            style="--i: 2"
+            src="../../assets/img/parroquias/jerusalen/footer_santuario.jpg"
+            alt="Santuario de la Virgen del Rocío iluminado de noche sobre la ciudad de Biblián"
+          />
+        </div>
+        <p class="footer-copy" data-reveal="fade-in">
+          © 2026 Biblián Vive. Todos los derechos reservados.
+        </p>
+      </div>
+
+      <div class="footer-contact" data-stagger>
+        <a
+          class="footer-contact__logo"
+          data-reveal="fade-in"
+          style="--i: 0"
+          href="../../index.html#inicio"
+          aria-label="Ir al inicio — Biblián Vive"
+          ><span class="logo" aria-hidden="true"></span></a>
+        <div class="footer-contact__body" data-reveal="fade-up" style="--i: 1">
+          <div>
+            <h3>¡Escríbenos!</h3>
+            <p>Más historias, más Biblián. Directo a ti.</p>
+            <div class="footer-socials">
+              <a
+                href="https://w.app/0drsrd"
+                target="_blank"
+                rel="noopener"
+                aria-label="WhatsApp"
+                ><svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.9.9-2.7-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.24-.12-1.4-.7-1.6-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.18-.7-.62-1.18-1.4-1.32-1.64-.14-.24 0-.36.1-.48.1-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.1.16 1.52.1.46-.07 1.4-.57 1.6-1.13.2-.55.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z"
+                  /></svg
+              ></a>
+              <a
+                href="https://www.facebook.com/share/1BjaVid1wK/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener"
+                aria-label="Facebook"
+                ><svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.5-1.5h1.6V3.6c-.28-.04-1.24-.12-2.36-.12-2.33 0-3.94 1.42-3.94 4.04v2.26H7.5V13h2.8v8h3.2Z"
+                  /></svg
+              ></a>
+              <a
+                href="https://www.instagram.com/andre_gerardoo"
+                target="_blank"
+                rel="noopener"
+                aria-label="Instagram"
+                ><svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2c2.7 0 3 0 4.1.06 1 .05 1.7.22 2.3.46.6.24 1.1.56 1.6 1.05.5.5.8 1 1.05 1.6.24.6.4 1.3.46 2.3.06 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1-.22 1.7-.46 2.3a4.4 4.4 0 0 1-1.05 1.6c-.5.5-1 .8-1.6 1.05-.6.24-1.3.4-2.3.46-1.1.06-1.4.06-4.1.06s-3 0-4.1-.06c-1-.05-1.7-.22-2.3-.46a4.4 4.4 0 0 1-1.6-1.05 4.4 4.4 0 0 1-1.05-1.6c-.24-.6-.4-1.3-.46-2.3C2.4 15 2.4 14.7 2.4 12s0-3 .06-4.1c.05-1 .22-1.7.46-2.3.24-.6.56-1.1 1.05-1.6.5-.5 1-.8 1.6-1.05.6-.24 1.3-.4 2.3-.46C9 2 9.3 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4ZM17.6 5.2a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z"
+                  /></svg
+              ></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h3 id="footer-nav-title">Sobre nosotros</h3>
+            <nav class="footer-nav" aria-labelledby="footer-nav-title">
+              <a href="../../index.html#inicio">Inicio</a>
+              <a href="../../index.html#parroquias">Parroquias</a>
+              <a href="../../index.html#datos">Datos</a>
+              <a href="../../index.html#voces">Voces</a>
+              <a href="../../index.html#activate">Actívate</a>
+            </nav>
+          </div>
+        </div>
+        <div class="footer-line" data-reveal="fade-in" style="--i: 2"></div>
+        <p class="footer-hashtag" data-reveal="fade-up" style="--i: 3">
+          #MásBiblián
+        </p>
+      </div>
+    </footer>
+
+    <!-- ===================== SCRIPTS ===================== -->
+    <script src="../../assets/js/main.js"></script>
+  </body>
 </html>

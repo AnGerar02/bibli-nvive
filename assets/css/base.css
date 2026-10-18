@@ -28,6 +28,7 @@ strong { font-weight: var(--peso-bold); }
 h1, h2, h3, h4,
 .pill, .qword, .qfront__title, .info-card__title, .flip__back,
 .peel__back, .footer-hashtag, .nav__link, .nav-toggle, .btn,
+.voces__tab, .voz__cita blockquote, .dato-carta__num,
 .site-header__logo, .footer-contact__logo {
   font-variation-settings: "wght" var(--wght-titulo);
 }
@@ -49,27 +50,27 @@ h1, h2, h3, h4,
   margin-bottom: var(--space-xl);
 }
 
-/* Palabra resaltada en pastilla amarilla (una por sección) */
+/* Palabra resaltada en pastilla amarilla (una por sección).
+   El aire es proporcional a la letra (--pill-aire-*) y la curva es un
+   tercio del alto (como los botones), en cualquier tamaño de título. */
 .pill {
+  --pill-arriba: var(--pill-aire-y);
+  --pill-abajo: var(--pill-aire-y);
   background-color: var(--md-accent);
   color: var(--md-on-accent);
-  padding: 0 var(--space-m);
-  border-radius: var(--radius-full);
+  padding: var(--pill-arriba) var(--pill-aire-x) var(--pill-abajo);
+  border-radius: calc((1em * var(--lh-tight) + var(--pill-arriba) + var(--pill-abajo)) / var(--radius-proporcion));
   display: inline-block;
   line-height: var(--lh-tight);
 }
-/* Centrado óptico: cada fuente deja distinto aire arriba y abajo de las
-   letras. Se recorta la caja a la altura de las mayúsculas y se pone el
-   mismo margen arriba y abajo (los navegadores sin soporte quedan igual). */
+/* Centrado óptico: se recorta la caja de la palabra a la altura de las
+   mayúsculas y main.js (sección 0) mide la tinta real de cada palabra para
+   repartir el aire: igual arriba y abajo, sea en mayúsculas, minúsculas o
+   con letras que bajan (p, g, y). Sin JS queda centrada en las mayúsculas. */
 @supports (text-box: trim-both cap alphabetic) {
   .pill {
     text-box: trim-both cap alphabetic;
-    padding-block: var(--space-xs);
-  }
-  /* Palabras con letras que bajan (p, g, q, y, j): se suma la cola abajo
-     para que no se salga de la pastilla y la palabra quede centrada */
-  .pill--cola {
-    padding-bottom: calc(var(--space-xs) + var(--pill-cola));
+    border-radius: calc((1cap + var(--pill-arriba) + var(--pill-abajo)) / var(--radius-proporcion));
   }
 }
 

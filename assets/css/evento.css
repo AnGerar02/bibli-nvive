@@ -1,0 +1,224 @@
+/* ============================================================
+   evento.css — Subpágina de cada evento (§7.16), según el diseño del
+   autor (oct-2026): sin hero, header azul fijo, "¿De qué se trata?"
+   con foto + fichas a la derecha, "Antes de ir" en franja azul y
+   "Otros eventos". Reutiliza las cartas de eventos (inicio.css).
+   ============================================================ */
+
+/* ---------- 1) ¿DE QUÉ SE TRATA? + FICHAS ----------
+   Móvil: todo apilado. Escritorio: texto y foto a la izquierda (8) y
+   las fichas a la derecha (5). Sin foto grande arriba, la sección
+   empieza bajo el header. */
+.evento-top {
+  padding-top: calc(var(--header-alto) + var(--space-section));
+}
+.evento-intro {
+  display: grid;
+  gap: var(--space-xl);
+  max-width: var(--evento-ancho);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.evento-intro__titulo {
+  font-size: var(--fs-display-lg);
+  margin-bottom: var(--space-l);
+}
+.evento-intro__texto { max-width: 65ch; }
+.evento-intro__foto {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  margin-top: var(--space-xl);
+  border-radius: var(--radius);
+  box-shadow: var(--elev-1);
+}
+.evento-lado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+/* Fichas azules: datos del evento y "Objetivo" */
+.ficha {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  padding: var(--space-card);
+  border-radius: var(--radius);
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+  box-shadow: var(--elev-1);
+}
+.ficha :focus-visible { outline-color: var(--md-surface); }
+.ficha__dato { padding-block: var(--space-s); }
+.ficha__dato:first-child { padding-top: 0; }
+.ficha__dato + .ficha__dato {
+  border-top: var(--stroke) solid
+    color-mix(in srgb, var(--md-on-primary) 24%, transparent);
+}
+.ficha dt {
+  font-size: var(--fs-label-md);
+  font-weight: var(--peso-medium);
+  letter-spacing: var(--tracking-label);
+}
+.ficha dd {
+  margin: var(--space-xxs) 0 0;
+  font-family: var(--font-titulo);
+  font-size: var(--fs-title-lg);
+  font-weight: var(--peso-bold);
+  font-variation-settings: "wght" var(--wght-titulo);
+  line-height: var(--lh-tight);
+}
+/* WhatsApp: círculo crema con el ícono azul + el número */
+.ficha__whatsapp {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: var(--size-touch);
+  align-self: start;
+  color: inherit;
+  font-size: var(--fs-body-md);
+  text-decoration: none;
+}
+.ficha__whatsapp-icono {
+  display: grid;
+  place-items: center;
+  width: var(--consejo-icono);
+  height: var(--consejo-icono);
+  border-radius: var(--radius-full);
+  background-color: var(--md-surface);
+  color: var(--md-primary);
+  /* hover común de los botones (components.css §3b): sube, crece y sombra */
+  transition: box-shadow var(--dur-btn) var(--ease-out),
+    translate var(--dur-btn) var(--ease-rebote),
+    scale var(--dur-btn) var(--ease-rebote);
+}
+@media (hover: hover) {
+  .ficha__whatsapp:hover .ficha__whatsapp-icono {
+    background-image: linear-gradient(var(--layer-on-surface-hover), var(--layer-on-surface-hover));
+    box-shadow: var(--elev-2);
+  }
+}
+.ficha__whatsapp-icono svg { width: var(--size-icon); height: var(--size-icon); }
+
+/* "¿Te gustaría ir por tu cuenta?": etiqueta crema sobre la ficha del objetivo */
+.ficha-titulo {
+  padding: var(--space-s) var(--space-m);
+  border-radius: var(--radius);
+  background-color: var(--md-surface);
+  color: var(--md-primary);
+  box-shadow: var(--elev-1);
+  font-size: var(--fs-title-lg);
+  text-align: center;
+}
+/* Ficha del objetivo: botón "Cómo llegar" amarillo, centrado */
+.ficha--objetivo .btn { align-self: center; }
+
+@media (min-width: 840px) {
+  .evento-intro {
+    grid-template-columns: 8fr 5fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+}
+
+/* ---------- 2) ANTES DE IR: franja azul con consejos ----------
+   "ir" en pastilla terracota (en el diseño, sobre azul). Tarjetas
+   crema con el ícono en un cuadro azul; dos arriba y una centrada
+   abajo en escritorio, una columna en móvil. */
+.antes {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+}
+.antes .section__title {
+  font-size: var(--fs-display-lg);
+  color: var(--md-on-primary);
+}
+.antes .pill {
+  background-color: var(--md-tertiary);
+  color: var(--md-on-tertiary);
+}
+.consejos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-l);
+  max-width: var(--evento-ancho);
+  margin-inline: auto;
+  padding: 0 var(--gutter);
+  list-style: none;
+}
+.consejo {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  padding: var(--space-m) var(--space-l);
+  border-radius: var(--radius);
+  background-color: var(--md-surface);
+  color: var(--md-primary);
+  font-size: var(--fs-body-md);
+  box-shadow: var(--elev-1);
+}
+.consejo__icono {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--consejo-icono);
+  height: var(--consejo-icono);
+  border-radius: var(--radius-chico);
+  background-color: var(--md-primary);
+  color: var(--md-surface);
+}
+/* El dibujo (SVG de assets/img/eventos/<evento>/iconos/) se usa como
+   máscara: toma el color crema sin importar el color del archivo. La
+   ruta va en el style del HTML (mask-image) para que se lea desde la
+   página y no desde este CSS. */
+.consejo__icono span {
+  width: var(--size-icon);
+  height: var(--size-icon);
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+@media (min-width: 840px) {
+  .consejo { flex: 0 1 calc((100% - var(--space-l)) / 2); }
+}
+
+/* ---------- 3) OTROS EVENTOS ----------
+   Las mismas cartas del inicio, en el ancho de la página, pero compactas
+   (oct-2026: en cuatro columnas quedaban muy largas): imagen más baja
+   (2 : 1), título, fecha y lugar. La descripción no se muestra aquí (está
+   completa en la página de cada evento). Móvil: una columna; tablet: dos;
+   escritorio ancho: cuatro en una fila. */
+.evento-pagina .eventos .container { max-width: var(--evento-ancho); }
+.eventos__lista--otros .evento__foto {
+  height: auto;
+  aspect-ratio: 2 / 1;
+}
+/* Pregón: la franja (50 % del ancho) termina justo antes de la fecha vieja del afiche (54 %) */
+.eventos__lista--otros .evento__foto--pregon { object-position: 50% -2.5cqi; }
+/* Ruta a las zonas frías: arriba del todo, para que no se vea la fecha vieja del afiche (empieza al 71 %) */
+.eventos__lista--otros .evento__foto--zonas-frias { object-position: 50% 0; }
+.eventos__lista--otros .evento__texto { display: none; }
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 600px) {
+    /* sin descripción: imagen, título y fecha (una fila menos) */
+    .eventos__lista--otros .evento { grid-row: span 3; }
+    .eventos__lista--otros .evento__cuerpo { grid-row: span 2; }
+  }
+}
+@media (min-width: 840px) {
+  .eventos__lista--otros { grid-template-columns: repeat(2, 1fr); }
+  .eventos__lista--otros .evento:nth-child(n) { grid-column: auto; }
+}
+@media (min-width: 1120px) {
+  .eventos__lista--otros { grid-template-columns: repeat(4, 1fr); }
+  .eventos__lista--otros .evento__cuerpo { padding: var(--space-l); }
+}
+

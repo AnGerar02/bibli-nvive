@@ -31,9 +31,10 @@
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
-/* Fuera del tope (al volver a aparecer): crema translúcido + elevación 2 */
+/* Fuera del tope (al volver a aparecer): azul translúcido + elevación 2
+   (oct-2026: colores invertidos; antes crema) */
 .site-header.scrolled {
-  background: color-mix(in srgb, var(--md-surface) 90%, transparent);
+  background: color-mix(in srgb, var(--md-primary) 92%, transparent);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   box-shadow: var(--elev-2);
@@ -58,49 +59,138 @@ body.menu-open .site-header {
 }
 body.menu-open .site-header::before { opacity: 0; }
 
-/* Logo: círculo amarillo de 48 px con "B" en azul */
+/* Logo (símbolo + "biveme"). El SVG se usa como máscara: toma el color del
+   texto donde está. En el tope, sobre la foto: blanco; con la barra crema
+   (o el menú móvil abierto): azul. Área táctil de 48 px de alto. */
+.logo {
+  display: block;
+  height: var(--logo-alto);
+  aspect-ratio: 155.6 / 38.9; /* proporción del dibujo (logo.svg) */
+  background-color: currentColor;
+  -webkit-mask: url("../img/ui/logo.svg") left center / contain no-repeat;
+  mask: url("../img/ui/logo.svg") left center / contain no-repeat;
+}
 .site-header__logo {
   position: relative;
   z-index: 2;
-  width: var(--size-touch);
-  height: var(--size-touch);
+  display: flex;
+  align-items: center;
+  min-height: var(--size-touch);
   flex-shrink: 0;
-  border-radius: var(--radius-full);
-  background: var(--md-accent);
-  color: var(--md-on-accent);
-  display: grid;
-  place-items: center;
-  font-family: var(--font-titulo);
-  font-weight: var(--peso-extrabold);
-  font-size: var(--fs-title-lg);
-  box-shadow: var(--elev-1);
+  color: var(--md-on-primary);
 }
-.site-header__logo:hover { background-image: linear-gradient(var(--layer-on-accent-hover), var(--layer-on-accent-hover)); }
-.site-header__logo img { width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius-full); }
+.site-header.scrolled .site-header__logo { color: var(--md-surface); }
+body.menu-open .site-header.site-header .site-header__logo { color: var(--md-primary); } /* sobre el menú móvil crema (gana a .scrolled) */
+/* Anillo de foco visible sobre la barra azul */
+.site-header.scrolled :focus-visible { outline-color: var(--md-surface); }
+body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md-primary); }
+/* Tablet (600–1023 px): el logo completo no cabe junto al menú centrado,
+   así que se ve solo el símbolo (el cuadrado de la izquierda del logo) */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .site-header__logo .logo {
+    aspect-ratio: 1;
+    -webkit-mask-size: auto 100%;
+    mask-size: auto 100%;
+  }
+}
 
 /* --- Entrada desde los lados: nav desde la izquierda · logo desde la derecha --- */
-.site-header__logo { transform: translateX(60vw); opacity: 0; transition: transform 1s var(--ease-out), opacity 0.9s ease; }
+.site-header__logo { transform: translateX(60vw); opacity: 0; transition: transform 1s var(--ease-out), opacity 0.9s ease, color 0.3s ease; }
 .site-header__nav  { transform: translateX(-60vw); opacity: 0; transition: transform 1s var(--ease-out), opacity 0.9s ease; }
 .site-header.is-ready .site-header__logo,
 .site-header.is-ready .site-header__nav { transform: none; opacity: 1; }
+
+/* ============================================================
+   1b) HERO (§7.4) — scroll-driven (parroquias e inicio)
+   --p va de 0 (arriba) a 1 (efecto completado), lo calcula main.js.
+   p=0 → foto/video con curva inferior; título abajo en azul sobre el crema.
+   p=1 → a pantalla completa, sin curva; título blanco sobre degradado.
+   ============================================================ */
+.hero-wrap {
+  --p: 0;
+  /* franja inferior donde vive el título al inicio */
+  --hero-strip: calc(
+    var(--fs-display-lg) * var(--lh-tight) + var(--space-l) * 2
+  );
+  height: 175vh;
+  position: relative;
+}
+.hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.hero-frame {
+  position: absolute;
+  inset: 0;
+  bottom: calc(var(--hero-strip) * (1 - var(--p)));
+  border-radius: 0 0 calc(var(--radius-2xl) * (1 - var(--p)))
+    calc(var(--radius-2xl) * (1 - var(--p)));
+  overflow: hidden;
+  background: var(--md-primary);
+  /* elevación 2 que se desvanece cuando la foto llena la pantalla */
+  box-shadow: var(--elev-2-shape)
+    rgba(var(--md-scrim-rgb), calc(0.35 * (1 - var(--p))));
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom; /* muestra las alpacas completas */
+}
+/* Degradado #0A3447 al 0 → 55 % bajo el texto (aparece con el título blanco) */
+.hero-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--md-scrim-rgb), 0) 40%,
+    rgba(var(--md-scrim-rgb), 0.55)
+  );
+  opacity: var(--p);
+  pointer-events: none;
+}
+.hero__title {
+  position: absolute;
+  z-index: 2;
+  /* alineado con el borde del contenido (1200 px), nunca a sangre */
+  right: max(
+    var(--gutter),
+    calc((100% - var(--container)) / 2 + var(--gutter))
+  );
+  bottom: var(--space-l);
+  font-size: var(--fs-display-lg);
+  font-weight: var(--peso-extrabold);
+  text-align: right;
+  color: var(--md-primary); /* respaldo para navegadores sin color-mix */
+  color: color-mix(
+    in srgb,
+    var(--md-on-primary) calc(var(--p) * 100%),
+    var(--md-primary)
+  );
+  text-shadow: var(--text-shadow-shape)
+    rgba(var(--md-scrim-rgb), calc(0.45 * var(--p)));
+}
 
 /* ============================================================
    2) NAVEGACIÓN (§7.2)
    ============================================================ */
 
 /* --- Botón "Menú" (solo móvil), arriba a la derecha junto al logo ---
-   Pastilla crema con tres rayas en los colores de la marca
-   (azul · amarillo · terracota) de distinto largo. Al abrir, la del
-   medio desaparece y las otras dos se cruzan formando una X. */
+   Pastilla crema con la palabra "Menú", solo texto (oct-2026: se quitaron
+   las tres rayas de colores que se volvían X). */
 .nav-toggle {
   position: relative;
   z-index: 2; /* por encima del menú abierto */
   display: inline-flex;
   align-items: center;
-  gap: var(--space-xs);
   min-height: var(--size-touch);
-  padding: 0 var(--space-m) 0 var(--space-s);
-  border-radius: var(--radius-full);
+  padding: 0 var(--space-m);
+  border-radius: var(--radius);
   background: var(--md-surface);
   color: var(--md-primary);
   font-family: var(--font-titulo);
@@ -115,37 +205,9 @@ body.menu-open .site-header::before { opacity: 0; }
 .nav-toggle:hover  { background-image: linear-gradient(var(--layer-on-surface-hover), var(--layer-on-surface-hover)); }
 .nav-toggle:active { transform: scale(0.97); }
 
-.nav-toggle__bars {
-  position: relative;
-  width: var(--size-icon);
-  height: var(--size-icon);
-}
-.nav-toggle__bars span {
-  position: absolute;
-  left: 0;
-  height: var(--stroke-divider);
-  border-radius: var(--radius-full);
-  transition: transform 0.35s var(--ease-out), opacity 0.2s ease, width 0.35s var(--ease-out);
-}
-.nav-toggle__bars span:nth-child(1) { top: var(--space-xxs);                width: 100%; background: var(--md-primary); }
-.nav-toggle__bars span:nth-child(2) { top: calc(var(--space-xxs) * 2.5);    width: 60%;  background: var(--md-accent); }
-.nav-toggle__bars span:nth-child(3) { top: calc(var(--space-xxs) * 4);      width: 80%;  background: var(--md-tertiary); }
-/* Abierto: X */
-.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(1) {
-  transform: translateY(calc(var(--space-xxs) * 1.5)) rotate(45deg);
-}
-.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(2) {
-  opacity: 0;
-  width: 0;
-}
-.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(3) {
-  width: 100%;
-  transform: translateY(calc(var(--space-xxs) * -1.5)) rotate(-45deg);
-}
-
 /* --- Móvil: menú de pantalla completa con tarjetas escalonadas ---
-   Cada tarjeta alterna de lado; su ícono va en un círculo con aro crema
-   que sobresale del borde. Entran en cascada desde su lado. */
+   Cada tarjeta alterna de lado y lleva solo su texto (oct-2026: se
+   quitaron los íconos en círculo). Entran en cascada desde su lado. */
 .nav {
   position: fixed;
   inset: 0;
@@ -171,7 +233,7 @@ body.menu-open .site-header::before { opacity: 0; }
   flex: 1 1 0;
   min-height: var(--size-touch);
   max-height: var(--nav-card-max);
-  width: calc(100% - var(--nav-badge) / 2); /* deja lugar al círculo que sobresale */
+  width: calc(100% - var(--nav-badge) / 2); /* más angosta que la pantalla: así se escalonan */
   border-radius: var(--radius-xl);
   box-shadow: var(--elev-1);
   font-family: var(--font-titulo);
@@ -183,15 +245,18 @@ body.menu-open .site-header::before { opacity: 0; }
   opacity: 0;
   transition: opacity var(--dur-cascade) ease, transform var(--dur-cascade) var(--ease-out);
 }
-/* Impares: tarjeta a la derecha, ícono a la izquierda, texto a la derecha */
-.nav .nav__link:nth-child(odd) {
+/* Los selectores usan ":nth-child(… of .nav__link)" para contar solo los
+   ítems del menú: el submenú de Parroquias vive entre ellos y no debe
+   alterar el escalonado ni los colores. */
+/* Impares: tarjeta a la derecha, texto a la derecha */
+.nav .nav__link:nth-child(odd of .nav__link) {
   align-self: flex-end;
   justify-content: flex-end;
   padding: 0 var(--space-l) 0 calc(var(--nav-badge) / 2 + var(--space-m));
   transform: translateX(var(--space-xl));
 }
-/* Pares: tarjeta a la izquierda, ícono a la derecha, texto a la izquierda */
-.nav .nav__link:nth-child(even) {
+/* Pares: tarjeta a la izquierda, texto a la izquierda */
+.nav .nav__link:nth-child(even of .nav__link) {
   align-self: flex-start;
   justify-content: flex-start;
   padding: 0 calc(var(--nav-badge) / 2 + var(--space-m)) 0 var(--space-l);
@@ -202,28 +267,12 @@ body.menu-open .site-header::before { opacity: 0; }
   outline-offset: calc(var(--focus-ring) * -3);
 }
 
-/* Círculo del ícono: mismo color que su tarjeta + aro crema */
-.nav__icon {
-  position: absolute;
-  top: 50%;
-  display: grid;
-  place-items: center;
-  width: var(--nav-badge);
-  height: var(--nav-badge);
-  border-radius: var(--radius-full);
-  background: inherit;
-  box-shadow: 0 0 0 var(--nav-badge-ring) var(--md-surface);
-}
-.nav__link:nth-child(odd) .nav__icon  { left: 0;  transform: translate(-50%, -50%); }
-.nav__link:nth-child(even) .nav__icon { right: 0; transform: translate(50%, -50%); }
-.nav__icon svg { width: var(--size-icon-card); height: var(--size-icon-card); fill: currentColor; }
-
 /* Colores (orden del boceto): azul · amarillo · terracota · azul · amarillo */
-.nav .nav__link:nth-child(1),
-.nav .nav__link:nth-child(4) { background-color: var(--md-primary);  color: var(--md-on-primary); }
-.nav .nav__link:nth-child(2),
-.nav .nav__link:nth-child(5) { background-color: var(--md-accent);   color: var(--md-on-accent); }
-.nav .nav__link:nth-child(3) { background-color: var(--md-tertiary); color: var(--md-on-tertiary); }
+.nav .nav__link:nth-child(1 of .nav__link),
+.nav .nav__link:nth-child(4 of .nav__link) { background-color: var(--md-primary);  color: var(--md-on-primary); }
+.nav .nav__link:nth-child(2 of .nav__link),
+.nav .nav__link:nth-child(5 of .nav__link) { background-color: var(--md-accent);   color: var(--md-on-accent); }
+.nav .nav__link:nth-child(3 of .nav__link) { background-color: var(--md-tertiary); color: var(--md-on-tertiary); }
 
 /* Activo en móvil: subrayado (el estado no se comunica solo con color) */
 .nav .nav__link.is-active .nav__label {
@@ -232,12 +281,12 @@ body.menu-open .site-header::before { opacity: 0; }
   text-underline-offset: var(--space-xs);
 }
 
-.nav.is-open .nav__link:nth-child(n) { opacity: 1; transform: none; }
-.nav.is-open .nav__link:nth-child(1) { transition-delay: 0.05s; }
-.nav.is-open .nav__link:nth-child(2) { transition-delay: 0.12s; }
-.nav.is-open .nav__link:nth-child(3) { transition-delay: 0.19s; }
-.nav.is-open .nav__link:nth-child(4) { transition-delay: 0.26s; }
-.nav.is-open .nav__link:nth-child(5) { transition-delay: 0.33s; }
+.nav.is-open .nav__link:nth-child(n of .nav__link) { opacity: 1; transform: none; }
+.nav.is-open .nav__link:nth-child(1 of .nav__link) { transition-delay: 0.05s; }
+.nav.is-open .nav__link:nth-child(2 of .nav__link) { transition-delay: 0.12s; }
+.nav.is-open .nav__link:nth-child(3 of .nav__link) { transition-delay: 0.19s; }
+.nav.is-open .nav__link:nth-child(4 of .nav__link) { transition-delay: 0.26s; }
+.nav.is-open .nav__link:nth-child(5 of .nav__link) { transition-delay: 0.33s; }
 
 /* --- Tablet y escritorio: logo a la izquierda (margen del contenido)
        y menú centrado.
@@ -261,28 +310,27 @@ body.menu-open .site-header::before { opacity: 0; }
     gap: var(--space-xxs);
     padding: var(--space-xs);
     background: transparent;
-    border-radius: var(--radius-full);
+    border-radius: var(--radius);
     box-shadow: none;
     opacity: 1;
     visibility: visible;
   }
 
   /* En el tope: tipografía blanca sobre la foto.
-     (Anula el formato de tarjetas del menú móvil: sin íconos, sin sombra,
-     ancho automático y sin escalonado.) */
-  .nav__icon { display: none; }
-  .nav .nav__link:nth-child(n) {
+     (Anula el formato de tarjetas del menú móvil: sin sombra, ancho
+     automático y sin escalonado.) */
+  .nav .nav__link:nth-child(n of .nav__link) {
     flex: none;
     width: auto;
     max-height: none;
     align-self: auto;
     justify-content: center;
     box-shadow: none;
-    padding: var(--space-s) var(--space-m); /* tablet: más compacto para que quepan 5 ítems */
+    padding: var(--space-s); /* tablet: compacto para que quepan los 5 ítems */
     font-size: var(--fs-label-lg);
     font-weight: var(--peso-bold);
     letter-spacing: var(--tracking-label);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius);
     background-color: transparent;
     color: var(--md-on-primary);
     opacity: 1;
@@ -298,41 +346,117 @@ body.menu-open .site-header::before { opacity: 0; }
     text-underline-offset: var(--space-xs);
   }
 
-  /* Al reaparecer (fuera del tope): texto azul, activo en pastilla azul */
-  .site-header.scrolled .nav .nav__link:nth-child(n) { color: var(--md-primary); }
-  .site-header.scrolled .nav .nav__link:hover  { background-image: linear-gradient(var(--layer-on-surface-hover), var(--layer-on-surface-hover)); }
-  .site-header.scrolled .nav .nav__link:active { background-image: linear-gradient(var(--layer-on-surface-pressed), var(--layer-on-surface-pressed)); }
+  /* Al reaparecer (barra azul): texto crema, activo en pastilla crema con
+     texto azul (oct-2026: colores invertidos; antes barra crema y texto azul).
+     La pastilla es un crema suavizado con un 15 % del azul de la barra, para
+     que no resalte tanto (el texto azul sigue con contraste ≈ 5:1). */
+  .site-header.scrolled .nav .nav__link:nth-child(n) { color: var(--md-surface); }
+  .site-header.scrolled .nav .nav__link:hover  { background-image: linear-gradient(var(--layer-on-primary-hover), var(--layer-on-primary-hover)); }
+  .site-header.scrolled .nav .nav__link:active { background-image: linear-gradient(var(--layer-on-primary-pressed), var(--layer-on-primary-pressed)); }
   .site-header.scrolled .nav .nav__link.is-active {
-    background-color: var(--md-primary);
-    color: var(--md-on-primary);
+    background-color: color-mix(in srgb, var(--md-surface) 85%, var(--md-primary));
+    color: var(--md-primary);
   }
   .site-header.scrolled .nav .nav__link.is-active .nav__label { text-decoration: none; }
-  .site-header.scrolled .nav .nav__link.is-active:hover { background-image: linear-gradient(var(--layer-on-primary-hover), var(--layer-on-primary-hover)); }
+  .site-header.scrolled .nav .nav__link.is-active:hover { background-image: linear-gradient(var(--layer-on-surface-hover), var(--layer-on-surface-hover)); }
 }
 
 /* ============================================================
    3) BOTÓN (§7.3)
+   Relleno de color, esquinas suaves (12 px), fuente de títulos en Title
+   Large, 48 px de alto y elevación 1 (oct-2026; antes con contorno grueso
+   y, antes aún, pastilla en Label Large).
+   Color del botón: --btn-color (relleno) y --btn-on (texto).
+   Hover (solo con mouse): el común de todos los botones (§3b): sube 4 px,
+   crece un 4 % con un leve rebote, la sombra pasa a elevación 2 y se
+   oscurece/aclara un 8 % con el color del texto (capa de estado M3); con
+   "reducir movimiento" no se mueve. Presionado: escala 0.97.
+   Se usan "translate" y "scale" (no "transform") para que subir y
+   presionar se sumen sin pisarse.
    ============================================================ */
 .btn {
+  --btn-color: var(--md-accent);
+  --btn-on: var(--md-on-accent);
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: var(--size-touch);
-  padding: 0 var(--space-l);
-  border-radius: var(--radius-full);
-  background: var(--md-accent);
-  color: var(--md-on-accent);
+  min-height: var(--btn-alto);
+  padding: 0 calc(var(--space-xl) + var(--space-xs));
+  border-radius: calc(var(--btn-alto) / var(--radius-proporcion)); /* 16 px: un tercio del alto */
+  background-color: var(--btn-color);
+  color: var(--btn-on);
   font-family: var(--font-titulo);
   font-weight: var(--peso-bold);
-  font-size: var(--fs-label-lg);
-  transition: transform 0.15s ease;
+  font-size: var(--fs-title-lg);
+  line-height: var(--lh-tight);
+  box-shadow: var(--elev-1);
+  transition:
+    background-color var(--dur-btn) var(--ease-out),
+    color var(--dur-btn) var(--ease-out),
+    box-shadow var(--dur-btn) var(--ease-out),
+    translate var(--dur-btn) var(--ease-rebote),
+    scale var(--dur-btn) var(--ease-rebote);
 }
-.btn:hover  { background-image: linear-gradient(var(--layer-on-accent-hover), var(--layer-on-accent-hover)); }
-.btn:active { transform: scale(0.97); }
+/* Centrado óptico (como .pill): se recorta la caja del texto a la altura
+   de las mayúsculas y se reparte el resto del alto por igual arriba y abajo */
+@supports (text-box: trim-both cap alphabetic) {
+  .btn {
+    display: inline-block;
+    min-height: 0;
+    padding-block: calc((var(--btn-alto) - 1cap) / 2);
+    text-align: center;
+    text-box: trim-both cap alphabetic;
+  }
+}
+@media (hover: hover) {
+  .btn:hover {
+    background-image: linear-gradient(
+      color-mix(in srgb, var(--btn-on) var(--state-hover), transparent),
+      color-mix(in srgb, var(--btn-on) var(--state-hover), transparent)
+    );
+    box-shadow: var(--elev-2);
+  }
+}
+/* Área del mouse: mientras el botón está levantado, se estira hacia abajo
+   lo mismo que sube. Sin esto, con el mouse en el borde inferior el botón
+   subía, dejaba de estar bajo el cursor, bajaba y volvía a subir (parpadeo). */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn:hover::after { bottom: calc(-1 * var(--btn-sube)); }
+}
+
+/* ---------- 3b) HOVER COMÚN DE TODOS LOS BOTONES ----------
+   Oct-2026: todos los botones hacen lo mismo al pasar el mouse (el menú de
+   navegación no): suben 4 px y crecen un 4 % con un leve rebote, pasan a
+   elevación 2 y se les suma una capa del color de su texto al 8 %.
+   Presionados: 97 %. Con "reducir movimiento" solo cambian sombra y color.
+   Botones: .btn (Visitar, Cómo llegar, Conoce…), redes del footer y
+   WhatsApp de la ficha de eventos. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn:hover,
+  .footer-socials a:hover,
+  .ficha__whatsapp:hover .ficha__whatsapp-icono {
+    translate: 0 calc(-1 * var(--btn-sube));
+    scale: var(--btn-crece);
+  }
+}
+.btn:active,
+.footer-socials a:active,
+.ficha__whatsapp:active .ficha__whatsapp-icono { scale: var(--btn-presion); }
+/* Secundario: contorno azul, sin relleno ni sombra (el contorno es una
+   sombra interior, así no cambia el tamaño del botón) */
 .btn--outlined {
-  background: transparent;
-  color: var(--md-primary);
-  border: var(--stroke) solid var(--md-primary);
+  --btn-color: transparent;
+  --btn-on: var(--md-primary);
+  box-shadow: inset 0 0 0 var(--stroke) var(--md-primary);
+}
+@media (hover: hover) {
+  .btn--outlined:hover { box-shadow: inset 0 0 0 var(--stroke) var(--md-primary); }
 }
 
 /* ============================================================
@@ -340,12 +464,23 @@ body.menu-open .site-header::before { opacity: 0; }
    La duración la calcula main.js para que la velocidad sea
    la misma en todas las filas.
    ============================================================ */
-.marquee { overflow: hidden; width: 100%; }
+/* El overflow: hidden recortaba la sombra en recto. Se da aire arriba y
+   abajo para que la sombra (hasta elevación 2 en hover) se vea completa, y
+   el margen negativo devuelve la misma distancia entre filas. Como ese aire
+   se superpone con la fila vecina, solo las tarjetas reciben el mouse. */
+.marquee {
+  overflow: hidden;
+  width: 100%;
+  padding-block: var(--space-2xl);
+  margin-block: calc(-1 * var(--space-2xl));
+  pointer-events: none;
+}
 .marquee__track {
   display: flex;
   gap: var(--space-grid);
   width: max-content;
   animation: marquee-left var(--marquee-speed, 60s) linear infinite;
+  pointer-events: auto;
 }
 .marquee--reverse .marquee__track { animation-name: marquee-right; }
 /* Pausa en hover, con foco de teclado y al tocar (clase de main.js) */
@@ -361,7 +496,7 @@ body.menu-open .site-header::before { opacity: 0; }
   .marquee {
     overflow-x: auto;
     scroll-snap-type: x proximity;
-    padding-bottom: var(--space-xs);
+    pointer-events: auto; /* la barra de desplazamiento debe poder usarse */
   }
   .marquee__track { animation: none !important; transform: none !important; }
   .marquee__track > * { scroll-snap-align: start; }
@@ -471,20 +606,16 @@ body.menu-open .site-header::before { opacity: 0; }
 .footer-contact > * { width: 100%; max-width: 600px; }
 .footer-contact :focus-visible { outline-color: var(--md-accent); }
 
+/* Logo del footer: en crema sobre el panel azul */
 .footer-contact__logo {
-  width: var(--size-touch);
-  height: var(--size-touch);
-  border-radius: var(--radius-full);
-  background: var(--md-accent);
-  color: var(--md-on-accent);
-  display: grid;
-  place-items: center;
-  font-family: var(--font-titulo);
-  font-weight: var(--peso-extrabold);
-  font-size: var(--fs-title-lg);
-  transition: transform 0.15s ease, opacity var(--dur-reveal) var(--ease-out); /* hover + aparición */
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  min-height: var(--size-touch);
+  color: var(--md-surface);
+  transition: transform 0.15s ease, opacity var(--dur-reveal) var(--ease-out); /* presionado + aparición */
 }
-.footer-contact__logo:hover  { background-image: linear-gradient(var(--layer-on-accent-hover), var(--layer-on-accent-hover)); }
+.footer-contact__logo .logo { height: var(--logo-alto-footer); }
 .footer-contact__logo:active { transform: scale(0.97); }
 
 .footer-contact h3 {
@@ -507,10 +638,28 @@ body.menu-open .site-header::before { opacity: 0; }
   color: var(--md-on-accent);
   display: grid;
   place-items: center;
-  transition: transform 0.15s ease;
+  position: relative;
+  /* hover común de los botones (§3b) */
+  transition: box-shadow var(--dur-btn) var(--ease-out),
+    translate var(--dur-btn) var(--ease-rebote),
+    scale var(--dur-btn) var(--ease-rebote);
 }
-.footer-socials a:hover  { background-image: linear-gradient(var(--layer-on-accent-hover), var(--layer-on-accent-hover)); }
-.footer-socials a:active { transform: scale(0.97); }
+/* Mientras sube, el área del mouse se estira hacia abajo (sin parpadeo) */
+.footer-socials a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+@media (hover: hover) {
+  .footer-socials a:hover {
+    background-image: linear-gradient(var(--layer-on-accent-hover), var(--layer-on-accent-hover));
+    box-shadow: var(--elev-2);
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .footer-socials a:hover::after { bottom: calc(-1 * var(--btn-sube)); }
+}
 .footer-socials svg { width: var(--size-icon); height: var(--size-icon); }
 
 .footer-nav { display: flex; flex-direction: column; }
@@ -546,7 +695,7 @@ body.menu-open .site-header::before { opacity: 0; }
 
 /* Escritorio: dos paneles lado a lado */
 @media (min-width: 840px) {
-  .nav .nav__link:nth-child(n) { padding: var(--space-s) var(--space-l); } /* escritorio: padding 12 × 24 */
+  .nav .nav__link:nth-child(n of .nav__link) { padding: var(--space-s) var(--space-l); } /* escritorio: padding 12 × 24 */
   .site-footer { grid-template-columns: 1.05fr 1fr; }
   .footer-left { order: 0; padding: var(--space-2xl) var(--space-2xl) var(--space-l); }
   .footer-contact { order: 0; padding: var(--space-2xl) var(--space-2xl) var(--space-xl); }
