@@ -4,7 +4,13 @@
     {
       "name": "app-leer",
       "runtimeExecutable": "py",
-      "runtimeArgs": ["-m", "http.server", "5502", "--directory", "C:\\Users\\andre\\Desktop\\Development\\P5\\app_leer"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5502",
+        "--directory",
+        "C:\\Users\\andre\\Desktop\\Development\\P5\\app_leer"
+      ],
       "port": 5502
     }
   ]

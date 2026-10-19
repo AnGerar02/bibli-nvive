@@ -37,7 +37,8 @@
         class="site-header__logo"
         href="#inicio"
         aria-label="Inicio — Biblián Vive"
-        ><span class="logo" aria-hidden="true"></span></a>
+        ><span class="logo" aria-hidden="true"></span
+      ></a>
 
       <div class="site-header__nav">
         <!-- En móvil: tarjetas escalonadas de colores, solo con texto.
@@ -47,7 +48,9 @@
             <span class="nav__label">Inicio</span>
           </a>
           <!-- "Parroquias" lleva a la sección de parroquias del inicio (empieza en Turupamba) -->
-          <a class="nav__link" href="#parroquias"><span class="nav__label">Parroquias</span></a>
+          <a class="nav__link" href="#parroquias"
+            ><span class="nav__label">Parroquias</span></a
+          >
           <a class="nav__link" href="#datos">
             <span class="nav__label">Datos</span>
           </a>
@@ -92,11 +95,17 @@
               poster="assets/img/inicio/hero-portada.jpg"
               aria-label="Video: el santuario de la Virgen del Rocío y los paisajes de Biblián"
             >
-              <source src="assets/img/inicio/hero-movil.mp4" type="video/mp4" media="(max-width: 839px)" />
+              <source
+                src="assets/img/inicio/hero-movil.mp4"
+                type="video/mp4"
+                media="(max-width: 839px)"
+              />
               <source src="assets/img/inicio/hero.mp4" type="video/mp4" />
             </video>
           </div>
-          <h2 class="hero__title hero__title--inicio">El patrimonio de Biblián</h2>
+          <h2 class="hero__title hero__title--inicio">
+            El patrimonio de Biblián
+          </h2>
         </div>
       </section>
 
@@ -106,8 +115,18 @@
            aparece desde ellos. Va fija sobre la pantalla y la mueve main.js
            con el scroll (3a2). Decorativa. -->
       <div class="niebla" aria-hidden="true">
-        <img class="niebla__capa" src="assets/img/inicio/capas/niebla-atras.webp" alt="" decoding="async" />
-        <img class="niebla__capa" src="assets/img/inicio/capas/niebla-delante.webp" alt="" decoding="async" />
+        <img
+          class="niebla__capa"
+          src="assets/img/inicio/capas/niebla-atras.webp"
+          alt=""
+          decoding="async"
+        />
+        <img
+          class="niebla__capa"
+          src="assets/img/inicio/capas/niebla-delante.webp"
+          alt=""
+          decoding="async"
+        />
       </div>
 
       <!-- ===================== CAPAS (parallax) =====================
@@ -119,22 +138,42 @@
       <section class="capas-escena" data-capas aria-labelledby="marca">
         <div class="capas">
           <div class="capa" data-y="-3 0">
-            <img src="assets/img/inicio/capas/fondo.webp" alt="" decoding="async" />
+            <img
+              src="assets/img/inicio/capas/fondo.webp"
+              alt=""
+              decoding="async"
+            />
           </div>
           <div class="capa" data-y="40 0">
             <h1 class="capas__marca" id="marca">RAÍCES</h1>
           </div>
           <div class="capa" data-y="7 0">
-            <img src="assets/img/inicio/capas/montanas.webp" alt="" decoding="async" />
+            <img
+              src="assets/img/inicio/capas/montanas.webp"
+              alt=""
+              decoding="async"
+            />
           </div>
           <div class="capa" data-y="14 0">
-            <img src="assets/img/inicio/capas/nube-superior.webp" alt="" decoding="async" />
+            <img
+              src="assets/img/inicio/capas/nube-superior.webp"
+              alt=""
+              decoding="async"
+            />
           </div>
           <div class="capa" data-y="10 0" data-x="-6 0">
-            <img src="assets/img/inicio/capas/nube-izquierda.webp" alt="" decoding="async" />
+            <img
+              src="assets/img/inicio/capas/nube-izquierda.webp"
+              alt=""
+              decoding="async"
+            />
           </div>
           <div class="capa" data-y="12 0" data-x="6 0">
-            <img src="assets/img/inicio/capas/nube-derecha.webp" alt="" decoding="async" />
+            <img
+              src="assets/img/inicio/capas/nube-derecha.webp"
+              alt=""
+              decoding="async"
+            />
           </div>
           <div class="capa" data-y="9 0">
             <img
@@ -148,172 +187,214 @@
       <!-- ===================== PARROQUIAS =====================
            Un solo fondo que toma el color de la parroquia que cruza el centro
            de la pantalla (main.js); el texto cambia con él. -->
-      <section class="parroquias" id="parroquias" data-parroquias aria-labelledby="parroquias-titulo">
-        <h2 class="sr-only" id="parroquias-titulo">Las cinco parroquias de Biblián</h2>
-      <article class="pq pq--azul" aria-labelledby="pq-turupamba">
-        <h3 class="pq__titulo" id="pq-turupamba" data-reveal="fade-up" data-reveal-manual>Turupamba</h3>
-        <div class="pq__galeria" data-abanico>
-          <a
-            class="btn pq__btn"
-            href="pages/parroquias/turupamba.html"
-            aria-label="Visitar Turupamba"
-            >Visitar</a
+      <section
+        class="parroquias"
+        id="parroquias"
+        data-parroquias
+        aria-labelledby="parroquias-titulo"
+      >
+        <h2 class="sr-only" id="parroquias-titulo">
+          Las cinco parroquias de Biblián
+        </h2>
+        <article class="pq pq--azul" aria-labelledby="pq-turupamba">
+          <h3
+            class="pq__titulo"
+            id="pq-turupamba"
+            data-reveal="fade-up"
+            data-reveal-manual
           >
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/turupamba_1.jpg"
-            alt="Bosque de eucaliptos altos en una ladera de Turupamba"
-          />
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/turupamba_2.jpg"
-            alt="Troncos de pino y un poste de cerco cubierto de musgo en un sendero de Turupamba"
-          />
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/turupamba_3.jpg"
-            alt="Lomas de bosque y potreros de Turupamba con las montañas de Biblián al fondo"
-          />
-        </div>
-      </article>
+            Turupamba
+          </h3>
+          <div class="pq__galeria" data-abanico>
+            <a
+              class="btn pq__btn"
+              href="pages/parroquias/turupamba.html"
+              aria-label="Visitar Turupamba"
+              >Visitar</a
+            >
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/turupamba_1.jpg"
+              alt="Bosque de eucaliptos altos en una ladera de Turupamba"
+            />
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/turupamba_2.jpg"
+              alt="Troncos de pino y un poste de cerco cubierto de musgo en un sendero de Turupamba"
+            />
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/turupamba_3.jpg"
+              alt="Lomas de bosque y potreros de Turupamba con las montañas de Biblián al fondo"
+            />
+          </div>
+        </article>
 
-      <article class="pq pq--amarillo" aria-labelledby="pq-jerusalen">
-        <h3 class="pq__titulo" id="pq-jerusalen" data-reveal="fade-up" data-reveal-manual>Jerusalén</h3>
-        <div class="pq__galeria" data-abanico>
-          <a
-            class="btn pq__btn"
-            href="pages/parroquias/jerusalen.html"
-            aria-label="Visitar Jerusalén"
-            >Visitar</a
+        <article class="pq pq--amarillo" aria-labelledby="pq-jerusalen">
+          <h3
+            class="pq__titulo"
+            id="pq-jerusalen"
+            data-reveal="fade-up"
+            data-reveal-manual
           >
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/jerusalen_1.jpg"
-            alt="Pajonal del páramo de Jerusalén visto desde el aire"
-          />
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/jerusalen_2.jpg"
-            alt="Valle verde de Jerusalén con potreros, bosque y pajonal"
-          />
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/jerusalen_3.jpg"
-            alt="Ladera de Jerusalén cubierta de bosque bajo un cielo nublado"
-          />
-        </div>
-      </article>
+            Jerusalén
+          </h3>
+          <div class="pq__galeria" data-abanico>
+            <a
+              class="btn pq__btn"
+              href="pages/parroquias/jerusalen.html"
+              aria-label="Visitar Jerusalén"
+              >Visitar</a
+            >
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/jerusalen_1.jpg"
+              alt="Pajonal del páramo de Jerusalén visto desde el aire"
+            />
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/jerusalen_2.jpg"
+              alt="Valle verde de Jerusalén con potreros, bosque y pajonal"
+            />
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/jerusalen_3.jpg"
+              alt="Ladera de Jerusalén cubierta de bosque bajo un cielo nublado"
+            />
+          </div>
+        </article>
 
-      <article class="pq pq--crema" aria-labelledby="pq-sageo">
-        <h3 class="pq__titulo" id="pq-sageo" data-reveal="fade-up" data-reveal-manual>San Francisco de Sageo</h3>
-        <div class="pq__galeria" data-abanico>
-          <a
-            class="btn pq__btn"
-            href="pages/parroquias/sageo.html"
-            aria-label="Visitar San Francisco de Sageo"
-            >Visitar</a
+        <article class="pq pq--crema" aria-labelledby="pq-sageo">
+          <h3
+            class="pq__titulo"
+            id="pq-sageo"
+            data-reveal="fade-up"
+            data-reveal-manual
           >
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/sageo_1.jpg"
-            alt="Ladera de bosque con un camino de tierra en San Francisco de Sageo"
-          />
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/sageo_2.jpg"
-            alt="Helechos y plantas nativas del bosque de Cubilán vistos de cerca"
-          />
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/sageo_3.jpg"
-            alt="Montañas y valles de Sageo bajo un cielo de tormenta"
-          />
-        </div>
-      </article>
+            San Francisco de Sageo
+          </h3>
+          <div class="pq__galeria" data-abanico>
+            <a
+              class="btn pq__btn"
+              href="pages/parroquias/sageo.html"
+              aria-label="Visitar San Francisco de Sageo"
+              >Visitar</a
+            >
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/sageo_1.jpg"
+              alt="Ladera de bosque con un camino de tierra en San Francisco de Sageo"
+            />
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/sageo_2.jpg"
+              alt="Helechos y plantas nativas del bosque de Cubilán vistos de cerca"
+            />
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/sageo_3.jpg"
+              alt="Montañas y valles de Sageo bajo un cielo de tormenta"
+            />
+          </div>
+        </article>
 
-      <article class="pq pq--terracota" aria-labelledby="pq-nazon">
-        <h3 class="pq__titulo" id="pq-nazon" data-reveal="fade-up" data-reveal-manual>Nazón</h3>
-        <div class="pq__galeria" data-abanico>
-          <a
-            class="btn pq__btn"
-            href="pages/parroquias/nazon.html"
-            aria-label="Visitar Nazón"
-            >Visitar</a
+        <article class="pq pq--terracota" aria-labelledby="pq-nazon">
+          <h3
+            class="pq__titulo"
+            id="pq-nazon"
+            data-reveal="fade-up"
+            data-reveal-manual
           >
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/nazon_1.jpg"
-            alt="Casa de teja entre potreros y una hilera de árboles en la zona alta de Nazón, con neblina sobre las montañas"
-          />
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/nazon_2.jpg"
-            alt="Potreros verdes y dorados divididos por cercas vivas, con una pequeña casa, en Tuñi Sagre vistos desde el aire"
-          />
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/nazon_3.jpg"
-            alt="Camino de tierra entre bosque de pinos y potreros en Nazón, visto desde el aire"
-          />
-        </div>
-      </article>
+            Nazón
+          </h3>
+          <div class="pq__galeria" data-abanico>
+            <a
+              class="btn pq__btn"
+              href="pages/parroquias/nazon.html"
+              aria-label="Visitar Nazón"
+              >Visitar</a
+            >
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/nazon_1.jpg"
+              alt="Casa de teja entre potreros y una hilera de árboles en la zona alta de Nazón, con neblina sobre las montañas"
+            />
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/nazon_2.jpg"
+              alt="Potreros verdes y dorados divididos por cercas vivas, con una pequeña casa, en Tuñi Sagre vistos desde el aire"
+            />
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/nazon_3.jpg"
+              alt="Camino de tierra entre bosque de pinos y potreros en Nazón, visto desde el aire"
+            />
+          </div>
+        </article>
 
-      <article class="pq pq--azul" aria-labelledby="pq-biblian">
-        <h3 class="pq__titulo" id="pq-biblian" data-reveal="fade-up" data-reveal-manual>Biblián</h3>
-        <div class="pq__galeria" data-abanico>
-          <a
-            class="btn pq__btn"
-            href="pages/parroquias/biblian.html"
-            aria-label="Visitar Biblián"
-            >Visitar</a
+        <article class="pq pq--azul" aria-labelledby="pq-biblian">
+          <h3
+            class="pq__titulo"
+            id="pq-biblian"
+            data-reveal="fade-up"
+            data-reveal-manual
           >
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/biblian_1.jpg"
-            alt="Torre azul del santuario de la Virgen del Rocío junto a la carretera que sube al Monte Zhalao"
-          />
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/biblian_2.jpg"
-            alt="Santuario de la Virgen del Rocío sobre la roca, bajo un cielo azul con nubes"
-          />
-          <img
-            class="pq__foto"
-            loading="lazy"
-            decoding="async"
-            src="assets/img/inicio/parroquias/biblian_3.jpg"
-            alt="Capilla blanca en la cima del Monte Zhalao junto a una antena"
-          />
-        </div>
-      </article>
+            Biblián
+          </h3>
+          <div class="pq__galeria" data-abanico>
+            <a
+              class="btn pq__btn"
+              href="pages/parroquias/biblian.html"
+              aria-label="Visitar Biblián"
+              >Visitar</a
+            >
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/biblian_1.jpg"
+              alt="Torre azul del santuario de la Virgen del Rocío junto a la carretera que sube al Monte Zhalao"
+            />
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/biblian_2.jpg"
+              alt="Santuario de la Virgen del Rocío sobre la roca, bajo un cielo azul con nubes"
+            />
+            <img
+              class="pq__foto"
+              loading="lazy"
+              decoding="async"
+              src="assets/img/inicio/parroquias/biblian_3.jpg"
+              alt="Capilla blanca en la cima del Monte Zhalao junto a una antena"
+            />
+          </div>
+        </article>
       </section>
 
       <!-- ===================== VOCES LOCALES =====================
@@ -322,25 +403,100 @@
            foto se desenfoca y sube su cita. Todo el panel de la cita es un
            enlace (con el ícono de flecha) a la subpágina de la persona
            (pages/voces/). -->
-      <section class="section voces" id="voces" data-voces aria-labelledby="voces-titulo">
+      <section
+        class="section voces"
+        id="voces"
+        data-voces
+        aria-labelledby="voces-titulo"
+      >
         <div class="container">
           <h2 class="section__title" id="voces-titulo" data-reveal="fade-up">
             <span class="pill">Voces</span><br />locales
           </h2>
-          <div class="voces__tabs" role="tablist" aria-label="Personas" data-reveal="fade-up">
-            <button class="voces__tab" type="button" role="tab" id="voz-tab-john" aria-controls="voz-john" aria-selected="false" tabindex="-1">John</button>
-            <button class="voces__tab" type="button" role="tab" id="voz-tab-milton" aria-controls="voz-milton" aria-selected="true">Milton</button>
-            <button class="voces__tab" type="button" role="tab" id="voz-tab-micaela" aria-controls="voz-micaela" aria-selected="false" tabindex="-1">Micaela</button>
-            <button class="voces__tab" type="button" role="tab" id="voz-tab-segundo" aria-controls="voz-segundo" aria-selected="false" tabindex="-1">Segundo</button>
-            <button class="voces__tab" type="button" role="tab" id="voz-tab-fredy" aria-controls="voz-fredy" aria-selected="false" tabindex="-1">Fredy</button>
+          <div
+            class="voces__tabs"
+            role="tablist"
+            aria-label="Personas"
+            data-reveal="fade-up"
+          >
+            <button
+              class="voces__tab"
+              type="button"
+              role="tab"
+              id="voz-tab-john"
+              aria-controls="voz-john"
+              aria-selected="false"
+              tabindex="-1"
+            >
+              John
+            </button>
+            <button
+              class="voces__tab"
+              type="button"
+              role="tab"
+              id="voz-tab-milton"
+              aria-controls="voz-milton"
+              aria-selected="true"
+            >
+              Milton
+            </button>
+            <button
+              class="voces__tab"
+              type="button"
+              role="tab"
+              id="voz-tab-micaela"
+              aria-controls="voz-micaela"
+              aria-selected="false"
+              tabindex="-1"
+            >
+              Micaela
+            </button>
+            <button
+              class="voces__tab"
+              type="button"
+              role="tab"
+              id="voz-tab-segundo"
+              aria-controls="voz-segundo"
+              aria-selected="false"
+              tabindex="-1"
+            >
+              Segundo
+            </button>
+            <button
+              class="voces__tab"
+              type="button"
+              role="tab"
+              id="voz-tab-fredy"
+              aria-controls="voz-fredy"
+              aria-selected="false"
+              tabindex="-1"
+            >
+              Fredy
+            </button>
           </div>
           <div class="voces__paneles">
-            <div class="voces__panel" role="tabpanel" id="voz-john" aria-labelledby="voz-tab-john" hidden>
+            <div
+              class="voces__panel"
+              role="tabpanel"
+              id="voz-john"
+              aria-labelledby="voz-tab-john"
+              hidden
+            >
               <figure class="voz voz--azul" tabindex="0">
-                <img class="voz__foto" src="assets/img/inicio/voces/john.jpg" alt="Retrato de John entre el pajonal del páramo, con montañas y neblina de fondo" width="720" height="960" loading="lazy" decoding="async" />
+                <img
+                  class="voz__foto"
+                  src="assets/img/inicio/voces/john.jpg"
+                  alt="Retrato de John entre el pajonal del páramo, con montañas y neblina de fondo"
+                  width="720"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <figcaption class="voz__cita">
                   <a class="voz__enlace" href="pages/voces/john.html">
-                    <blockquote><p>Todavía se rescatan algunos saberes ancestrales.</p></blockquote>
+                    <blockquote>
+                      <p>Todavía se rescatan algunos saberes ancestrales.</p>
+                    </blockquote>
                     <span class="voz__lugar">-Nazón</span>
                     <span class="voz__ir" aria-hidden="true"></span>
                     <span class="sr-only">Conoce la historia de John</span>
@@ -348,12 +504,27 @@
                 </figcaption>
               </figure>
             </div>
-            <div class="voces__panel" role="tabpanel" id="voz-milton" aria-labelledby="voz-tab-milton">
+            <div
+              class="voces__panel"
+              role="tabpanel"
+              id="voz-milton"
+              aria-labelledby="voz-tab-milton"
+            >
               <figure class="voz voz--amarillo" tabindex="0">
-                <img class="voz__foto" src="assets/img/inicio/voces/milton.jpg" alt="Retrato de Milton con cerros de pajonal y cielo nublado de fondo" width="720" height="960" loading="lazy" decoding="async" />
+                <img
+                  class="voz__foto"
+                  src="assets/img/inicio/voces/milton.jpg"
+                  alt="Retrato de Milton con cerros de pajonal y cielo nublado de fondo"
+                  width="720"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <figcaption class="voz__cita">
                   <a class="voz__enlace" href="pages/voces/milton.html">
-                    <blockquote><p>Te sientes parte de la tierra.</p></blockquote>
+                    <blockquote>
+                      <p>Te sientes parte de la tierra.</p>
+                    </blockquote>
                     <span class="voz__lugar">-Jerusalén</span>
                     <span class="voz__ir" aria-hidden="true"></span>
                     <span class="sr-only">Conoce la historia de Milton</span>
@@ -361,12 +532,28 @@
                 </figcaption>
               </figure>
             </div>
-            <div class="voces__panel" role="tabpanel" id="voz-micaela" aria-labelledby="voz-tab-micaela" hidden>
+            <div
+              class="voces__panel"
+              role="tabpanel"
+              id="voz-micaela"
+              aria-labelledby="voz-tab-micaela"
+              hidden
+            >
               <figure class="voz voz--azul" tabindex="0">
-                <img class="voz__foto" src="assets/img/inicio/voces/micaela.jpg" alt="Retrato de Micaela frente al santuario de la Virgen del Rocío" width="720" height="960" loading="lazy" decoding="async" />
+                <img
+                  class="voz__foto"
+                  src="assets/img/inicio/voces/micaela.jpg"
+                  alt="Retrato de Micaela frente al santuario de la Virgen del Rocío"
+                  width="720"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <figcaption class="voz__cita">
                   <a class="voz__enlace" href="pages/voces/micaela.html">
-                    <blockquote><p>Un lugar de mucha riqueza, sobre todo cultural.</p></blockquote>
+                    <blockquote>
+                      <p>Un lugar de mucha riqueza, sobre todo cultural.</p>
+                    </blockquote>
                     <span class="voz__lugar">-Biblián</span>
                     <span class="voz__ir" aria-hidden="true"></span>
                     <span class="sr-only">Conoce la historia de Micaela</span>
@@ -374,12 +561,28 @@
                 </figcaption>
               </figure>
             </div>
-            <div class="voces__panel" role="tabpanel" id="voz-segundo" aria-labelledby="voz-tab-segundo" hidden>
+            <div
+              class="voces__panel"
+              role="tabpanel"
+              id="voz-segundo"
+              aria-labelledby="voz-tab-segundo"
+              hidden
+            >
               <figure class="voz voz--azul" tabindex="0">
-                <img class="voz__foto" src="assets/img/inicio/voces/segundo.jpg" alt="Retrato de Segundo frente a un bosque" width="720" height="960" loading="lazy" decoding="async" />
+                <img
+                  class="voz__foto"
+                  src="assets/img/inicio/voces/segundo.jpg"
+                  alt="Retrato de Segundo frente a un bosque"
+                  width="720"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <figcaption class="voz__cita">
                   <a class="voz__enlace" href="pages/voces/segundo.html">
-                    <blockquote><p>Es como que el tiempo se ha detenido.</p></blockquote>
+                    <blockquote>
+                      <p>Es como que el tiempo se ha detenido.</p>
+                    </blockquote>
                     <span class="voz__lugar">-Turupamba</span>
                     <span class="voz__ir" aria-hidden="true"></span>
                     <span class="sr-only">Conoce la historia de Segundo</span>
@@ -387,12 +590,28 @@
                 </figcaption>
               </figure>
             </div>
-            <div class="voces__panel" role="tabpanel" id="voz-fredy" aria-labelledby="voz-tab-fredy" hidden>
+            <div
+              class="voces__panel"
+              role="tabpanel"
+              id="voz-fredy"
+              aria-labelledby="voz-tab-fredy"
+              hidden
+            >
               <figure class="voz voz--amarillo" tabindex="0">
-                <img class="voz__foto" src="assets/img/inicio/voces/fredy.jpg" alt="Retrato de Fredy con montañas cubiertas de bosque y nubes de fondo" width="720" height="960" loading="lazy" decoding="async" />
+                <img
+                  class="voz__foto"
+                  src="assets/img/inicio/voces/fredy.jpg"
+                  alt="Retrato de Fredy con montañas cubiertas de bosque y nubes de fondo"
+                  width="720"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <figcaption class="voz__cita">
                   <a class="voz__enlace" href="pages/voces/fredy.html">
-                    <blockquote><p>Aquí también sí se puede emprender.</p></blockquote>
+                    <blockquote>
+                      <p>Aquí también sí se puede emprender.</p>
+                    </blockquote>
                     <span class="voz__lugar">-Sageo</span>
                     <span class="voz__ir" aria-hidden="true"></span>
                     <span class="sr-only">Conoce la historia de Fredy</span>
@@ -418,30 +637,82 @@
         <div class="datos__pista" data-datos-pista>
           <div class="datos__escena">
             <ul class="datos__cartas">
-            <li class="dato-carta dato-carta--azul">
-              <h3 class="dato-carta__titulo">Unas últimas manos</h3>
-              <p class="dato-carta__num" aria-hidden="true">01.</p>
-              <p class="dato-carta__texto">En Biblián todavía se horma el sombrero de paño, pero ya casi una sola persona lo practica en el centro cantonal. Si nadie lo aprende, este oficio podría desaparecer.</p>
-              <img class="dato-carta__foto" src="assets/img/inicio/datos/dato-1.jpg" alt="Una artesana sostiene un sombrero de paño naranja en su taller" width="720" height="960" loading="lazy" decoding="async" />
-            </li>
-            <li class="dato-carta dato-carta--terracota">
-              <h3 class="dato-carta__titulo">Misma piedra que el Santuario</h3>
-              <p class="dato-carta__num" aria-hidden="true">02.</p>
-              <p class="dato-carta__texto">En Sageo hay dos túneles de piedra por donde pasaba el tren. Se construyeron con la misma piedra que el Santuario de la Virgen del Rocío y siguen ahí, a pocos metros del centro parroquial.</p>
-              <img class="dato-carta__foto" src="assets/img/inicio/datos/dato-2.jpg" alt="Una joven con los brazos abiertos camina hacia la entrada de un túnel de piedra del antiguo tren" width="720" height="960" loading="lazy" decoding="async" />
-            </li>
-            <li class="dato-carta dato-carta--amarillo">
-              <h3 class="dato-carta__titulo">Carbón para el tren</h3>
-              <p class="dato-carta__num" aria-hidden="true">03.</p>
-              <p class="dato-carta__texto">En Turupamba se sacaba carbón de cuevas cavadas a mano y se llevaba en mulas para el ferrocarril. Casi todos vivían de eso. Hoy solo quedan vestigios en San Luis, en un lugar que todavía llaman "las minas".</p>
-              <img class="dato-carta__foto" src="assets/img/inicio/datos/dato-3.jpg" alt="Fotografía antigua de vagonetas cargadas en una mina, junto a montículos de piedra" width="720" height="960" loading="lazy" decoding="async" />
-            </li>
-            <li class="dato-carta dato-carta--crema">
-              <h3 class="dato-carta__titulo">Aquí hubo una batalla</h3>
-              <p class="dato-carta__num" aria-hidden="true">04.</p>
-              <p class="dato-carta__texto">En Verdeloma, Nazón, se libró en 1820 una batalla por la independencia. El obelisco que la recuerda fue declarado patrimonio cultural, pero muchos todavía no saben que existe.</p>
-              <img class="dato-carta__foto" src="assets/img/inicio/datos/dato-4.jpg" alt="Fotografía antigua de un grupo de hombres formados junto al obelisco de Verdeloma" width="720" height="960" loading="lazy" decoding="async" />
-            </li>
+              <li class="dato-carta dato-carta--azul">
+                <h3 class="dato-carta__titulo">Unas últimas manos</h3>
+                <p class="dato-carta__num" aria-hidden="true">01.</p>
+                <p class="dato-carta__texto">
+                  En Biblián todavía se horma el sombrero de paño, pero ya casi
+                  una sola persona lo practica en el centro cantonal. Si nadie
+                  lo aprende, este oficio podría desaparecer.
+                </p>
+                <img
+                  class="dato-carta__foto"
+                  src="assets/img/inicio/datos/dato-1.jpg"
+                  alt="Una artesana sostiene un sombrero de paño naranja en su taller"
+                  width="720"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </li>
+              <li class="dato-carta dato-carta--terracota">
+                <h3 class="dato-carta__titulo">
+                  Misma piedra que el Santuario
+                </h3>
+                <p class="dato-carta__num" aria-hidden="true">02.</p>
+                <p class="dato-carta__texto">
+                  En Sageo hay dos túneles de piedra por donde pasaba el tren.
+                  Se construyeron con la misma piedra que el Santuario de la
+                  Virgen del Rocío y siguen ahí, a pocos metros del centro
+                  parroquial.
+                </p>
+                <img
+                  class="dato-carta__foto"
+                  src="assets/img/inicio/datos/dato-2.jpg"
+                  alt="Una joven con los brazos abiertos camina hacia la entrada de un túnel de piedra del antiguo tren"
+                  width="720"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </li>
+              <li class="dato-carta dato-carta--amarillo">
+                <h3 class="dato-carta__titulo">Carbón para el tren</h3>
+                <p class="dato-carta__num" aria-hidden="true">03.</p>
+                <p class="dato-carta__texto">
+                  En Turupamba se sacaba carbón de cuevas cavadas a mano y se
+                  llevaba en mulas para el ferrocarril. Casi todos vivían de
+                  eso. Hoy solo quedan vestigios en San Luis, en un lugar que
+                  todavía llaman "las minas".
+                </p>
+                <img
+                  class="dato-carta__foto"
+                  src="assets/img/inicio/datos/dato-3.jpg"
+                  alt="Fotografía antigua de vagonetas cargadas en una mina, junto a montículos de piedra"
+                  width="720"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </li>
+              <li class="dato-carta dato-carta--crema">
+                <h3 class="dato-carta__titulo">Aquí hubo una batalla</h3>
+                <p class="dato-carta__num" aria-hidden="true">04.</p>
+                <p class="dato-carta__texto">
+                  En Verdeloma, Nazón, se libró en 1820 una batalla por la
+                  independencia. El obelisco que la recuerda fue declarado
+                  patrimonio cultural, pero muchos todavía no saben que existe.
+                </p>
+                <img
+                  class="dato-carta__foto"
+                  src="assets/img/inicio/datos/dato-4.jpg"
+                  alt="Fotografía antigua de un grupo de hombres formados junto al obelisco de Verdeloma"
+                  width="720"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </li>
             </ul>
           </div>
         </div>
@@ -453,64 +724,167 @@
            amarilla. Toda la carta es tocable: el enlace del título la cubre
            entera y lleva a su subpágina (pages/eventos/).
            Las imágenes son decorativas (alt vacío): la carta ya dice lo mismo. -->
-      <section class="section eventos" id="activate" aria-labelledby="eventos-titulo">
+      <section
+        class="section eventos"
+        id="activate"
+        aria-labelledby="eventos-titulo"
+      >
         <div class="container">
           <h2 class="section__title" id="eventos-titulo" data-reveal="fade-up">
             Próximos <span class="pill">eventos</span>
           </h2>
           <div class="eventos__lista" data-stagger>
             <article class="evento" data-reveal="fade-up" style="--i: 0">
-              <div class="evento__media"><img class="evento__foto evento__foto--camping" src="assets/img/inicio/eventos/camping-padre-rumi.jpg" alt="" loading="lazy" decoding="async" /></div>
+              <div class="evento__media">
+                <img
+                  class="evento__foto evento__foto--camping"
+                  src="assets/img/inicio/eventos/camping-padre-rumi.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
               <div class="evento__cuerpo">
-                <h3 class="evento__titulo"><a class="evento__enlace" href="pages/eventos/camping-padre-rumi.html">Camping + pachamanca en Padre Rumi</a></h3>
-                <p class="evento__texto">Dos días de campamento en el páramo de Padre Rumi, con una pachamanca: comida andina cocinada bajo tierra con piedras calientes.</p>
+                <h3 class="evento__titulo">
+                  <a
+                    class="evento__enlace"
+                    href="pages/eventos/camping-padre-rumi.html"
+                    >Camping + pachamanca en Padre Rumi</a
+                  >
+                </h3>
+                <p class="evento__texto">
+                  Dos días de campamento en el páramo de Padre Rumi, con una
+                  pachamanca: comida andina cocinada bajo tierra con piedras
+                  calientes.
+                </p>
                 <p class="evento__datos">
-                  <time class="evento__fecha" datetime="2026-11-29">29 – 30 nov</time>
+                  <time class="evento__fecha" datetime="2026-11-29"
+                    >29 – 30 nov</time
+                  >
                   <span class="evento__lugar">Padre Rumi, Jerusalén</span>
                 </p>
               </div>
             </article>
             <article class="evento" data-reveal="fade-up" style="--i: 1">
-              <div class="evento__media"><img class="evento__foto evento__foto--shuriray" src="assets/img/inicio/eventos/caminata-shuriray.jpg" alt="" loading="lazy" decoding="async" /></div>
+              <div class="evento__media">
+                <img
+                  class="evento__foto evento__foto--shuriray"
+                  src="assets/img/inicio/eventos/caminata-shuriray.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
               <div class="evento__cuerpo">
-                <h3 class="evento__titulo"><a class="evento__enlace" href="pages/eventos/caminata-shuriray.html">Caminata ecoturística al cerro Shuriray</a></h3>
-                <p class="evento__texto">Caminata a la cueva del Señor de Belén y al mirador del cerro Shuriray.</p>
+                <h3 class="evento__titulo">
+                  <a
+                    class="evento__enlace"
+                    href="pages/eventos/caminata-shuriray.html"
+                    >Caminata ecoturística al cerro Shuriray</a
+                  >
+                </h3>
+                <p class="evento__texto">
+                  Caminata a la cueva del Señor de Belén y al mirador del cerro
+                  Shuriray.
+                </p>
                 <p class="evento__datos">
-                  <time class="evento__fecha" datetime="2026-12-08">8 – 10 dic</time>
-                  <span class="evento__lugar">Gruta Señor de Belén, Turupamba</span>
+                  <time class="evento__fecha" datetime="2026-12-08"
+                    >8 – 10 dic</time
+                  >
+                  <span class="evento__lugar"
+                    >Gruta Señor de Belén, Turupamba</span
+                  >
                 </p>
               </div>
             </article>
             <article class="evento" data-reveal="fade-up" style="--i: 2">
-              <div class="evento__media"><img class="evento__foto evento__foto--tuni" src="assets/img/inicio/eventos/caminata-tuni-sagre.jpg" alt="" loading="lazy" decoding="async" /></div>
+              <div class="evento__media">
+                <img
+                  class="evento__foto evento__foto--tuni"
+                  src="assets/img/inicio/eventos/caminata-tuni-sagre.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
               <div class="evento__cuerpo">
-                <h3 class="evento__titulo"><a class="evento__enlace" href="pages/eventos/caminata-tuni-sagre.html">Caminata al páramo Tuñi Sagre</a></h3>
-                <p class="evento__texto">Una caminata guiada desde Nazón hasta el páramo de Tuñi Sagre.</p>
+                <h3 class="evento__titulo">
+                  <a
+                    class="evento__enlace"
+                    href="pages/eventos/caminata-tuni-sagre.html"
+                    >Caminata al páramo Tuñi Sagre</a
+                  >
+                </h3>
+                <p class="evento__texto">
+                  Una caminata guiada desde Nazón hasta el páramo de Tuñi Sagre.
+                </p>
                 <p class="evento__datos">
-                  <time class="evento__fecha" datetime="2027-01-19">19 – 20 ene</time>
+                  <time class="evento__fecha" datetime="2027-01-19"
+                    >19 – 20 ene</time
+                  >
                   <span class="evento__lugar">Tuñi Sagre, Nazón</span>
                 </p>
               </div>
             </article>
             <article class="evento" data-reveal="fade-up" style="--i: 3">
-              <div class="evento__media"><img class="evento__foto evento__foto--zonas-frias" src="assets/img/inicio/eventos/ruta-zonas-frias.jpg" alt="" loading="lazy" decoding="async" /></div>
+              <div class="evento__media">
+                <img
+                  class="evento__foto evento__foto--zonas-frias"
+                  src="assets/img/inicio/eventos/ruta-zonas-frias.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
               <div class="evento__cuerpo">
-                <h3 class="evento__titulo"><a class="evento__enlace" href="pages/eventos/ruta-zonas-frias.html">Ruta a las zonas frías</a></h3>
-                <p class="evento__texto">Senderismo y trail de unos 12 km, ida y vuelta, por Cubilán en Sageo.</p>
+                <h3 class="evento__titulo">
+                  <a
+                    class="evento__enlace"
+                    href="pages/eventos/ruta-zonas-frias.html"
+                    >Ruta a las zonas frías</a
+                  >
+                </h3>
+                <p class="evento__texto">
+                  Senderismo y trail de unos 12 km, ida y vuelta, por Cubilán en
+                  Sageo.
+                </p>
                 <p class="evento__datos">
-                  <time class="evento__fecha" datetime="2027-02-14">14 – 20 feb</time>
+                  <time class="evento__fecha" datetime="2027-02-14"
+                    >14 – 20 feb</time
+                  >
                   <span class="evento__lugar">Cubilán, Sageo</span>
                 </p>
               </div>
             </article>
             <article class="evento" data-reveal="fade-up" style="--i: 4">
-              <div class="evento__media"><img class="evento__foto evento__foto--pregon" src="assets/img/inicio/eventos/pregon-virgen-rocio.jpg" alt="" loading="lazy" decoding="async" /></div>
+              <div class="evento__media">
+                <img
+                  class="evento__foto evento__foto--pregon"
+                  src="assets/img/inicio/eventos/pregon-virgen-rocio.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
               <div class="evento__cuerpo">
-                <h3 class="evento__titulo"><a class="evento__enlace" href="pages/eventos/pregon-virgen-rocio.html">Pregón de fiestas de la Virgen del Rocío</a></h3>
-                <p class="evento__texto">Procesión desde el barrio San Antonio hasta el Santuario en honor a la Virgen del Rocío.</p>
+                <h3 class="evento__titulo">
+                  <a
+                    class="evento__enlace"
+                    href="pages/eventos/pregon-virgen-rocio.html"
+                    >Pregón de fiestas de la Virgen del Rocío</a
+                  >
+                </h3>
+                <p class="evento__texto">
+                  Procesión desde el barrio San Antonio hasta el Santuario en
+                  honor a la Virgen del Rocío.
+                </p>
                 <p class="evento__datos">
-                  <time class="evento__fecha" datetime="2027-09-01">1 – 30 sep</time>
-                  <span class="evento__lugar">Santuario de la Virgen del Rocío, Biblián</span>
+                  <time class="evento__fecha" datetime="2027-09-01"
+                    >1 – 30 sep</time
+                  >
+                  <span class="evento__lugar"
+                    >Santuario de la Virgen del Rocío, Biblián</span
+                  >
                 </p>
               </div>
             </article>
@@ -560,7 +934,8 @@
           style="--i: 0"
           href="#inicio"
           aria-label="Ir al inicio — Biblián Vive"
-          ><span class="logo" aria-hidden="true"></span></a>
+          ><span class="logo" aria-hidden="true"></span
+        ></a>
         <div class="footer-contact__body" data-reveal="fade-up" style="--i: 1">
           <div>
             <h3>¡Escríbenos!</h3>

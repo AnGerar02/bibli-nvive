@@ -113,7 +113,9 @@
    impone" (oct-2026: antes se sumaban dos, arriba 128 px, y para igualarlo
    también abajo; se veía demasiado vacío). Las tarjetas no llevan margen
    inferior y el bloque texto + imagen queda con el normal arriba y abajo. */
-.section:has(> .info-cards) { padding-bottom: 0; }
+.section:has(> .info-cards) {
+  padding-bottom: 0;
+}
 
 /* ---------- 4) BLOQUE TEXTO + IMAGEN (§7.7) ---------- */
 .impone {
@@ -185,9 +187,15 @@
   box-shadow: var(--elev-2);
 }
 /* Variante amarilla (Sageo): fondo amarillo y frase en azul */
-.peel--amarillo { background: var(--md-accent); }
-.peel--amarillo .peel__back { color: var(--md-on-accent); }
-.peel--amarillo:focus-visible { outline-color: var(--md-primary); }
+.peel--amarillo {
+  background: var(--md-accent);
+}
+.peel--amarillo .peel__back {
+  color: var(--md-on-accent);
+}
+.peel--amarillo:focus-visible {
+  outline-color: var(--md-primary);
+}
 
 .peel__img,
 .peel__fold {
@@ -223,7 +231,9 @@
   padding: var(--space-m);
   font-family: var(--font-titulo);
   font-weight: var(--peso-bold);
-  font-size: var(--fs-body-sm); /* móvil: 12 px para que las frases largas quepan en el triángulo */
+  font-size: var(
+    --fs-body-sm
+  ); /* móvil: 12 px para que las frases largas quepan en el triángulo */
   line-height: var(--lh-tight);
   text-align: right;
   color: var(--md-surface);

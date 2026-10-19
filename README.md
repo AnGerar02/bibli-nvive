@@ -58,7 +58,7 @@ bibliánvive/
 ## ▶️ Cómo abrir
 
 1. Abrir la carpeta en **VS Code**.
-2. (Recomendado) instalar la extensión **Live Server** y hacer clic en *"Go Live"*,
+2. (Recomendado) instalar la extensión **Live Server** y hacer clic en _"Go Live"_,
    o simplemente abrir `index.html` en el navegador.
 
 ## ✅ Estado actual
