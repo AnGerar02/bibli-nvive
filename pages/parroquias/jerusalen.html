@@ -51,10 +51,18 @@
           <a class="nav__link" href="../../index.html#inicio">
             <span class="nav__label">Inicio</span>
           </a>
-          <!-- "Parroquias" lleva a la sección de parroquias del inicio (empieza en Turupamba) -->
-          <a class="nav__link is-active" href="../../index.html#parroquias"
-            ><span class="nav__label">Parroquias</span></a
-          >
+          <!-- "Parroquias" abre un desplegable con las cinco parroquias (foto, nombre y su color) (main.js, 2a) -->
+          <button class="nav__link nav__desplegar is-active" type="button" aria-expanded="false" aria-controls="nav-parroquias">
+            <span class="nav__label">Parroquias</span>
+            <svg class="nav__chevron" viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" /></svg>
+          </button>
+          <ul class="nav__parroquias" id="nav-parroquias" hidden>
+            <li><a class="nav__parroquia nav__parroquia--azul" href="turupamba.html"><img src="../../assets/img/ui/parroquias/turupamba.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Turupamba</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--amarillo" href="jerusalen.html" aria-current="page"><img src="../../assets/img/ui/parroquias/jerusalen.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Jerusalén</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--crema" href="sageo.html"><img src="../../assets/img/ui/parroquias/sageo.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>San Francisco de Sageo</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--terracota" href="nazon.html"><img src="../../assets/img/ui/parroquias/nazon.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Nazón</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--azul" href="biblian.html"><img src="../../assets/img/ui/parroquias/biblian.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Biblián</span></a></li>
+          </ul>
           <a class="nav__link" href="../../index.html#datos">
             <span class="nav__label">Datos</span>
           </a>
@@ -81,7 +89,8 @@
       </button>
     </header>
 
-    <main>
+    <!-- data-visor: las fotos de "Desde la raíz" se abren en el visor (main.js 5b) -->
+    <main data-visor data-visor-parroquia="Jerusalén">
       <!-- ===================== HERO (efecto tipo armenia.travel) =====================
            Al hacer scroll: la foto crece hasta llenar la pantalla, pierde las
            curvas y el título pasa de azul (abajo, fuera de la foto) a blanco
@@ -102,7 +111,7 @@
 
       <!-- ===================== DESDE LA RAÍZ (3 fotos en cartas) ===================== -->
       <section class="section raiz">
-        <h2 class="raiz__title" data-parallax="0.07" data-reveal="fade-in">
+        <h2 class="raiz__title" data-parallax="0.07" data-reveal="fade-in" data-palabras>
           Desde la raíz
         </h2>
 
@@ -182,7 +191,7 @@
       <section class="section">
         <div class="impone">
           <div data-reveal="fade-right">
-            <h2 class="impone__title">
+            <h2 class="impone__title" data-palabras>
               Donde la<br />
               piedra <br />
               <span class="pill">IMPONE</span>
@@ -196,12 +205,19 @@
             </p>
           </div>
           <!-- Esquina que se despega: al pasar el mouse (o tocar) se abre
-               y deja ver la frase que está detrás de la foto -->
+               y deja ver lo que está detrás de la foto
+               (oct-2026, prueba del autor: detrás solo va "Cómo llegar", que
+               abre Google Maps; sin la frase ni el pin) -->
           <figure class="peel" id="peel" tabindex="0" data-reveal="fade-left">
             <figcaption class="peel__back">
-              <span>3.800 msnm</span>
-              <span>y una sola pregunta:</span>
-              <span>¿quién las talló?</span>
+              <a
+                class="peel__mapa"
+                href="https://www.google.com/maps/search/?api=1&amp;query=Padre+Rumi%2C+Bibli%C3%A1n%2C+Ca%C3%B1ar%2C+Ecuador"
+                target="_blank"
+                rel="noopener"
+                aria-label="Cómo llegar (se abre Google Maps)"
+                >Cómo llegar <svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M640-624 284-268q-11 11-28 11t-28-11q-11-11-11-28t11-28l356-356H280q-17 0-28.5-11.5T240-720q0-17 11.5-28.5T280-760h400q17 0 28.5 11.5T720-720v400q0 17-11.5 28.5T680-280q-17 0-28.5-11.5T640-320v-304Z" /></svg
+              ></a>
             </figcaption>
             <img
               loading="lazy"
@@ -220,7 +236,7 @@
       <section class="video-feature">
         <div class="video-feature__inner">
           <div class="video-feature__text" data-reveal="fade-right">
-            <h2 class="video-feature__title">
+            <h2 class="video-feature__title" data-palabras>
               Una experiencia por los senderos naturales hacia el Padre Rumi
             </h2>
             <p>
@@ -251,214 +267,30 @@
 
       <!-- ===================== ¿QUÉ PODEMOS HACER? ===================== -->
       <section class="section hacemos">
-        <h2 class="hacemos__title" data-reveal="fade-up">
+        <!-- Actividades en cartas (oct-2026): las 4 actividades en fila
+             (2 × 2 en el celular), cada foto con su título encima. Entran como
+             las cartas de "Desde la raíz" (data-cartas, main.js 3). -->
+        <h2 class="hacemos__title" data-reveal="fade-up" data-palabras>
           ¿Qué <span class="pill pill--cola">podemos</span> hacer?
         </h2>
-
-        <div class="hacemos__rows">
-          <!-- Fila 1: tarjetas (texto + palabra) — aparece desde la izquierda -->
-          <div class="marquee" data-reveal="fade-left">
-            <div class="marquee__track" data-marquee>
-              <div class="flip q-item">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--amarillo">
-                      <h3 class="qfront__title">Senderismo</h3>
-                      <p>Área de gran biodiversidad y reserva hídrica</p>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item q-item--word">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--verde">
-                      <span class="qword">VIDA</span>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--terracota">
-                      <h3 class="qfront__title">Fotografía</h3>
-                      <p>De las formaciones y del paisaje andino</p>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item q-item--word">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--azul">
-                      <span class="qword">AIRE</span>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--amarillo">
-                      <h3 class="qfront__title">Observación</h3>
-                      <p>Buscar especies sin alterar su hábitat</p>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item q-item--word">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--verde">
-                      <span class="qword">PAZ</span>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--terracota">
-                      <h3 class="qfront__title">Picnic</h3>
-                      <p>
-                        Compartir llevando de regreso todos los residuos para no
-                        contaminar el ecosistema
-                      </p>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item q-item--word">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--azul">
-                      <span class="qword">LUZ</span>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Fila 2: fotos (dirección contraria) — aparece desde la derecha -->
-          <div class="marquee marquee--reverse" data-reveal="fade-right">
-            <div class="marquee__track" data-marquee>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/jerusalen/hacemos_1.jpg"
-                      alt="Riachuelo que baja entre piedras y arbustos nativos en las faldas de Padre Rumi"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/jerusalen/hacemos_2.jpg"
-                      alt="Vista aérea de lomas verdes con pajonal y árboles dispersos en Jerusalén"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/jerusalen/hacemos_3.jpg"
-                      alt="Colinas de pajonal dorado del páramo de Padre Rumi bajo un cielo nublado"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/jerusalen/hacemos_4.jpg"
-                      alt="Quebrada con un río entre laderas de páramo y bosque nativo en Padre Rumi"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/jerusalen/hacemos5.jpg"
-                      alt="Vista aérea de un arroyo escondido entre bosque nativo y pajonal"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/jerusalen/hacemos6.jpg"
-                      alt="Ovejas pastando en una ladera de páramo con el valle de Biblián al fondo"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/jerusalen/hacemos7.jpg"
-                      alt="Cordillera de Padre Rumi bajo nubes grises de tormenta"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/jerusalen/hacemos8.jpg"
-                      alt="Vista aérea del pajonal del páramo con pequeños claros verdes"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ul class="actividades" data-cartas>
+          <li class="actividad actividad--amarillo">
+            <span class="actividad__etiqueta">Desconexión</span>
+            <img loading="lazy" decoding="async" src="../../assets/img/parroquias/jerusalen/desconexion.jpg" alt="Vista aérea de un arroyo escondido entre bosque nativo y pajonal" />
+          </li>
+          <li class="actividad actividad--terracota">
+            <span class="actividad__etiqueta">Fotografía</span>
+            <img loading="lazy" decoding="async" src="../../assets/img/parroquias/jerusalen/fotografía.jpg" alt="Quebrada con un río entre laderas de páramo y bosque nativo en Padre Rumi" />
+          </li>
+          <li class="actividad actividad--amarillo">
+            <span class="actividad__etiqueta">Observación</span>
+            <img loading="lazy" decoding="async" src="../../assets/img/parroquias/jerusalen/observación.jpg" alt="Vista aérea de lomas verdes con pajonal y árboles dispersos en Jerusalén" />
+          </li>
+          <li class="actividad actividad--terracota">
+            <span class="actividad__etiqueta">Caminata</span>
+            <img loading="lazy" decoding="async" src="../../assets/img/parroquias/jerusalen/caminata.jpg" alt="Vista aérea del pajonal del páramo con pequeños claros verdes" />
+          </li>
+        </ul>
       </section>
     </main>
 
@@ -511,7 +343,7 @@
             <p>Más historias, más Biblián. Directo a ti.</p>
             <div class="footer-socials">
               <a
-                href="https://w.app/0drsrd"
+                href="https://wa.me/593983723673"
                 target="_blank"
                 rel="noopener"
                 aria-label="WhatsApp"

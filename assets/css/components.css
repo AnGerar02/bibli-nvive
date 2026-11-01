@@ -32,11 +32,11 @@
   transition: opacity 0.3s ease;
 }
 /* Fuera del tope (al volver a aparecer): azul translúcido + elevación 2
-   (oct-2026: colores invertidos; antes crema) */
+   (oct-2026: colores invertidos; antes crema). Sin desenfoque del fondo
+   (oct-2026, revisión del scroll): se recalculaba en cada cuadro mientras
+   se sube y trababa el scroll; con el azul al 92 % casi no se notaba. */
 .site-header.scrolled {
   background: color-mix(in srgb, var(--md-primary) 92%, transparent);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
   box-shadow: var(--elev-2);
   padding-block: var(--space-xs);
 }
@@ -49,6 +49,14 @@
 /* Con el menú móvil abierto el header no puede tener backdrop-filter
    (encerraría al menú de pantalla completa dentro del header) */
 body.menu-open { overflow: hidden; }
+/* Con el menú abierto la página de atrás no se desplaza. Donde se puede,
+   se bloquea en html (el que hace scroll) y body sigue con "clip": si
+   body pasara a "hidden" se volvería contenedor de scroll y los
+   escenarios fijos (sticky) se soltarían por un momento. */
+@supports selector(:has(*)) {
+  html:has(> body.menu-open) { overflow: hidden; }
+  body.menu-open { overflow: visible; overflow-x: hidden; overflow-x: clip; }
+}
 body.menu-open .site-header {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
@@ -101,19 +109,33 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
 .site-header.is-ready .site-header__nav { transform: none; opacity: 1; }
 
 /* ============================================================
-   1b) HERO (§7.4) — scroll-driven (parroquias e inicio)
-   --p va de 0 (arriba) a 1 (efecto completado), lo calcula main.js.
+   1b) HERO (§7.4) — parroquias e inicio
+   --p va de 0 (cerrada) a 1 (abierta).
    p=0 → foto/video con curva inferior; título abajo en azul sobre el crema.
    p=1 → a pantalla completa, sin curva; título blanco sobre degradado.
+   Oct-2026 (referencia: armenia.travel; "la animación es muy dura y
+   tiesa"): ya no sigue al scroll cuadro a cuadro. Al bajar un poco,
+   main.js le pone .is-abierta y --p se anima sola en 1 s con una curva
+   suave; al volver arriba se cierra igual. Por eso ya no queda fija 3/4
+   de pantalla mientras se baja (antes ese tramo era la animación).
    ============================================================ */
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
 .hero-wrap {
   --p: 0;
   /* franja inferior donde vive el título al inicio */
   --hero-strip: calc(
     var(--fs-display-lg) * var(--lh-tight) + var(--space-l) * 2
   );
-  height: 175vh;
+  height: 100vh;
   position: relative;
+  transition: --p var(--dur-hero) var(--ease-hero);
+}
+.hero-wrap.is-abierta {
+  --p: 1;
 }
 .hero-sticky {
   position: sticky;
@@ -125,8 +147,8 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   position: absolute;
   inset: 0;
   bottom: calc(var(--hero-strip) * (1 - var(--p)));
-  border-radius: 0 0 calc(var(--radius-2xl) * (1 - var(--p)))
-    calc(var(--radius-2xl) * (1 - var(--p)));
+  border-radius: 0 0 calc(var(--radius-portada) * (1 - var(--p)))
+    calc(var(--radius-portada) * (1 - var(--p)));
   overflow: hidden;
   background: var(--md-primary);
   /* elevación 2 que se desvanece cuando la foto llena la pantalla */
@@ -220,6 +242,13 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   padding: calc(var(--size-touch) + var(--space-m) * 3) var(--gutter) var(--space-xl);
   background: var(--md-surface);
   box-shadow: var(--elev-3);
+  /* las tarjetas esperan corridas a los lados para entrar: con el menú
+     cerrado sobresalían 16 px de la pantalla y en el celular se podía
+     deslizar la página de costado (se veía una barra blanca; oct-2026).
+     De arriba abajo se puede desplazar: con el desplegable de "Parroquias"
+     abierto, en pantallas bajas el menú no entra entero. */
+  overflow-x: hidden;
+  overflow-y: auto;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s ease, visibility 0.25s ease;
@@ -281,6 +310,66 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   text-underline-offset: var(--space-xs);
 }
 
+/* --- "Parroquias": desplegable con las cinco parroquias (oct-2026) ---
+   Test de usabilidad: para volver a una parroquia había que recorrer toda
+   la página. El ítem es un botón que abre la lista (foto redonda, nombre y
+   el color de cada parroquia, el mismo del inicio). En móvil la lista se abre debajo de su tarjeta, cada fila
+   del color de su parroquia; desde 600 px es un panel crema que cuelga
+   debajo del ítem y cada fila toma su color al pasar el mouse. */
+.nav__chevron {
+  flex: none;
+  width: var(--space-l);
+  height: var(--space-l);
+  margin-left: var(--space-xxs);
+  fill: currentColor;
+  transition: rotate var(--dur-btn) var(--ease-out);
+}
+.nav__desplegar[aria-expanded="true"] .nav__chevron { rotate: 180deg; }
+.nav__parroquias {
+  display: grid;
+  gap: var(--space-xxs);
+  width: calc(100% - var(--nav-badge) / 2);
+  align-self: flex-start; /* debajo de "Parroquias" (tarjeta de la izquierda) */
+  animation: nav-desplegar var(--dur-btn) var(--ease-out);
+}
+.nav__parroquias[hidden] { display: none; }
+@keyframes nav-desplegar {
+  from { opacity: 0; translate: 0 calc(-1 * var(--space-xs)); }
+}
+.nav__parroquia {
+  --np-fondo: var(--md-primary);
+  --np-texto: var(--md-on-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: var(--size-touch);
+  padding: var(--space-xxs) var(--space-m) var(--space-xxs) var(--space-xxs);
+  border-radius: var(--radius);
+  background-color: var(--np-fondo);
+  color: var(--np-texto);
+  font-family: var(--font-titulo);
+  font-weight: var(--peso-bold);
+  font-size: var(--fs-title-lg);
+  line-height: var(--lh-tight);
+  transition: background-color var(--dur-btn) var(--ease-out), color var(--dur-btn) var(--ease-out);
+}
+.nav__parroquia img {
+  flex: none;
+  width: var(--nav-parroquia-foto);
+  height: var(--nav-parroquia-foto);
+  border-radius: var(--radius-full);
+  object-fit: cover;
+}
+.nav__parroquia--amarillo  { --np-fondo: var(--md-accent);   --np-texto: var(--md-on-accent); }
+.nav__parroquia--crema     { --np-fondo: var(--md-surface-container-high); --np-texto: var(--md-primary); } /* el crema de la página no se distinguiría */
+.nav__parroquia--terracota { --np-fondo: var(--md-tertiary); --np-texto: var(--md-on-tertiary); }
+/* la parroquia en la que se está: en negrita y subrayada (no solo color) */
+.nav__parroquia[aria-current="page"] span {
+  text-decoration: underline;
+  text-decoration-thickness: var(--stroke);
+  text-underline-offset: var(--space-xxs);
+}
+
 .nav.is-open .nav__link:nth-child(n of .nav__link) { opacity: 1; transform: none; }
 .nav.is-open .nav__link:nth-child(1 of .nav__link) { transition-delay: 0.05s; }
 .nav.is-open .nav__link:nth-child(2 of .nav__link) { transition-delay: 0.12s; }
@@ -304,7 +393,8 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   .nav-toggle { display: none; }
 
   .nav {
-    position: static;
+    position: relative; /* el desplegable de "Parroquias" se ubica respecto de la barra */
+    overflow: visible;
     flex-direction: row;
     align-items: center;
     gap: var(--space-xxs);
@@ -359,6 +449,41 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   }
   .site-header.scrolled .nav .nav__link.is-active .nav__label { text-decoration: none; }
   .site-header.scrolled .nav .nav__link.is-active:hover { background-image: linear-gradient(var(--layer-on-surface-hover), var(--layer-on-surface-hover)); }
+
+  /* "Parroquias": panel crema bajo el ítem (main.js lo alinea con el
+     botón); cada fila toma el color de su parroquia al pasar el mouse */
+  /* La flecha no suma ancho al ítem: ocupa el aire de la derecha, así la
+     palabra "Parroquias" queda centrada entre sus vecinos como los demás
+     ítems (oct-2026: con la flecha sumando ancho se veía corrida a la
+     izquierda, sobre todo junto a la pastilla del activo). Cuando
+     "Parroquias" es la pastilla activa, la flecha va dentro de la pastilla
+     con el mismo aire a los dos lados. */
+  .nav__chevron { width: var(--space-s); height: var(--space-s); }
+  .nav__desplegar .nav__chevron { margin-right: calc(-1 * (var(--space-s) + var(--space-xxs))); }
+  .site-header.scrolled .nav__desplegar.is-active .nav__chevron { margin-right: 0; }
+  .nav__parroquias {
+    position: absolute;
+    top: calc(100% + var(--space-xs));
+    left: var(--desplegable-x, 0px);
+    z-index: 2;
+    width: var(--nav-desplegable-ancho);
+    padding: var(--space-xs);
+    border-radius: var(--radius-xl);
+    background-color: var(--md-surface);
+    box-shadow: var(--elev-2);
+  }
+  .nav__parroquia {
+    background-color: transparent;
+    color: var(--md-primary);
+    font-size: var(--fs-body-lg);
+    letter-spacing: normal;
+  }
+  .nav__parroquia:hover,
+  .nav__parroquia:focus-visible,
+  .nav__parroquia[aria-current="page"] {
+    background-color: var(--np-fondo);
+    color: var(--np-texto);
+  }
 }
 
 /* ============================================================
@@ -417,6 +542,23 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
     );
     box-shadow: var(--elev-2);
   }
+}
+/* Botón con flecha ("Conoce su historia →", "Ver evento →"): ícono de
+   Material Symbols Rounded de 24 px, en la misma línea que el texto y
+   centrado a la altura de las mayúsculas. Como la flecha ocupa lugar, el
+   botón lleva menos aire a los lados y no parte el texto en dos líneas. */
+.btn:has(.btn__flecha) {
+  padding-inline: var(--space-l);
+  white-space: nowrap;
+}
+.btn__flecha {
+  display: inline-block; /* el reset pone los svg en bloque */
+  flex: none;
+  width: var(--space-l);
+  height: var(--space-l);
+  margin-left: var(--space-xs);
+  vertical-align: calc((1cap - var(--space-l)) / 2);
+  fill: currentColor;
 }
 /* Área del mouse: mientras el botón está levantado, se estira hacia abajo
    lo mismo que sube. Sin esto, con el mouse en el borde inferior el botón
@@ -696,6 +838,8 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
 /* Escritorio: dos paneles lado a lado */
 @media (min-width: 840px) {
   .nav .nav__link:nth-child(n of .nav__link) { padding: var(--space-s) var(--space-l); } /* escritorio: padding 12 × 24 */
+  .nav__chevron { width: var(--space-m); height: var(--space-m); } /* con más aire a los lados, la flecha puede ser de 16 px */
+  .nav__desplegar .nav__chevron { margin-right: calc(-1 * (var(--space-m) + var(--space-xxs))); }
   .site-footer { grid-template-columns: 1.05fr 1fr; }
   .footer-left { order: 0; padding: var(--space-2xl) var(--space-2xl) var(--space-l); }
   .footer-contact { order: 0; padding: var(--space-2xl) var(--space-2xl) var(--space-xl); }

@@ -6,14 +6,24 @@
 /* Sin scroll-behavior: smooth (oct-2026): al ir a una sección desde el menú
    o al volver al inicio (index.html#voces…) se llega directo, sin bajar
    animado por toda la página, que mareaba */
-html { -webkit-text-size-adjust: 100%; }
+/* Sin scroll horizontal (oct-2026, test de usabilidad: en el celular, al
+   deslizar de lado se veía una barra blanca). En html y en body: algunos
+   navegadores del celular no respetan el de body solo. Se usa "clip"
+   porque recorta sin convertir html/body en contenedores de scroll (con
+   "hidden" en los dos, los escenarios fijos —sticky— dejarían de
+   funcionar); "hidden" queda de respaldo para navegadores antiguos. */
+html {
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
+}
 
 body {
   min-height: 100vh;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;            /* evita scroll horizontal por animaciones */
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 img, picture, video, canvas, svg { display: block; max-width: 100%; }

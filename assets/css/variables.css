@@ -12,13 +12,13 @@
      PRUEBA "Paleta A" (sep-2026): mismos tonos, más saturación.
      Valores anteriores anotados al lado para poder volver. */
   --md-primary:             #056287;  /* Azul (antes #3B5F73) */
-  --md-on-primary:          #FFFFFF;
+  --md-on-primary:          var(--md-surface);  /* crema, como RAÍCES (antes blanco #FFFFFF; oct-2026) */
   /* PRUEBA: verde reemplazado por el azul.
      Verde original: #627742 · verde paleta A: #597C03 */
   --md-secondary:           var(--md-primary);
-  --md-on-secondary:        #FFFFFF;
+  --md-on-secondary:        var(--md-surface);  /* crema (antes #FFFFFF) */
   --md-tertiary:            #C24E00;  /* Terracota con texto (antes #AC4B10) */
-  --md-on-tertiary:         #FFFFFF;
+  --md-on-tertiary:         var(--md-surface);  /* crema (antes #FFFFFF) */
   --md-tertiary-deco:       #D55A01;  /* Terracota decorativa (antes #CC6228) */
   --md-accent:              #FE9C29;  /* Amarillo (antes #F99F3F) */
   --md-on-accent:           var(--md-primary);  /* un solo azul para todo el texto */
@@ -115,12 +115,22 @@
   --nav-badge:      64px;        /* menú móvil: las tarjetas son la mitad de esto (32 px) más angostas que la pantalla, para el escalonado (antes era el círculo del ícono) */
   --nav-badge-ring: 8px;         /* SIN USO (oct-2026): aro del círculo del ícono, que ya no existe */
   --nav-card-max:   128px;       /* alto máximo de cada tarjeta del menú móvil */
+  --nav-parroquia-foto: 2.5rem;  /* desplegable de "Parroquias": foto redonda de cada parroquia (40 px) */
+  /* Visor de postales (páginas de parroquia, oct-2026) */
+  --visor-ancho: 64rem;          /* ancho máximo de la foto en el visor (1024 px) */
+  --visor-foto-alto: 72svh;      /* alto máximo de la foto en el visor (debajo solo va el número de foto) */
+  --nav-desplegable-ancho: 17rem; /* desplegable de "Parroquias" desde 600 px: ancho del panel (272 px) */
   --peel-rest: 56px;             /* esquina doblada en reposo */
   --peel-open: 70cqi;            /* esquina abierta en móvil/tablet: < 75 % para que la punta quede dentro de la foto 4:3 */
+  /* Actividades en cartas ("¿Qué podemos hacer?", las 5 parroquias, oct-2026) */
+  --actividad-etiqueta: calc(var(--fs-label-lg) * var(--lh-tight) + var(--space-xxs) * 3); /* lo que ocupa el título encima de cada foto, con su margen (28 px) */
   /* Inicio (landing) */
   --header-alto: calc(var(--size-touch) + var(--space-xs) * 2); /* header en crema: logo 48 px + 8 px arriba y abajo */
   --capas-alto: 100svh;          /* escenario del parallax: llena la pantalla mientras queda fijo */
   --capas-scroll: 100svh;        /* cuánto se baja con el escenario fijo (lo que dura la animación) */
+  --capas-reposo: 40svh;         /* al terminar, la escena completa queda quieta este tramo antes de las parroquias (oct-2026) */
+  --capas-cubre: 100svh;         /* al final, las parroquias suben como una cortina sobre la escena quieta (oct-2026: antes la escena subía pegada a la página, "tiesa") */
+  --pq-fundido: 50svh;           /* borde de arriba difuminado de las parroquias sobre el final de RAÍCES (oct-2026; antes 30svh, con degradado lineal) */
   --capas-recorrido: 12%;        /* lo que sobra cada capa arriba y abajo, para que al moverse no deje huecos */
   --capas-foco: 35% 50%;         /* punto de la composición que se conserva al recortar (móvil: el santuario) */
   --niebla-alto: 150svh;         /* alto de cada banda de niebla (más alta que la pantalla: la tapa al pasar) */
@@ -130,12 +140,15 @@
   --hero-reposo: 50vh;           /* inicio: scroll extra con el título del video quieto (para leerlo) antes de la niebla */
   --pq-galeria: calc(var(--container) - var(--gutter) * 2); /* ancho máximo de las 3 fotos de cada parroquia en el inicio: el mismo ancho de contenido que las páginas de parroquia (1152 px en escritorio; antes 896 px) */
   --fs-marca: clamp(2.5rem, 11vw, 12rem); /* palabra grande de la escena de capas ("RAÍCES") */
-  --voz-ancho: 17.5rem;          /* ancho de la foto de cada voz local (280 px) */
-  --voces-tabs: 54rem;           /* ancho máximo de la barra de pestañas de voces (864 px) */
+  --voz-ancho: 17.5rem;          /* SIN USO desde oct-2026 (antes ancho de la foto de cada voz local) */
+  --voz-ficha: 56rem;            /* voces locales: ancho máximo de la ficha destacada (896 px) */
+  --voces-avatar: 3.25rem;       /* voces locales: cara de cada pestaña (52 px; 64 px desde 600 px) */
+  --voz-acerca: 1.04;            /* voces locales: la foto se acerca un 4 % al pasar el mouse por la ficha */
+  --voces-tabs: 54rem;           /* SIN USO desde oct-2026 (antes la barra azul de pestañas de voces) */
   --voz-foto-grande: 22.5rem;    /* foto de la persona en su subpágina (360 px) */
   /* Datos interesantes: rueda de cartas (como armenia.travel) */
   /* Datos interesantes: cartas que suben con el scroll (oct-2026, como dontboardme.com) */
-  --datos-pantallas: 4;          /* alto del tramo fijo, en pantallas: 1 que se ve + 3 de scroll para las 4 cartas */
+  --datos-pantallas: 2.5;        /* alto del tramo fijo, en pantallas: 1 que se ve + 1,5 de scroll para las 3 cartas que suben (oct-2026: antes 4, tardaba mucho) */
   --dato-escena: min(85vw, 26rem); /* ancho de cada carta (416 px como máximo) */
   --dato-baja: var(--space-m);   /* cada carta queda un poco más abajo que la anterior (móvil 16 px; escritorio 32 px) */
   --dato-inclina: 2.5deg;        /* inclinación base; cada carta la multiplica (−0,8, 0,4, −1,2, 0,8) */
@@ -155,7 +168,7 @@
   --evento-foto: 10rem;          /* alto de la imagen de cada carta de evento (160 px) */
   --evento-ancho: 64rem;         /* ancho del contenido en las subpáginas de eventos (1024 px, según el diseño) */
   --consejo-icono: 2.5rem;       /* cuadro azul del ícono en "Antes de ir" (40 px) */
-  --voz-blur: 12px;              /* desenfoque de la foto cuando aparece la cita */
+  --voz-blur: 12px;              /* SIN USO desde oct-2026 (la cita ya no aparece sobre la foto desenfocada) */
 
   /* ================= FORMA (esquinas) ================= */
   /* Oct-2026: una sola curvatura para todo el sitio (fotos, tarjetas,
@@ -170,6 +183,10 @@
   --radius-xl:   var(--radius);  /* antes 28 px (tarjetas y fotos) */
   --radius-2xl:  var(--radius);  /* antes 48 px (hero, footer, secciones) */
   --radius-full: 999px;          /* solo círculos (logo, redes) y puntas de líneas divisorias */
+  /* Fotos a todo el ancho (portadas): la curva crece con la pantalla, de
+     16 px en el celular a 48 px en escritorio (4 % del ancho). Con 16 px
+     fijos, una foto de 1280 px se veía con las esquinas casi rectas. */
+  --radius-portada: clamp(var(--radius), 4vw, 48px);
   /* Botones y pastillas (piezas con forma de botón): la curva es un tercio
      del alto, sea cual sea su tamaño. Así un botón de 48 px (16 px), la
      pestaña de 32 px (≈ 11 px) y una pastilla de título de 80 px (≈ 27 px)
@@ -207,7 +224,8 @@
   --dur-cascade: 0.35s;
   --dur-btn:     0.25s;  /* hover de los botones (sube, sombra y color) */
   --dur-press:   0.15s;  /* botón presionado (escala 0.97) */
-  --dur-voz:     0.45s;  /* voces locales: aparece la cita (al cambiar de persona la foto entra como carta, --dur-fan) */
+  --dur-hero:    1s;     /* portada: la foto se abre sola al empezar a bajar (como armenia.travel) */
+  --dur-voz:     0.45s;  /* voces locales: la foto se acerca al pasar el mouse (al cambiar de persona la ficha entra como carta, --dur-fan) */
   --dur-dato:    var(--dur-fan); /* SIN USO desde oct-2026 (la rueda de Datos se cambió por las cartas que suben con el scroll) */
   --dur-empujon: 1.4s;   /* SIN USO desde oct-2026 (se quitó el empujoncito de la rueda) */
   /* Entrada en abanico del carrusel "Desde la raíz" (main.js) */
@@ -219,6 +237,7 @@
   --float-y:   var(--space-xs);
   --dur-float: 6s;
   --ease-out:    cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-hero:   cubic-bezier(0.25, 0.46, 0.45, 0.94); /* portada: sale rápido y frena suave, medida en armenia.travel */
   /* Hover común de todos los botones (no el menú): suben, crecen un poco
      con un leve rebote y se achican al presionar. Ver components.css §3b. */
   --ease-rebote: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -264,6 +283,7 @@
 /* Tablet (600–839 px): márgenes y gutters de 24 px */
 @media (min-width: 600px) {
   :root {
+    --voces-avatar: 4rem;   /* voces locales: caras de las pestañas más grandes (64 px) */
     --gutter:     var(--space-l);
     --space-grid: var(--space-l);
     --space-card: var(--space-l);

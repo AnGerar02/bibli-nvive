@@ -46,8 +46,18 @@
           <a class="nav__link" href="../../index.html#inicio">
             <span class="nav__label">Inicio</span>
           </a>
-          <!-- "Parroquias" lleva a la sección de parroquias del inicio (empieza en Turupamba) -->
-          <a class="nav__link is-active" href="../../index.html#parroquias"><span class="nav__label">Parroquias</span></a>
+          <!-- "Parroquias" abre un desplegable con las cinco parroquias (foto, nombre y su color) (main.js, 2a) -->
+          <button class="nav__link nav__desplegar is-active" type="button" aria-expanded="false" aria-controls="nav-parroquias">
+            <span class="nav__label">Parroquias</span>
+            <svg class="nav__chevron" viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" /></svg>
+          </button>
+          <ul class="nav__parroquias" id="nav-parroquias" hidden>
+            <li><a class="nav__parroquia nav__parroquia--azul" href="turupamba.html" aria-current="page"><img src="../../assets/img/ui/parroquias/turupamba.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Turupamba</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--amarillo" href="jerusalen.html"><img src="../../assets/img/ui/parroquias/jerusalen.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Jerusalén</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--crema" href="sageo.html"><img src="../../assets/img/ui/parroquias/sageo.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>San Francisco de Sageo</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--terracota" href="nazon.html"><img src="../../assets/img/ui/parroquias/nazon.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Nazón</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--azul" href="biblian.html"><img src="../../assets/img/ui/parroquias/biblian.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Biblián</span></a></li>
+          </ul>
           <a class="nav__link" href="../../index.html#datos">
             <span class="nav__label">Datos</span>
           </a>
@@ -74,7 +84,8 @@
       </button>
     </header>
 
-    <main>
+    <!-- data-visor: las fotos de "Desde la raíz" se abren en el visor (main.js 5b) -->
+    <main data-visor data-visor-parroquia="Turupamba">
       <!-- ===================== HERO (efecto tipo armenia.travel) =====================
            Misma plantilla que jerusalen.html (ver comentarios allí). -->
       <section class="hero-wrap" id="hero-wrap">
@@ -93,7 +104,7 @@
 
       <!-- ===================== FE EN LA MONTAÑA (carrusel) ===================== -->
       <section class="section raiz">
-        <h2 class="raiz__title" data-parallax="0.07" data-reveal="fade-in">
+        <h2 class="raiz__title" data-parallax="0.07" data-reveal="fade-in" data-palabras>
           Fe en la montaña
         </h2>
 
@@ -170,7 +181,7 @@
       <section class="section">
         <div class="impone">
           <div data-reveal="fade-right">
-            <h2 class="impone__title">
+            <h2 class="impone__title" data-palabras>
               Donde<br />
               comunidad<br />
               <span class="pill">CAMINA</span>
@@ -184,12 +195,19 @@
             </p>
           </div>
           <!-- Esquina que se despega: al pasar el mouse (o tocar) se abre
-               y deja ver la frase que está detrás de la foto -->
+               y deja ver lo que está detrás de la foto
+               (oct-2026, prueba del autor: detrás solo va "Cómo llegar", que
+               abre Google Maps; sin la frase ni el pin) -->
           <figure class="peel" id="peel" tabindex="0" data-reveal="fade-left">
             <figcaption class="peel__back">
-              <span>Mediados de julio</span>
-              <span>una cueva, una cima</span>
-              <span>y una mesa para todos</span>
+              <a
+                class="peel__mapa"
+                href="https://www.google.com/maps/search/?api=1&amp;query=San+Luis+de+Mang%C3%A1n%2C+Bibli%C3%A1n%2C+Ca%C3%B1ar%2C+Ecuador"
+                target="_blank"
+                rel="noopener"
+                aria-label="Cómo llegar (se abre Google Maps)"
+                >Cómo llegar <svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M640-624 284-268q-11 11-28 11t-28-11q-11-11-11-28t11-28l356-356H280q-17 0-28.5-11.5T240-720q0-17 11.5-28.5T280-760h400q17 0 28.5 11.5T720-720v400q0 17-11.5 28.5T680-280q-17 0-28.5-11.5T640-320v-304Z" /></svg
+              ></a>
             </figcaption>
             <img
               loading="lazy"
@@ -207,7 +225,7 @@
       <section class="video-feature">
         <div class="video-feature__inner">
           <div class="video-feature__text" data-reveal="fade-right">
-            <h2 class="video-feature__title">
+            <h2 class="video-feature__title" data-palabras>
               Una caminata comunitaria hasta la cueva en Shuriray
             </h2>
             <p>
@@ -237,211 +255,30 @@
 
       <!-- ===================== ¿QUÉ PODEMOS HACER? ===================== -->
       <section class="section hacemos">
-        <h2 class="hacemos__title" data-reveal="fade-up">
+        <!-- Actividades en cartas (oct-2026): las 4 actividades en fila
+             (2 × 2 en el celular), cada foto con su título encima. Entran como
+             las cartas de "Desde la raíz" (data-cartas, main.js 3). -->
+        <h2 class="hacemos__title" data-reveal="fade-up" data-palabras>
           ¿Qué <span class="pill pill--cola">podemos</span> hacer?
         </h2>
-
-        <div class="hacemos__rows">
-          <!-- Fila 1: tarjetas (texto + palabra) — aparece desde la izquierda -->
-          <div class="marquee" data-reveal="fade-left">
-            <div class="marquee__track" data-marquee>
-              <div class="flip q-item">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--amarillo">
-                      <h3 class="qfront__title">Trail running</h3>
-                      <p>Correr los senderos de 5K y 10K del Zhuriray Trail</p>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item q-item--word">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--verde">
-                      <span class="qword">RUTA</span>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--terracota">
-                      <h3 class="qfront__title">Peregrinación</h3>
-                      <p>Subir con la comunidad a la cueva del Señor de Belén</p>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item q-item--word">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--azul">
-                      <span class="qword">FIESTA</span>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--amarillo">
-                      <h3 class="qfront__title">Pampa mesa</h3>
-                      <p>Compartir comida andina sobre mantas al llegar a la cima</p>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item q-item--word">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--verde">
-                      <span class="qword">MESA</span>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--terracota">
-                      <h3 class="qfront__title">Chiva tren</h3>
-                      <p>Viajar en la chiva tradicional hasta San Luis de Mangán</p>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-item q-item--word">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <div class="qfront qfront--azul">
-                      <span class="qword">MONTE</span>
-                    </div>
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Fila 2: fotos (dirección contraria) — aparece desde la derecha -->
-          <div class="marquee marquee--reverse" data-reveal="fade-right">
-            <div class="marquee__track" data-marquee>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/turupamba/hacemos_1.jpg"
-                      alt="Bosque de eucaliptos altos en una ladera del Shuriray"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/turupamba/hacemos_2.jpg"
-                      alt="Lomas con bosque nativo y potreros en los alrededores del Shuriray"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/turupamba/hacemos_3.jpg"
-                      alt="Bosque denso de eucaliptos cubriendo la pendiente del cerro"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/turupamba/hacemos_4.jpg"
-                      alt="Troncos de pino y postes de un cerco junto al sendero del Shuriray"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/turupamba/hacemos_5.jpg"
-                      alt="Valles y montañas de Biblián vistos desde lo alto del Shuriray"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/turupamba/hacemos_6.jpg"
-                      alt="Ladera con roca expuesta, pajonal y bosque de eucaliptos"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/turupamba/hacemos_7.jpg"
-                      alt="Paisaje de colinas con bosque y valles al fondo bajo nubes"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-              <div class="flip q-photo">
-                <div class="flip__inner">
-                  <div class="flip__front">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      src="../../assets/img/parroquias/turupamba/hacemos_8.jpg"
-                      alt="Quebrada con vegetación nativa entre lomas del Shuriray"
-                    />
-                  </div>
-                  <div class="flip__back">#MásBiblián</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ul class="actividades" data-cartas>
+          <li class="actividad actividad--amarillo">
+            <span class="actividad__etiqueta">Trail running</span>
+            <img loading="lazy" decoding="async" src="../../assets/img/parroquias/turupamba/hacemos_4.jpg" alt="Troncos de pino y postes de un cerco junto al sendero del Shuriray" />
+          </li>
+          <li class="actividad actividad--terracota">
+            <span class="actividad__etiqueta">Peregrinación</span>
+            <img loading="lazy" decoding="async" src="../../assets/img/parroquias/turupamba/hacemos_6.jpg" alt="Ladera con roca expuesta, pajonal y bosque de eucaliptos" />
+          </li>
+          <li class="actividad actividad--amarillo">
+            <span class="actividad__etiqueta">Pampa mesa</span>
+            <img loading="lazy" decoding="async" src="../../assets/img/parroquias/turupamba/hacemos_5.jpg" alt="Valles y montañas de Biblián vistos desde lo alto del Shuriray" />
+          </li>
+          <li class="actividad actividad--terracota">
+            <span class="actividad__etiqueta">Chiva tren</span>
+            <img loading="lazy" decoding="async" src="../../assets/img/parroquias/turupamba/hacemos_2.jpg" alt="Lomas con bosque nativo y potreros en los alrededores del Shuriray" />
+          </li>
+        </ul>
       </section>
     </main>
 
@@ -493,7 +330,7 @@
             <p>Más historias, más Biblián. Directo a ti.</p>
             <div class="footer-socials">
               <a
-                href="https://w.app/0drsrd"
+                href="https://wa.me/593983723673"
                 target="_blank"
                 rel="noopener"
                 aria-label="WhatsApp"

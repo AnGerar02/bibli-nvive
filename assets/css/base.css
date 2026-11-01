@@ -26,9 +26,10 @@ strong { font-weight: var(--peso-bold); }
 /* Grosor de la fuente variable de títulos. Se aplica a todo lo que usa
    --font-titulo (solo afecta fuentes con eje "wght"; Montserrat no está aquí). */
 h1, h2, h3, h4,
-.pill, .qword, .qfront__title, .info-card__title, .flip__back,
+.pill, .qword, .qfront__title, .info-card__title, .flip__back, .q-photo .flip__front::after,
+.actividad__etiqueta,
 .peel__back, .footer-hashtag, .nav__link, .nav-toggle, .btn,
-.voces__tab, .voz__cita blockquote, .dato-carta__num,
+.voces__tab, .voz__cita, .dato-carta__num,
 .site-header__logo, .footer-contact__logo {
   font-variation-settings: "wght" var(--wght-titulo);
 }
@@ -88,8 +89,11 @@ h1, h2, h3, h4,
 [data-reveal] {
   opacity: 0;
   transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
-  will-change: opacity, transform;
 }
+/* Capa propia solo mientras espera (oct-2026, revisión del scroll): antes
+   la conservaba para siempre y la página llenaba de capas la memoria del
+   celular */
+[data-reveal]:not(.is-visible) { will-change: opacity, transform; }
 [data-reveal="fade-up"]    { transform: translateY(56px); }
 [data-reveal="fade-in"]    { transform: none; }
 [data-reveal="fade-left"]  { transform: translateX(-64px); }

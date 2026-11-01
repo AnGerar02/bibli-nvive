@@ -42,9 +42,41 @@
 }
 /* Mientras esperan a entrar en pantalla quedan ocultas; main.js quita la
    clase al animarlas (solo con JS y sin "reducir movimiento", así nunca
-   quedan escondidas por error). */
-.raiz-carta.is-carta-pendiente {
+   quedan escondidas por error). Sirve para toda lista con data-cartas. */
+[data-cartas] > .is-carta-pendiente,
+.raiz-puntos.is-carta-pendiente {
   opacity: 0;
+}
+
+/* Puntos debajo de las fotos (oct-2026): avisan que es una galería. El
+   amarillo marca la foto que se mira y tocar uno la abre en el visor. Como
+   los del antiguo carrusel: 8 px, crema al 45 %. Separados para que el
+   área táctil de 48 px de cada uno no pise a la vecina. main.js (5b) los
+   arma; entran después de las cartas. */
+.raiz-puntos {
+  display: flex;
+  justify-content: center;
+  gap: calc(var(--size-touch) - var(--space-xs));
+  margin-top: var(--space-xl);
+}
+.raiz-punto {
+  position: relative;
+  width: var(--space-xs);
+  height: var(--space-xs);
+  padding: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--md-on-primary);
+  opacity: 0.45;
+  transition: opacity var(--dur-btn) var(--ease-out), background-color var(--dur-btn) var(--ease-out);
+}
+.raiz-punto::after {
+  content: "";
+  position: absolute;
+  inset: calc((var(--size-touch) - var(--space-xs)) / -2);
+}
+.raiz-punto.is-activo {
+  background-color: var(--md-accent);
+  opacity: 1;
 }
 
 /* ---------- 3) TARJETAS DE INFORMACIÓN (§7.6) ---------- */
@@ -150,7 +182,9 @@
 
 /* ---------- 4b) ESQUINA QUE SE DESPEGA (peel) ----------
    La foto tiene la esquina superior derecha cortada en diagonal.
-   Detrás está el fondo azul con la frase; encima, la solapa doblada.
+   Detrás está el fondo azul con "Cómo llegar" (oct-2026, test de
+   usabilidad: esperaban que la esquina los llevara al lugar; prueba del
+   autor: sin la frase ni el pin de la solapa); encima, la solapa doblada.
    --open se anima de 0 (cerrada) a 1 (abierta); cada pieza calcula
    el tamaño real de la esquina (--fold) dentro del contenedor .peel,
    para que "cqi" se mida con el ancho de la foto y no de la pantalla. */
@@ -182,7 +216,8 @@
   }
 }
 .peel:focus-visible,
-.peel.is-open {
+.peel.is-open,
+.peel:has(.peel__mapa:focus-visible) {
   --open: 1;
   box-shadow: var(--elev-2);
 }
@@ -219,7 +254,8 @@
   );
 }
 
-/* Frase detrás de la foto, en la esquina que se abre */
+/* Lo que está detrás de la foto, en la esquina que se abre (hoy solo
+   "Cómo llegar"; las reglas de la frase quedan por si vuelve, §7.12) */
 .peel__back {
   position: absolute;
   top: 0;
@@ -250,9 +286,61 @@
   }
 }
 .peel:focus-visible .peel__back,
-.peel.is-open .peel__back {
+.peel.is-open .peel__back,
+.peel:has(.peel__mapa:focus-visible) .peel__back {
   opacity: 1;
   transition-delay: 0.15s;
+}
+
+/* "Cómo llegar ↗": botón chico debajo de la frase que abre Google Maps.
+   Del tamaño de la frase para que entre en el triángulo; crema con texto
+   azul (en la variante amarilla, azul con texto crema), esquinas de un
+   tercio del alto y área táctil de 48 px de alto. Solo se puede tocar con
+   la esquina abierta (cerrada no se ve). En móvil va más compacto para que
+   no lo tape la solapa; desde tablet, con más aire. */
+.peel__mapa {
+  --mapa-aire: var(--space-xxs);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xxs);
+  padding: var(--mapa-aire) calc(var(--mapa-aire) * 2);
+  border-radius: calc((1lh + var(--mapa-aire) * 2) / var(--radius-proporcion));
+  background-color: var(--md-surface);
+  color: var(--md-primary);
+  box-shadow: var(--elev-1);
+  white-space: nowrap;
+  pointer-events: none;
+  transition: translate var(--dur-btn) var(--ease-rebote), box-shadow var(--dur-btn) var(--ease-out);
+}
+.peel__back span + .peel__mapa { margin-top: var(--space-xs); } /* debajo de la frase, si la hay */
+.peel__mapa::after {
+  content: "";
+  position: absolute;
+  inset: min(0px, (100% - var(--size-touch)) / 2) 0;
+}
+.peel__mapa svg {
+  width: 1lh;
+  height: 1lh;
+  fill: currentColor;
+}
+.peel.is-open .peel__mapa,
+.peel:focus-visible .peel__mapa,
+.peel__mapa:focus-visible {
+  pointer-events: auto;
+}
+@media (hover: hover) {
+  .peel:hover .peel__mapa { pointer-events: auto; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .peel__mapa:hover {
+    translate: 0 calc(-1 * var(--btn-sube));
+    box-shadow: var(--elev-2);
+  }
+}
+.peel--amarillo .peel__mapa {
+  background-color: var(--md-primary);
+  color: var(--md-surface);
 }
 
 /* Tablet y escritorio: 16 px y más margen (la foto es más grande) */
@@ -271,6 +359,8 @@
     padding: var(--space-l);
     font-size: var(--fs-body-lg);
   }
+  .peel__mapa { --mapa-aire: var(--space-xs); }
+  .peel__back span + .peel__mapa { margin-top: var(--space-s); }
 }
 /* Escritorio: la foto ocupa media pantalla → la esquina se abre menos */
 @media (min-width: 840px) {
@@ -465,7 +555,124 @@
   object-fit: cover;
 }
 
-/* Reverso: solo #MásBiblián */
+/* ---------- 7b) FILAS CONECTADAS (§7.10) ----------
+   Oct-2026 (test de usabilidad: las tarjetas solo giraban y mostraban
+   #MásBiblián; esperaban algo más). Ya no giran: cada tarjeta de arriba
+   tiene su foto en la fila de abajo. Al tocar una, las filas se detienen,
+   la otra se desliza hasta quedar alineada (main.js 6c) y la pareja se
+   resalta con el color de la tarjeta: anillo en las dos, una línea que las
+   une y el nombre de la tarjeta sobre la foto. Lo demás se atenúa. */
+.hacemos .flip:hover .flip__inner,
+.hacemos .flip.is-flipped .flip__inner {
+  transform: none;
+}
+.hacemos__rows .flip {
+  position: relative;
+  transition: opacity var(--dur-btn) var(--ease-out);
+}
+.hacemos__rows.is-conectando .marquee__track {
+  animation-play-state: paused;
+}
+.hacemos__rows.is-conectando .flip:not(.is-elegida, .is-resaltada) {
+  opacity: 0.4;
+}
+/* Anillo del color de la tarjeta (como el de las voces elegidas) */
+.flip.is-elegida .flip__front,
+.flip.is-resaltada .flip__front {
+  box-shadow:
+    0 0 0 var(--stroke) var(--md-surface),
+    0 0 0 calc(var(--stroke) * 2) var(--pareja),
+    var(--elev-2);
+}
+/* Línea que une la foto con su tarjeta (cruza el espacio entre filas) */
+.q-photo.is-resaltada::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: var(--stroke-divider);
+  height: var(--space-grid);
+  translate: -50% 0;
+  border-radius: var(--radius-full);
+  background: var(--pareja);
+}
+/* El nombre de la tarjeta sobre la foto */
+.q-photo.is-resaltada .flip__front::after {
+  content: attr(data-etiqueta);
+  position: absolute;
+  left: var(--space-s);
+  bottom: var(--space-s);
+  padding: var(--space-xxs) var(--space-s);
+  border-radius: calc((1lh + var(--space-xxs) * 2) / var(--radius-proporcion));
+  background: var(--pareja);
+  color: var(--pareja-texto);
+  font-family: var(--font-titulo);
+  font-weight: var(--peso-bold);
+  font-size: var(--fs-label-lg);
+  line-height: var(--lh-tight);
+  box-shadow: var(--elev-1);
+}
+
+/* ---------- 7d) ACTIVIDADES EN CARTAS (§7.10, las 5 parroquias) ----------
+   Oct-2026 (punto 8 del test; antes se probaron paneles que se expanden,
+   una pared curva, un vuelo de fotos y tarjetas que se levantan; se probó
+   en Nazón y el autor lo pasó a las 5 parroquias): las 4
+   actividades en fila (2 × 2 en el celular), cada foto con su título
+   encima, sobre el crema de la página. Entran como las cartas de "Desde la
+   raíz" (data-cartas, main.js 3). */
+.hacemos:has(> .actividades) .hacemos__title {
+  text-align: center;
+}
+/* Arriba de cada fila queda el lugar de los títulos de las fotos */
+.actividades {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--actividad-etiqueta) + var(--space-m)) var(--space-grid);
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: var(--actividad-etiqueta) var(--gutter) 0;
+  list-style: none;
+}
+.actividad {
+  position: relative;
+}
+.actividad img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+/* Título de cada foto: encima, a la derecha (como en el vuelo de fotos),
+   en el color de la actividad */
+.actividad__etiqueta {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  margin-bottom: var(--space-xxs);
+  padding: var(--space-xxs) var(--space-s);
+  border-radius: calc((1lh + var(--space-xxs) * 2) / var(--radius-proporcion));
+  font-family: var(--font-titulo);
+  font-weight: var(--peso-bold);
+  font-size: var(--fs-label-lg);
+  line-height: var(--lh-tight);
+  white-space: nowrap;
+}
+.actividad--amarillo .actividad__etiqueta {
+  background: var(--md-accent);
+  color: var(--md-on-accent);
+}
+.actividad--terracota .actividad__etiqueta {
+  background: var(--md-tertiary);
+  color: var(--md-on-tertiary);
+}
+@media (min-width: 840px) {
+  .actividades {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Reverso: solo #MásBiblián (ya no se usa en "¿Qué podemos hacer?") */
 .flip__back {
   background: var(--md-primary);
   color: var(--md-on-primary);
@@ -521,3 +728,152 @@
     gap: var(--space-2xl);
   }
 }
+
+
+/* ---------- 9) VISOR DE FOTOS (§7.18) ----------
+   Oct-2026 (test de usabilidad: hacían clic en las fotos esperando que
+   pasara algo). Las fotos de "Desde la raíz" se abren en grande (3:4) y
+   debajo va el número de foto (2 / 3). La fila de fotos de "¿Qué podemos
+   hacer?" no es galería: sigue girando como las demás tarjetas. Se pasa
+   de una a otra con las flechas, el teclado o deslizando; se cierra con
+   la X, Esc o tocando afuera. (Primero llevaba
+   debajo una postal con el lugar, la descripción, una estampilla y "Cómo
+   llegar"; el autor la quitó.)
+   main.js (5b) arma el visor; sin JavaScript las fotos no se abren. */
+
+/* Fotos que se abren: con mouse, la foto se acerca un poco. (Llevaban un
+   ícono de "ampliar" en la esquina; el autor lo cambió por los puntos de
+   abajo, §2.) */
+.visor-foto {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+}
+.visor-foto img {
+  transition: scale var(--dur-voz) var(--ease-out);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .visor-foto:hover img { scale: var(--voz-acerca); }
+}
+.visor-foto:focus-visible { outline-offset: var(--focus-ring); }
+/* en "Desde la raíz" la sombra pasa al botón (dentro quedaría recortada) */
+.raiz-carta .visor-foto { box-shadow: var(--elev-1); }
+
+/* El visor: pantalla completa en azul oscuro, la foto y debajo el número
+   de foto. Mientras está abierto, la página no se desplaza. */
+html:has(.visor[open]) { overflow: hidden; }
+.visor {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: calc(var(--size-touch) + var(--space-m) * 2) var(--gutter) var(--space-l);
+  border: 0;
+  background-color: rgba(var(--md-scrim-rgb), 0.94);
+  color: var(--md-on-primary);
+  overflow-y: auto;
+}
+.visor::backdrop { background: transparent; }
+.visor[open] {
+  display: grid;
+  place-items: center;
+  animation: visor-entra var(--dur-btn) var(--ease-out);
+}
+@keyframes visor-entra {
+  from { opacity: 0; }
+}
+.visor__marco {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-m);
+  width: min(100%, var(--visor-ancho));
+}
+.visor__figura {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  width: 100%;
+}
+/* La foto: vertical 3:4 y del mismo tamaño en todas: a lo ancho en móvil
+   y hasta el 72 % del alto de la pantalla. Si una foto no es 3:4, se
+   recorta al centro. */
+.visor__foto {
+  width: min(100%, var(--visor-foto-alto) * 3 / 4);
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elev-3);
+  touch-action: pan-y; /* deslizar de lado pasa de foto */
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.visor__foto.is-nueva { animation: visor-foto var(--dur-voz) var(--ease-out); }
+@keyframes visor-foto {
+  from { opacity: 0; scale: 0.97; }
+}
+
+/* Número de foto (2 / 3): chico (Body Medium) y centrado debajo de la
+   foto. Las cifras de igual ancho evitan que salte al pasar de foto. */
+.visor__cuenta {
+  font-family: var(--font-texto);
+  font-weight: var(--peso-regular);
+  font-size: var(--fs-body-md);
+  line-height: var(--lh-tight);
+  font-variant-numeric: tabular-nums;
+  color: var(--md-surface);
+}
+
+/* Botones redondos crema (48 px): cerrar arriba a la derecha; anterior y
+   siguiente a los lados de la foto */
+.visor__boton {
+  display: grid;
+  place-items: center;
+  width: var(--size-touch);
+  height: var(--size-touch);
+  border-radius: var(--radius-full);
+  background-color: var(--md-surface);
+  color: var(--md-primary);
+  box-shadow: var(--elev-2);
+  transition: translate var(--dur-btn) var(--ease-rebote), scale var(--dur-btn) var(--ease-rebote);
+}
+.visor__boton svg {
+  width: var(--space-l);
+  height: var(--space-l);
+  fill: currentColor;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .visor__boton:hover { scale: var(--btn-crece); }
+}
+.visor__boton:active { scale: var(--btn-presion); }
+.visor__cerrar {
+  position: fixed;
+  top: var(--space-m);
+  right: var(--gutter);
+  z-index: 1;
+}
+.visor__anterior,
+.visor__siguiente {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+}
+.visor__anterior { left: var(--space-xs); }
+.visor__siguiente { right: var(--space-xs); }
+.visor__anterior svg { scale: -1 1; } /* la misma flecha, apuntando a la izquierda */
+@media (min-width: 840px) {
+  .visor__anterior { left: calc(var(--size-touch) * -1 - var(--space-m)); }
+  .visor__siguiente { right: calc(var(--size-touch) * -1 - var(--space-m)); }
+  .visor__marco { width: min(100% - var(--size-touch) * 3, var(--visor-ancho)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .visor[open],
+  .visor__foto.is-nueva { animation: none; }
+}
+

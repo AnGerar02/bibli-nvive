@@ -8,27 +8,47 @@
 
 /* ---------- 1) VIDEO (hero) ----------
    Misma animación que el hero de las parroquias (components.css §1b), con
-   video: al bajar crece hasta llenar la pantalla, pierde la curva y el
-   título pasa de azul a blanco. Diferencias del inicio:
+   video: al empezar a bajar se abre sola hasta llenar la pantalla, pierde
+   la curva y el título pasa de azul a blanco. Diferencias del inicio:
    · empieza bajo el header en crema (y sube hasta el borde al completarse);
    · el título va en Display Small (en hasta 2 líneas en móvil), a la derecha como en las parroquias.
    El video no lleva botones: arranca solo, silenciado y en bucle mientras
    se ve, y se pausa al salir de pantalla (main.js). */
+/* --hdr: 1 con el header a la vista, 0 cuando se esconde (al bajar).
+   Cuando se esconde, el video sube hasta el borde de arriba (si no,
+   quedaba un hueco crema donde estaba la barra). Es una propiedad
+   registrada para poder animarla sola, a la par del header.
+   Oct-2026 (test de usabilidad, "en el celular se traba y tiembla"): antes
+   la transición iba sobre "top"; como --p cambia en cada cuadro de scroll,
+   la transición se reiniciaba todo el tiempo y el video temblaba. */
+@property --hdr {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
 .inicio .hero-wrap {
   --hero-strip: calc(var(--fs-display-sm) * var(--lh-tight) * 2 + var(--space-l) * 2);
-  /* más alto que el de las parroquias: al terminar la animación queda un
-     reposo con el título quieto, y ahí llega la niebla (main.js 3a2) */
-  height: calc(175vh + var(--hero-reposo));
+  --hdr: 1;
+  /* más alto que el de las parroquias: el video queda fijo un tramo con el
+     título quieto, y ahí llega la niebla (main.js 3a2) */
+  height: calc(100vh + var(--hero-reposo));
+  transition:
+    --hdr var(--dur-cascade) var(--ease-out), /* al mismo ritmo que el header */
+    --p var(--dur-hero) var(--ease-hero);
 }
+.inicio:has(.site-header.is-hidden) .hero-wrap { --hdr: 0; }
 .inicio .hero-frame {
-  top: calc(var(--header-alto) * (1 - var(--p)));
-  transition: top var(--dur-cascade) var(--ease-out); /* al mismo ritmo que el header */
+  top: calc(var(--header-alto) * (1 - var(--p)) * var(--hdr));
 }
-/* Cuando el header se esconde (al bajar), el video sube hasta el borde de
-   arriba; si no, quedaba un hueco crema donde estaba la barra */
-.inicio:has(.site-header.is-hidden) .hero-frame { top: 0; }
+/* El video mide siempre la pantalla completa y se queda quieto: la ventana
+   lo va descubriendo al crecer. Antes cambiaba de tamaño en cada cuadro de
+   scroll, algo muy pesado para el celular (oct-2026). Se compensa con
+   "translate" lo que baja la ventana, para que el video no se mueva. */
 .inicio .hero__bg {
+  inset: 0 0 auto;
+  height: 100vh;
   object-position: center;
+  translate: 0 calc(var(--header-alto) * (1 - var(--p)) * var(--hdr) * -1);
 }
 /* Sin el degradado oscuro bajo el título (el título conserva su sombra suave) */
 .inicio .hero-frame::after {
@@ -63,7 +83,12 @@
    arriba y abajo para que al moverse nunca deje ver un hueco. */
 .capas-escena {
   position: relative;
-  height: calc(var(--capas-alto) + var(--capas-scroll));
+  /* + --capas-reposo: al terminar la animación, la escena completa queda
+     quieta un momento antes de que lleguen las parroquias (oct-2026).
+     + --capas-cubre: después sigue fija mientras las parroquias suben
+     encima (cortina; las parroquias se adelantan lo mismo, así el largo de
+     la página no cambia) */
+  height: calc(var(--capas-alto) + var(--capas-scroll) + var(--capas-reposo) + var(--capas-cubre));
 }
 .capas {
   position: sticky;
@@ -89,6 +114,21 @@
   height: 100%;
   object-fit: cover;
   object-position: var(--capas-foco);
+}
+/* Cortina (oct-2026, "el paso a las parroquias es muy tieso"): mientras
+   las parroquias suben encima, la escena no se queda congelada: sigue
+   subiendo despacio (cada capa sobra --capas-recorrido, así no deja huecos)
+   y se tiñe del azul de las parroquias. main.js (3c) pone --cubre de 0 a 1. */
+.capa {
+  translate: 0 calc(var(--cubre, 0) * -6%);
+}
+.capas::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--md-primary);
+  opacity: calc(var(--cubre, 0) * 0.45);
+  pointer-events: none;
 }
 
 /* "RAÍCES": texto real (h1), entre el fondo y las montañas */
@@ -163,11 +203,40 @@
 .parroquias {
   --pq-fondo: var(--md-primary);
   --pq-texto: var(--md-on-primary);
+  position: relative;
   background-color: var(--pq-fondo);
   color: var(--pq-texto);
   border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
   transition: background-color var(--dur-reveal) var(--ease-out),
     color var(--dur-reveal) var(--ease-out);
+}
+/* Cortina (oct-2026): las parroquias se adelantan --capas-cubre y suben
+   encima de la escena de RAÍCES, que sigue fija. Sin animación (reducir
+   movimiento) la escena mide una pantalla y no hay cortina. */
+@media (prefers-reduced-motion: no-preference) {
+  .parroquias { margin-top: calc(-1 * var(--capas-cubre)); }
+}
+/* Borde de arriba difuminado: el color de las parroquias sube como una
+   marea sobre el final de la escena de RAÍCES, en vez de cortarla con una
+   línea recta (oct-2026, test de usabilidad: "se ve como una línea
+   incompleta"). El degradado sigue una curva suave (lento al empezar y al
+   terminar): con uno lineal se notaba dónde empezaba la banda. */
+.parroquias::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 100%;
+  height: var(--pq-fundido);
+  background: linear-gradient(to bottom,
+    transparent,
+    color-mix(in srgb, var(--pq-fondo) 4%, transparent) 15%,
+    color-mix(in srgb, var(--pq-fondo) 15%, transparent) 30%,
+    color-mix(in srgb, var(--pq-fondo) 35%, transparent) 45%,
+    color-mix(in srgb, var(--pq-fondo) 62%, transparent) 60%,
+    color-mix(in srgb, var(--pq-fondo) 84%, transparent) 75%,
+    color-mix(in srgb, var(--pq-fondo) 96%, transparent) 90%,
+    var(--pq-fondo));
+  pointer-events: none;
 }
 /* Colores de cada parroquia (fondo · texto) */
 .pq--azul      { --b-fondo: var(--md-primary);  --b-texto: var(--md-on-primary); }
@@ -273,11 +342,16 @@
 }
 
 
-/* ---------- 4) VOCES LOCALES ----------
-   Barra azul de pestañas (la persona elegida en crema) y su foto. Al pasar
-   el mouse, enfocar con el teclado o tocar la foto en el celular
-   (.is-abierta, main.js), la foto se desenfoca y sube desde abajo un panel
-   con la cita, en azul o amarillo según la persona. */
+/* ---------- 4) VOCES LOCALES — voz destacada ----------
+   Oct-2026 (test de usabilidad: nadie se daba cuenta de que podía entrar a
+   la historia de cada persona, porque el enlace estaba escondido en un
+   panel que solo aparecía con el mouse encima o al tocar la foto; y la
+   barra de nombres, estirada de lado a lado, dejaba mucho espacio vacío).
+   Arriba, las pestañas con la cara de cada persona, juntas y centradas.
+   Abajo, una ficha abierta, sin nada escondido: la foto, la cita, el
+   nombre · parroquia y el botón "Conoce su historia" (toda la ficha lleva
+   a la historia). Móvil: la foto arriba y el texto debajo, con el botón a
+   lo ancho. ≥ 600 px: la foto a la izquierda y el texto a la derecha. */
 /* Sin margen inferior: "Datos" ya trae el suyo arriba, así entre las dos
    secciones queda un solo espacio de sección (antes se sumaban dos) */
 .voces { padding-bottom: 0; }
@@ -285,91 +359,94 @@
 .voces .section__title,
 .datos .section__title,
 .eventos .section__title { font-size: var(--fs-display-lg); }
+/* Pestañas: la cara de cada persona (miniatura cuadrada en círculo) y su
+   nombre debajo. La elegida lleva un anillo amarillo, como las historias
+   de las redes, y su nombre en azul pleno. */
 .voces__tabs {
   display: flex;
-  gap: var(--space-xxs);
-  width: min(100%, var(--voces-tabs));
+  justify-content: center;
+  justify-content: safe center; /* si no caben, que no se corte la primera */
+  gap: var(--space-xxs); /* móvil: así caben las cinco caras */
   margin: 0 auto var(--space-xl);
-  padding: var(--space-xxs);
-  border-radius: var(--radius-m);
-  background-color: var(--md-primary);
-  box-shadow: var(--elev-2);
-  overflow-x: auto; /* en móvil, si no caben todos los nombres, la barra se desliza */
+  padding: var(--space-xs) var(--space-xxs);
+  overflow-x: auto; /* en pantallas muy angostas la fila se desliza */
   scrollbar-width: none;
 }
-/* Cada pestaña ocupa toda su celda (área táctil de 48 px); la pastilla
-   crema de la elegida es más chica que la celda y se dibuja aparte
-   (::before), con 8 px de aire arriba y abajo, como en el diseño. */
 .voces__tab {
-  --tab-aire: 0px; /* aire a los lados de la pastilla (móvil: sin aire, para que quepan los cinco) */
-  position: relative;
-  isolation: isolate;
-  flex: 1 0 auto;
-  min-height: var(--size-touch);
-  padding-inline: var(--space-xxs); /* móvil: así caben los cinco nombres */
-  color: var(--md-on-primary);
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  min-width: var(--size-touch);
+  padding: var(--space-xxs);
+  border-radius: var(--radius);
+  color: color-mix(in srgb, var(--md-primary) 65%, var(--md-surface));
   font-family: var(--font-titulo);
   font-weight: var(--peso-bold);
-  font-size: var(--fs-label-lg); /* 14 px en móvil (como el menú); 16 px desde tablet */
-  white-space: nowrap;
+  font-size: var(--fs-label-lg);
+  line-height: var(--lh-tight);
   transition: color var(--dur-btn) var(--ease-out);
 }
-.voces__tab::before {
-  content: "";
-  position: absolute;
-  inset: var(--space-xs) var(--tab-aire);
-  z-index: -1;
-  border-radius: var(--radius-chico); /* mide 32 px de alto: misma proporción que los botones */
-  background-color: transparent;
-  transition: background-color var(--dur-btn) var(--ease-out),
-    box-shadow var(--dur-btn) var(--ease-out);
-}
-.voces__tab:hover::before { background-color: var(--layer-on-primary-hover); }
-.voces__tab[aria-selected="true"] { color: var(--md-primary); }
-.voces__tab[aria-selected="true"]::before {
-  background-color: var(--md-surface);
+.voces__avatar {
+  width: var(--voces-avatar);
+  height: var(--voces-avatar);
+  border-radius: var(--radius-full);
+  object-fit: cover;
   box-shadow: var(--elev-1);
+  transition: box-shadow var(--dur-btn) var(--ease-out), scale var(--dur-btn) var(--ease-rebote);
 }
-.voces__tab:focus-visible {
-  outline-color: var(--md-accent);
-  outline-offset: calc(-1 * var(--focus-ring));
+.voces__tab[aria-selected="true"] { color: var(--md-primary); }
+.voces__tab[aria-selected="true"] .voces__avatar {
+  box-shadow: 0 0 0 var(--stroke) var(--md-surface),
+    0 0 0 calc(var(--stroke) * 2) var(--md-accent),
+    var(--elev-1);
 }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .voces__tab:hover .voces__avatar { scale: var(--btn-crece); }
+}
+.voces__tab:hover { color: var(--md-primary); }
 @media (min-width: 600px) {
-  /* todas las pestañas del mismo ancho, como en el diseño */
-  .voces__tabs {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
-    padding: var(--space-xs);
-  }
-  .voces__tab {
-    --tab-aire: var(--space-m);
-    padding-inline: var(--space-xl);
-    font-size: var(--fs-body-lg);
-  }
+  .voces__tabs { gap: var(--space-l); }
+  .voces__tab { font-size: var(--fs-body-lg); }
 }
 
-/* La foto entra como carta al llegar a la sección y al cambiar de persona
+/* La ficha entra como carta al llegar a la sección y al cambiar de persona
    (main.js 3f). Mientras espera la primera llegada queda oculta (solo con
-   JS y sin "reducir movimiento"). Oct-2026: antes aparecía con un fundido. */
+   JS y sin "reducir movimiento"). */
 .voz.is-carta-pendiente { opacity: 0; }
 
 .voz {
   --voz-fondo: var(--md-primary);
   --voz-texto: var(--md-on-primary);
   position: relative;
-  width: min(100%, var(--voz-ancho));
+  display: grid;
+  max-width: var(--voz-ficha);
   margin-inline: auto;
-  aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: var(--radius-xl);
+  background-color: var(--voz-fondo);
+  color: var(--voz-texto);
   box-shadow: var(--elev-2);
   text-align: left;
 }
 .voz--azul     { --voz-fondo: var(--md-primary); --voz-texto: var(--md-on-primary); }
 .voz--amarillo { --voz-fondo: var(--md-accent);  --voz-texto: var(--md-on-accent); }
-/* Tarjeta en espera (John, sin foto todavía): silueta sobre crema oscuro */
-.voz--pendiente {
+.voz :focus-visible { outline-color: var(--voz-texto); }
+.voz__media {
+  aspect-ratio: 1; /* móvil: cuadrada, así la ficha entra mejor en la pantalla */
+  overflow: hidden;
+}
+.voz__foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%; /* en el recorte cuadrado se conserva la cara */
+  transition: scale var(--dur-voz) var(--ease-out);
+}
+/* Voz en espera (sin foto todavía): silueta clara sobre crema oscuro en
+   el lugar de la foto. Hoy no la usa nadie; queda para una voz futura. */
+.voz--pendiente .voz__media {
   display: grid;
   place-items: center;
   background-color: var(--md-surface-container-high);
@@ -378,94 +455,68 @@
   width: 50%;
   fill: var(--md-outline-variant);
 }
-.voz__foto {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: filter var(--dur-voz) var(--ease-out), scale var(--dur-voz) var(--ease-out);
+.voz__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-m);
+  padding: var(--space-l);
 }
 .voz__cita {
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  background-color: var(--voz-fondo);
-  color: var(--voz-texto);
-  translate: 0 100%; /* escondido debajo de la foto */
-  transition: translate var(--dur-voz) var(--ease-out);
-}
-/* Todo el panel es un enlace a la subpágina de la persona (pages/voces/):
-   cita arriba; abajo, el lugar a la izquierda y la flecha a la derecha */
-.voz__enlace {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "cita  cita"
-    "lugar ir";
-  align-items: center;
-  column-gap: var(--space-s);
-  padding: var(--space-l) var(--space-m) var(--space-m);
-  border-radius: inherit;
-  color: inherit;
-  text-decoration: none;
-}
-.voz__enlace:focus-visible {
-  outline: var(--focus-ring) solid var(--voz-texto);
-  outline-offset: calc(var(--focus-ring) * -3);
-}
-.voz__cita blockquote {
-  grid-area: cita;
   font-family: var(--font-titulo);
   font-weight: var(--peso-bold);
-  font-size: var(--fs-title-lg);
+  font-size: var(--fs-headline-md);
   line-height: var(--lh-tight);
+  text-wrap: balance;
 }
-.voz__lugar {
-  grid-area: lugar;
-  margin-top: var(--space-s);
+/* Nombre completo (negrita) y debajo "Parroquia: …" */
+.voz__quien {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
   font-size: var(--fs-body-lg);
 }
-/* Flecha en círculo (assets/img/ui/flecha.svg) usada como máscara: toma
-   el color del texto del panel (azul sobre amarillo, blanco sobre azul) */
-.voz__ir {
-  grid-area: ir;
-  width: var(--size-touch);
-  height: var(--size-touch);
-  margin-top: var(--space-s);
-  background-color: currentColor;
-  -webkit-mask: url("../img/ui/flecha.svg") center / contain no-repeat;
-  mask: url("../img/ui/flecha.svg") center / contain no-repeat;
-  scale: -1 1; /* el SVG apunta a la izquierda: se voltea para que apunte a la derecha */
-  transition: translate var(--dur-btn) var(--ease-out);
+.voz__nombre { font-weight: var(--peso-bold); }
+/* Botón: crema sobre azul, azul sobre amarillo (como "Visitar" en las
+   parroquias). Va por encima del área que cubre la ficha. */
+.voz__btn {
+  --btn-color: var(--md-surface);
+  --btn-on: var(--md-primary);
+  z-index: 1;
+  margin-top: var(--space-xs);
 }
+.voz--amarillo .voz__btn {
+  --btn-color: var(--md-primary);
+  --btn-on: var(--md-surface);
+}
+/* Toda la ficha es tocable: un enlace vacío la cubre (debajo del botón) */
+.voz__area {
+  position: absolute;
+  inset: 0;
+}
+/* Al pasar el mouse por la ficha: la foto se acerca un poco y el botón
+   hace su hover (sube y crece), para que se note que lleva a algún lado */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .voz__enlace:hover .voz__ir { translate: var(--space-xxs) 0; }
-}
-/* Mostrar la cita: toque (.is-abierta), foco con teclado o mouse.
-   La foto se agranda un poco al desenfocarse para que el borde borroso
-   no deje ver un halo claro en las esquinas. */
-.voz.is-abierta .voz__foto,
-.voz:focus-visible .voz__foto {
-  filter: blur(var(--voz-blur));
-  scale: 1.1;
-}
-.voz.is-abierta .voz__cita,
-.voz:focus-visible .voz__cita {
-  translate: 0 0;
-}
-@media (hover: hover) {
-  .voz:hover .voz__foto {
-    filter: blur(var(--voz-blur));
-    scale: 1.1;
+  .voz:hover .voz__foto { scale: var(--voz-acerca); }
+  .voz:hover .voz__btn {
+    translate: 0 calc(-1 * var(--btn-sube));
+    scale: var(--btn-crece);
+    box-shadow: var(--elev-2);
   }
-  .voz:hover .voz__cita { translate: 0 0; }
 }
-/* Si el foco del teclado pasa al enlace del panel, el panel sigue a la vista */
-.voz:has(.voz__enlace:focus-visible) .voz__foto {
-  filter: blur(var(--voz-blur));
-  scale: 1.1;
+@media (min-width: 600px) {
+  .voz { grid-template-columns: 2fr 3fr; }
+  .voz__media { aspect-ratio: 3 / 4; }
+  .voz__texto {
+    justify-content: center;
+    align-items: flex-start;
+    padding: var(--space-xl);
+  }
 }
-.voz:has(.voz__enlace:focus-visible) .voz__cita { translate: 0 0; }
+@media (min-width: 840px) {
+  .voz__cita { font-size: var(--fs-display-sm); }
+  .voz__texto { padding: var(--space-2xl); }
+}
 
 
 /* ---------- 5) DATOS INTERESANTES — cartas que suben con el scroll ----------
@@ -555,7 +606,8 @@
   top: calc(var(--header-alto) + var(--space-m) + var(--i) * var(--dato-baja));
   left: calc(50% - var(--dato-escena) / 2 + (var(--i) - 1.5) * var(--space-xs));
   width: var(--dato-escena);
-  /* sube desde abajo de la pantalla y llega con su inclinación */
+  /* sube desde abajo de la pantalla y llega con su inclinación (la
+     primera, mientras la sección entra a la pantalla) */
   translate: 0 calc(var(--subida, 1) * 100svh);
   rotate: calc(var(--dato-inclina) * var(--giro) + var(--subida, 1) * var(--dato-giro-extra) * var(--sentido));
   transition: scale var(--dur-btn) var(--ease-rebote), box-shadow var(--dur-btn) var(--ease-out);
@@ -589,7 +641,10 @@
    Cartas con imagen arriba y la información sobre azul. Ordenadas por
    fecha. Móvil: una columna; tablet: dos; escritorio: arriba una ancha y
    una angosta (3 : 2) y abajo tres iguales. Al pasar el mouse, la parte
-   azul se vuelve amarilla (y el texto, azul). */
+   azul se vuelve amarilla (y el texto, azul) y el botón "Ver evento" se
+   levanta. Oct-2026 (test de usabilidad: jugaban con el cambio de color
+   pero nadie entraba): cada carta lleva el botón "Ver evento →" y la fecha
+   dejó de ser una pastilla con sombra (parecía un botón). */
 .eventos__lista {
   display: grid;
   gap: var(--space-l);
@@ -662,7 +717,9 @@
   outline-offset: var(--focus-ring);
 }
 .evento__texto { font-size: var(--fs-body-md); }
-/* Fecha (pastilla crema) y lugar, siempre al pie de la carta */
+/* Al pie de la carta: el lugar (en el inicio ya no va la fecha, que está
+   en la página de cada evento; "Otros eventos" de las subpáginas sí la
+   muestra) */
 .evento__datos {
   display: flex;
   flex-wrap: wrap;
@@ -672,21 +729,40 @@
   padding-top: var(--space-xs);
   font-size: var(--fs-body-md);
 }
+/* La fecha es una etiqueta: en negrita, con la fuente de títulos y sin
+   fondo ni sombra, así no se confunde con un botón */
 .evento__fecha {
-  padding: var(--space-s) var(--space-l);
-  border-radius: calc((1lh + var(--space-s) * 2) / var(--radius-proporcion)); /* un tercio del alto, como los botones */
-  background-color: var(--md-surface);
-  color: var(--md-primary);
-  box-shadow: var(--elev-1);
+  font-family: var(--font-titulo);
+  font-weight: var(--peso-bold);
+  font-size: var(--fs-body-lg);
   white-space: nowrap;
 }
-/* El lugar se queda al lado de la fecha y, si es largo, baja a dos líneas
-   (antes se iba entero debajo de la pastilla) */
+/* El lugar se queda al lado de la fecha y, si es largo, baja a dos líneas */
 .evento__lugar { flex: 1 1 calc(var(--space-3xl) * 2); }
+/* "Ver evento →": crema con texto azul sobre la carta azul. Es solo
+   visual: el enlace del título ya cubre toda la carta. En móvil va a lo
+   ancho; desde tablet, a la izquierda. */
+.evento__btn {
+  --btn-color: var(--md-surface);
+  --btn-on: var(--md-primary);
+  margin-top: var(--space-xs);
+}
 @media (hover: hover) {
   .evento:hover .evento__cuerpo {
     background-color: var(--md-accent);
     color: var(--md-on-accent);
+  }
+  /* sobre la carta amarilla, el botón pasa a azul con texto crema */
+  .evento:hover .evento__btn {
+    --btn-color: var(--md-primary);
+    --btn-on: var(--md-surface);
+    box-shadow: var(--elev-2);
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .evento:hover .evento__btn {
+    translate: 0 calc(-1 * var(--btn-sube));
+    scale: var(--btn-crece);
   }
 }
 @media (min-width: 600px) {
@@ -695,20 +771,23 @@
   .evento:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 /* Textos nivelados: las cartas de una misma fila comparten las filas de la
-   lista (subgrid): imagen, título, descripción y fecha. Cada fila mide lo
-   que la más alta, así títulos, descripciones y fechas empiezan a la misma
-   altura aunque un título ocupe una línea y otro dos. */
+   lista (subgrid): imagen, título, descripción, fecha y botón. Cada fila
+   mide lo que la más alta, así títulos, descripciones, fechas y botones
+   empiezan a la misma altura aunque un título ocupe una línea y otro dos. */
+@media (min-width: 600px) {
+  .evento__btn { align-self: flex-start; justify-self: start; }
+}
 @supports (grid-template-rows: subgrid) {
   @media (min-width: 600px) {
     .evento {
       display: grid;
-      grid-row: span 4;
+      grid-row: span 5;
       grid-template-rows: subgrid;
       row-gap: 0;
     }
     .evento__cuerpo {
       display: grid;
-      grid-row: span 3;
+      grid-row: span 4;
       grid-template-rows: subgrid;
       row-gap: var(--space-s);
     }

@@ -47,10 +47,18 @@
           <a class="nav__link is-active" href="#inicio" aria-current="page">
             <span class="nav__label">Inicio</span>
           </a>
-          <!-- "Parroquias" lleva a la sección de parroquias del inicio (empieza en Turupamba) -->
-          <a class="nav__link" href="#parroquias"
-            ><span class="nav__label">Parroquias</span></a
-          >
+          <!-- "Parroquias" abre un desplegable con las cinco parroquias (foto, nombre y su color) (main.js, 2a) -->
+          <button class="nav__link nav__desplegar" type="button" aria-expanded="false" aria-controls="nav-parroquias">
+            <span class="nav__label">Parroquias</span>
+            <svg class="nav__chevron" viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" /></svg>
+          </button>
+          <ul class="nav__parroquias" id="nav-parroquias" hidden>
+            <li><a class="nav__parroquia nav__parroquia--azul" href="pages/parroquias/turupamba.html"><img src="assets/img/ui/parroquias/turupamba.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Turupamba</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--amarillo" href="pages/parroquias/jerusalen.html"><img src="assets/img/ui/parroquias/jerusalen.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Jerusalén</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--crema" href="pages/parroquias/sageo.html"><img src="assets/img/ui/parroquias/sageo.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>San Francisco de Sageo</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--terracota" href="pages/parroquias/nazon.html"><img src="assets/img/ui/parroquias/nazon.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Nazón</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--azul" href="pages/parroquias/biblian.html"><img src="assets/img/ui/parroquias/biblian.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Biblián</span></a></li>
+          </ul>
           <a class="nav__link" href="#datos">
             <span class="nav__label">Datos</span>
           </a>
@@ -85,7 +93,10 @@
       <section class="hero-wrap" id="hero-wrap">
         <div class="hero-sticky">
           <div class="hero-frame inicio-video" id="inicio-video">
-            <!-- Arranca solo, silenciado y en bucle (main.js). Versión liviana en celular. -->
+            <!-- Arranca solo, silenciado y en bucle (main.js). En celular: versión
+                 vertical (720 × 1280, 4 MB; oct-2026, antes la horizontal de 8 MB, de
+                 la que el celular solo mostraba la franja del centro) y, con el
+                 celular de costado, la horizontal liviana. -->
             <video
               class="hero__bg"
               preload="none"
@@ -95,6 +106,11 @@
               poster="assets/img/inicio/hero-portada.jpg"
               aria-label="Video: el santuario de la Virgen del Rocío y los paisajes de Biblián"
             >
+              <source
+                src="assets/img/inicio/hero-vertical.mp4"
+                type="video/mp4"
+                media="(max-width: 839px) and (orientation: portrait)"
+              />
               <source
                 src="assets/img/inicio/hero-movil.mp4"
                 type="video/mp4"
@@ -398,11 +414,11 @@
       </section>
 
       <!-- ===================== VOCES LOCALES =====================
-           Pestañas con el nombre de cada persona (main.js). Al pasar el
-           mouse, enfocar con el teclado o tocar la foto en el celular, la
-           foto se desenfoca y sube su cita. Todo el panel de la cita es un
-           enlace (con el ícono de flecha) a la subpágina de la persona
-           (pages/voces/). -->
+           Pestañas con la cara y el nombre de cada persona (main.js) y una
+           ficha abierta: foto, cita, nombre · parroquia y el botón "Conoce
+           su historia", que lleva a su subpágina (pages/voces/). Toda la
+           ficha es tocable. Oct-2026: antes la cita y el enlace estaban
+           escondidos hasta pasar el mouse o tocar la foto. -->
       <section
         class="section voces"
         id="voces"
@@ -410,214 +426,101 @@
         aria-labelledby="voces-titulo"
       >
         <div class="container">
-          <h2 class="section__title" id="voces-titulo" data-reveal="fade-up">
+          <h2 class="section__title" id="voces-titulo" data-reveal="fade-up" data-palabras>
             <span class="pill">Voces</span><br />locales
           </h2>
-          <div
-            class="voces__tabs"
-            role="tablist"
-            aria-label="Personas"
-            data-reveal="fade-up"
-          >
-            <button
-              class="voces__tab"
-              type="button"
-              role="tab"
-              id="voz-tab-john"
-              aria-controls="voz-john"
-              aria-selected="false"
-              tabindex="-1"
-            >
-              John
+          <div class="voces__tabs" role="tablist" aria-label="Personas" data-reveal="fade-up">
+            <button class="voces__tab" type="button" role="tab" id="voz-tab-john" aria-controls="voz-john" aria-selected="false" tabindex="-1">
+              <img class="voces__avatar" src="assets/img/inicio/voces/avatar-john.jpg" alt="" width="96" height="96" loading="lazy" decoding="async" />
+              <span class="voces__nombre">John</span>
             </button>
-            <button
-              class="voces__tab"
-              type="button"
-              role="tab"
-              id="voz-tab-milton"
-              aria-controls="voz-milton"
-              aria-selected="true"
-            >
-              Milton
+            <button class="voces__tab" type="button" role="tab" id="voz-tab-milton" aria-controls="voz-milton" aria-selected="true">
+              <img class="voces__avatar" src="assets/img/inicio/voces/avatar-milton.jpg" alt="" width="96" height="96" loading="lazy" decoding="async" />
+              <span class="voces__nombre">Milton</span>
             </button>
-            <button
-              class="voces__tab"
-              type="button"
-              role="tab"
-              id="voz-tab-micaela"
-              aria-controls="voz-micaela"
-              aria-selected="false"
-              tabindex="-1"
-            >
-              Micaela
+            <button class="voces__tab" type="button" role="tab" id="voz-tab-micaela" aria-controls="voz-micaela" aria-selected="false" tabindex="-1">
+              <img class="voces__avatar" src="assets/img/inicio/voces/avatar-micaela.jpg" alt="" width="96" height="96" loading="lazy" decoding="async" />
+              <span class="voces__nombre">Micaela</span>
             </button>
-            <button
-              class="voces__tab"
-              type="button"
-              role="tab"
-              id="voz-tab-segundo"
-              aria-controls="voz-segundo"
-              aria-selected="false"
-              tabindex="-1"
-            >
-              Segundo
+            <button class="voces__tab" type="button" role="tab" id="voz-tab-segundo" aria-controls="voz-segundo" aria-selected="false" tabindex="-1">
+              <img class="voces__avatar" src="assets/img/inicio/voces/avatar-segundo.jpg" alt="" width="96" height="96" loading="lazy" decoding="async" />
+              <span class="voces__nombre">Segundo</span>
             </button>
-            <button
-              class="voces__tab"
-              type="button"
-              role="tab"
-              id="voz-tab-fredy"
-              aria-controls="voz-fredy"
-              aria-selected="false"
-              tabindex="-1"
-            >
-              Fredy
+            <button class="voces__tab" type="button" role="tab" id="voz-tab-fredy" aria-controls="voz-fredy" aria-selected="false" tabindex="-1">
+              <img class="voces__avatar" src="assets/img/inicio/voces/avatar-fredy.jpg" alt="" width="96" height="96" loading="lazy" decoding="async" />
+              <span class="voces__nombre">Fredy</span>
             </button>
           </div>
           <div class="voces__paneles">
-            <div
-              class="voces__panel"
-              role="tabpanel"
-              id="voz-john"
-              aria-labelledby="voz-tab-john"
-              hidden
-            >
-              <figure class="voz voz--azul" tabindex="0">
-                <img
-                  class="voz__foto"
-                  src="assets/img/inicio/voces/john.jpg"
-                  alt="Retrato de John entre el pajonal del páramo, con montañas y neblina de fondo"
-                  width="720"
-                  height="960"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <figcaption class="voz__cita">
-                  <a class="voz__enlace" href="pages/voces/john.html">
-                    <blockquote>
-                      <p>Todavía se rescatan algunos saberes ancestrales.</p>
-                    </blockquote>
-                    <span class="voz__lugar">-Nazón</span>
-                    <span class="voz__ir" aria-hidden="true"></span>
-                    <span class="sr-only">Conoce la historia de John</span>
-                  </a>
-                </figcaption>
-              </figure>
+            <div class="voces__panel" role="tabpanel" id="voz-john" aria-labelledby="voz-tab-john" hidden>
+              <article class="voz voz--azul">
+                <div class="voz__media">
+                  <img class="voz__foto" src="assets/img/inicio/voces/john.jpg" alt="Retrato de John entre el pajonal del páramo, con montañas y neblina de fondo" width="720" height="960" loading="lazy" decoding="async" />
+                </div>
+                <div class="voz__texto">
+                  <blockquote class="voz__cita"><p>Todavía se rescatan algunos saberes ancestrales.</p></blockquote>
+                  <p class="voz__quien" id="voz-quien-john"><span class="voz__nombre">John Asitimbay</span> <span class="voz__parroquia">Parroquia: Nazón</span></p>
+                  <a class="btn voz__btn" href="pages/voces/john.html" aria-describedby="voz-quien-john">Conoce su historia <svg class="btn__flecha" viewBox="0 -960 960 960" aria-hidden="true"><path d="M647-440H160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h487L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z" /></svg></a>
+                </div>
+                <!-- toda la ficha lleva a la historia (para mouse y dedo; el teclado y los lectores usan el botón) -->
+                <a class="voz__area" href="pages/voces/john.html" tabindex="-1" aria-hidden="true"></a>
+              </article>
             </div>
-            <div
-              class="voces__panel"
-              role="tabpanel"
-              id="voz-milton"
-              aria-labelledby="voz-tab-milton"
-            >
-              <figure class="voz voz--amarillo" tabindex="0">
-                <img
-                  class="voz__foto"
-                  src="assets/img/inicio/voces/milton.jpg"
-                  alt="Retrato de Milton con cerros de pajonal y cielo nublado de fondo"
-                  width="720"
-                  height="960"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <figcaption class="voz__cita">
-                  <a class="voz__enlace" href="pages/voces/milton.html">
-                    <blockquote>
-                      <p>Te sientes parte de la tierra.</p>
-                    </blockquote>
-                    <span class="voz__lugar">-Jerusalén</span>
-                    <span class="voz__ir" aria-hidden="true"></span>
-                    <span class="sr-only">Conoce la historia de Milton</span>
-                  </a>
-                </figcaption>
-              </figure>
+            <div class="voces__panel" role="tabpanel" id="voz-milton" aria-labelledby="voz-tab-milton">
+              <article class="voz voz--amarillo">
+                <div class="voz__media">
+                  <img class="voz__foto" src="assets/img/inicio/voces/milton.jpg" alt="Retrato de Milton con cerros de pajonal y cielo nublado de fondo" width="720" height="960" loading="lazy" decoding="async" />
+                </div>
+                <div class="voz__texto">
+                  <blockquote class="voz__cita"><p>Te sientes parte de la tierra.</p></blockquote>
+                  <p class="voz__quien" id="voz-quien-milton"><span class="voz__nombre">Milton Murudumbay</span> <span class="voz__parroquia">Parroquia: Jerusalén</span></p>
+                  <a class="btn voz__btn" href="pages/voces/milton.html" aria-describedby="voz-quien-milton">Conoce su historia <svg class="btn__flecha" viewBox="0 -960 960 960" aria-hidden="true"><path d="M647-440H160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h487L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z" /></svg></a>
+                </div>
+                <!-- toda la ficha lleva a la historia (para mouse y dedo; el teclado y los lectores usan el botón) -->
+                <a class="voz__area" href="pages/voces/milton.html" tabindex="-1" aria-hidden="true"></a>
+              </article>
             </div>
-            <div
-              class="voces__panel"
-              role="tabpanel"
-              id="voz-micaela"
-              aria-labelledby="voz-tab-micaela"
-              hidden
-            >
-              <figure class="voz voz--azul" tabindex="0">
-                <img
-                  class="voz__foto"
-                  src="assets/img/inicio/voces/micaela.jpg"
-                  alt="Retrato de Micaela frente al santuario de la Virgen del Rocío"
-                  width="720"
-                  height="960"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <figcaption class="voz__cita">
-                  <a class="voz__enlace" href="pages/voces/micaela.html">
-                    <blockquote>
-                      <p>Un lugar de mucha riqueza, sobre todo cultural.</p>
-                    </blockquote>
-                    <span class="voz__lugar">-Biblián</span>
-                    <span class="voz__ir" aria-hidden="true"></span>
-                    <span class="sr-only">Conoce la historia de Micaela</span>
-                  </a>
-                </figcaption>
-              </figure>
+            <div class="voces__panel" role="tabpanel" id="voz-micaela" aria-labelledby="voz-tab-micaela" hidden>
+              <article class="voz voz--azul">
+                <div class="voz__media">
+                  <img class="voz__foto" src="assets/img/inicio/voces/micaela.jpg" alt="Retrato de Micaela frente al santuario de la Virgen del Rocío" width="720" height="960" loading="lazy" decoding="async" />
+                </div>
+                <div class="voz__texto">
+                  <blockquote class="voz__cita"><p>Un lugar de mucha riqueza, sobre todo cultural.</p></blockquote>
+                  <p class="voz__quien" id="voz-quien-micaela"><span class="voz__nombre">Micaela Rivera</span> <span class="voz__parroquia">Parroquia: Biblián</span></p>
+                  <a class="btn voz__btn" href="pages/voces/micaela.html" aria-describedby="voz-quien-micaela">Conoce su historia <svg class="btn__flecha" viewBox="0 -960 960 960" aria-hidden="true"><path d="M647-440H160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h487L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z" /></svg></a>
+                </div>
+                <!-- toda la ficha lleva a la historia (para mouse y dedo; el teclado y los lectores usan el botón) -->
+                <a class="voz__area" href="pages/voces/micaela.html" tabindex="-1" aria-hidden="true"></a>
+              </article>
             </div>
-            <div
-              class="voces__panel"
-              role="tabpanel"
-              id="voz-segundo"
-              aria-labelledby="voz-tab-segundo"
-              hidden
-            >
-              <figure class="voz voz--azul" tabindex="0">
-                <img
-                  class="voz__foto"
-                  src="assets/img/inicio/voces/segundo.jpg"
-                  alt="Retrato de Segundo frente a un bosque"
-                  width="720"
-                  height="960"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <figcaption class="voz__cita">
-                  <a class="voz__enlace" href="pages/voces/segundo.html">
-                    <blockquote>
-                      <p>Es como que el tiempo se ha detenido.</p>
-                    </blockquote>
-                    <span class="voz__lugar">-Turupamba</span>
-                    <span class="voz__ir" aria-hidden="true"></span>
-                    <span class="sr-only">Conoce la historia de Segundo</span>
-                  </a>
-                </figcaption>
-              </figure>
+            <div class="voces__panel" role="tabpanel" id="voz-segundo" aria-labelledby="voz-tab-segundo" hidden>
+              <article class="voz voz--azul">
+                <div class="voz__media">
+                  <img class="voz__foto" src="assets/img/inicio/voces/segundo.jpg" alt="Retrato de Segundo frente a un bosque" width="720" height="960" loading="lazy" decoding="async" />
+                </div>
+                <div class="voz__texto">
+                  <blockquote class="voz__cita"><p>Es como que el tiempo se ha detenido.</p></blockquote>
+                  <p class="voz__quien" id="voz-quien-segundo"><span class="voz__nombre">Segundo Quizhpi</span> <span class="voz__parroquia">Parroquia: Turupamba</span></p>
+                  <a class="btn voz__btn" href="pages/voces/segundo.html" aria-describedby="voz-quien-segundo">Conoce su historia <svg class="btn__flecha" viewBox="0 -960 960 960" aria-hidden="true"><path d="M647-440H160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h487L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z" /></svg></a>
+                </div>
+                <!-- toda la ficha lleva a la historia (para mouse y dedo; el teclado y los lectores usan el botón) -->
+                <a class="voz__area" href="pages/voces/segundo.html" tabindex="-1" aria-hidden="true"></a>
+              </article>
             </div>
-            <div
-              class="voces__panel"
-              role="tabpanel"
-              id="voz-fredy"
-              aria-labelledby="voz-tab-fredy"
-              hidden
-            >
-              <figure class="voz voz--amarillo" tabindex="0">
-                <img
-                  class="voz__foto"
-                  src="assets/img/inicio/voces/fredy.jpg"
-                  alt="Retrato de Fredy con montañas cubiertas de bosque y nubes de fondo"
-                  width="720"
-                  height="960"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <figcaption class="voz__cita">
-                  <a class="voz__enlace" href="pages/voces/fredy.html">
-                    <blockquote>
-                      <p>Aquí también sí se puede emprender.</p>
-                    </blockquote>
-                    <span class="voz__lugar">-Sageo</span>
-                    <span class="voz__ir" aria-hidden="true"></span>
-                    <span class="sr-only">Conoce la historia de Fredy</span>
-                  </a>
-                </figcaption>
-              </figure>
+            <div class="voces__panel" role="tabpanel" id="voz-fredy" aria-labelledby="voz-tab-fredy" hidden>
+              <article class="voz voz--amarillo">
+                <div class="voz__media">
+                  <img class="voz__foto" src="assets/img/inicio/voces/fredy.jpg" alt="Retrato de Fredy con montañas cubiertas de bosque y nubes de fondo" width="720" height="960" loading="lazy" decoding="async" />
+                </div>
+                <div class="voz__texto">
+                  <blockquote class="voz__cita"><p>Aquí también sí se puede emprender.</p></blockquote>
+                  <p class="voz__quien" id="voz-quien-fredy"><span class="voz__nombre">Fredy Lema</span> <span class="voz__parroquia">Parroquia: Sageo</span></p>
+                  <a class="btn voz__btn" href="pages/voces/fredy.html" aria-describedby="voz-quien-fredy">Conoce su historia <svg class="btn__flecha" viewBox="0 -960 960 960" aria-hidden="true"><path d="M647-440H160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h487L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z" /></svg></a>
+                </div>
+                <!-- toda la ficha lleva a la historia (para mouse y dedo; el teclado y los lectores usan el botón) -->
+                <a class="voz__area" href="pages/voces/fredy.html" tabindex="-1" aria-hidden="true"></a>
+              </article>
             </div>
           </div>
         </div>
@@ -630,7 +533,7 @@
            foto y a la izquierda la del dato anterior. main.js la mueve. -->
       <section class="section datos" id="datos" aria-labelledby="datos-titulo">
         <div class="container">
-          <h2 class="section__title" id="datos-titulo" data-reveal="fade-up">
+          <h2 class="section__title" id="datos-titulo" data-reveal="fade-up" data-palabras>
             <span class="pill">Datos</span> interesantes
           </h2>
         </div>
@@ -722,7 +625,11 @@
            Cartas ordenadas por fecha: la primera ancha y la segunda angosta;
            abajo, tres iguales. Al pasar el mouse, la parte azul se vuelve
            amarilla. Toda la carta es tocable: el enlace del título la cubre
-           entera y lleva a su subpágina (pages/eventos/).
+           entera y lleva a su subpágina (pages/eventos/). El botón "Ver
+           evento" es solo visual (aria-hidden): anuncia que la carta se abre
+           (oct-2026, test de usabilidad: nadie entraba a los eventos).
+           Sin fecha (oct-2026, pedido del autor): está en la página de cada
+           evento.
            Las imágenes son decorativas (alt vacío): la carta ya dice lo mismo. -->
       <section
         class="section eventos"
@@ -730,7 +637,7 @@
         aria-labelledby="eventos-titulo"
       >
         <div class="container">
-          <h2 class="section__title" id="eventos-titulo" data-reveal="fade-up">
+          <h2 class="section__title" id="eventos-titulo" data-reveal="fade-up" data-palabras>
             Próximos <span class="pill">eventos</span>
           </h2>
           <div class="eventos__lista" data-stagger>
@@ -758,11 +665,9 @@
                   calientes.
                 </p>
                 <p class="evento__datos">
-                  <time class="evento__fecha" datetime="2026-11-29"
-                    >29 – 30 nov</time
-                  >
                   <span class="evento__lugar">Padre Rumi, Jerusalén</span>
                 </p>
+                <span class="btn evento__btn" aria-hidden="true">Ver evento <svg class="btn__flecha" viewBox="0 -960 960 960" aria-hidden="true"><path d="M647-440H160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h487L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z" /></svg></span>
               </div>
             </article>
             <article class="evento" data-reveal="fade-up" style="--i: 1">
@@ -788,13 +693,11 @@
                   Shuriray.
                 </p>
                 <p class="evento__datos">
-                  <time class="evento__fecha" datetime="2026-12-08"
-                    >8 – 10 dic</time
-                  >
                   <span class="evento__lugar"
                     >Gruta Señor de Belén, Turupamba</span
                   >
                 </p>
+                <span class="btn evento__btn" aria-hidden="true">Ver evento <svg class="btn__flecha" viewBox="0 -960 960 960" aria-hidden="true"><path d="M647-440H160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h487L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z" /></svg></span>
               </div>
             </article>
             <article class="evento" data-reveal="fade-up" style="--i: 2">
@@ -819,11 +722,9 @@
                   Una caminata guiada desde Nazón hasta el páramo de Tuñi Sagre.
                 </p>
                 <p class="evento__datos">
-                  <time class="evento__fecha" datetime="2027-01-19"
-                    >19 – 20 ene</time
-                  >
                   <span class="evento__lugar">Tuñi Sagre, Nazón</span>
                 </p>
+                <span class="btn evento__btn" aria-hidden="true">Ver evento <svg class="btn__flecha" viewBox="0 -960 960 960" aria-hidden="true"><path d="M647-440H160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h487L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z" /></svg></span>
               </div>
             </article>
             <article class="evento" data-reveal="fade-up" style="--i: 3">
@@ -849,11 +750,9 @@
                   Sageo.
                 </p>
                 <p class="evento__datos">
-                  <time class="evento__fecha" datetime="2027-02-14"
-                    >14 – 20 feb</time
-                  >
                   <span class="evento__lugar">Cubilán, Sageo</span>
                 </p>
+                <span class="btn evento__btn" aria-hidden="true">Ver evento <svg class="btn__flecha" viewBox="0 -960 960 960" aria-hidden="true"><path d="M647-440H160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h487L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z" /></svg></span>
               </div>
             </article>
             <article class="evento" data-reveal="fade-up" style="--i: 4">
@@ -879,13 +778,11 @@
                   honor a la Virgen del Rocío.
                 </p>
                 <p class="evento__datos">
-                  <time class="evento__fecha" datetime="2027-09-01"
-                    >1 – 30 sep</time
-                  >
                   <span class="evento__lugar"
                     >Santuario de la Virgen del Rocío, Biblián</span
                   >
                 </p>
+                <span class="btn evento__btn" aria-hidden="true">Ver evento <svg class="btn__flecha" viewBox="0 -960 960 960" aria-hidden="true"><path d="M647-440H160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h487L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z" /></svg></span>
               </div>
             </article>
           </div>
@@ -942,7 +839,7 @@
             <p>Más historias, más Biblián. Directo a ti.</p>
             <div class="footer-socials">
               <a
-                href="https://w.app/0drsrd"
+                href="https://wa.me/593983723673"
                 target="_blank"
                 rel="noopener"
                 aria-label="WhatsApp"

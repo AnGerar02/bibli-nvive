@@ -48,8 +48,18 @@
           <a class="nav__link" href="../../index.html#inicio">
             <span class="nav__label">Inicio</span>
           </a>
-          <!-- "Parroquias" lleva a la sección de parroquias del inicio (empieza en Turupamba) -->
-          <a class="nav__link" href="../../index.html#parroquias"><span class="nav__label">Parroquias</span></a>
+          <!-- "Parroquias" abre un desplegable con las cinco parroquias (foto, nombre y su color) (main.js, 2a) -->
+          <button class="nav__link nav__desplegar" type="button" aria-expanded="false" aria-controls="nav-parroquias">
+            <span class="nav__label">Parroquias</span>
+            <svg class="nav__chevron" viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" /></svg>
+          </button>
+          <ul class="nav__parroquias" id="nav-parroquias" hidden>
+            <li><a class="nav__parroquia nav__parroquia--azul" href="../parroquias/turupamba.html"><img src="../../assets/img/ui/parroquias/turupamba.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Turupamba</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--amarillo" href="../parroquias/jerusalen.html"><img src="../../assets/img/ui/parroquias/jerusalen.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Jerusalén</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--crema" href="../parroquias/sageo.html"><img src="../../assets/img/ui/parroquias/sageo.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>San Francisco de Sageo</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--terracota" href="../parroquias/nazon.html"><img src="../../assets/img/ui/parroquias/nazon.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Nazón</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--azul" href="../parroquias/biblian.html"><img src="../../assets/img/ui/parroquias/biblian.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Biblián</span></a></li>
+          </ul>
           <a class="nav__link" href="../../index.html#datos">
             <span class="nav__label">Datos</span>
           </a>
@@ -83,7 +93,7 @@
         <h1 class="sr-only">Ruta a las zonas frías</h1>
         <div class="evento-intro">
           <div data-reveal="fade-right">
-            <h2 class="evento-intro__titulo" id="trata-titulo">
+            <h2 class="evento-intro__titulo" id="trata-titulo" data-palabras>
               ¿De qué<br />se <span class="pill">trata?</span>
             </h2>
             <p class="evento-intro__texto">
@@ -152,7 +162,7 @@
 
       <!-- ===================== ANTES DE IR (franja azul) ===================== -->
       <section class="section antes" aria-labelledby="antes-titulo">
-        <h2 class="section__title" id="antes-titulo" data-reveal="fade-up">
+        <h2 class="section__title" id="antes-titulo" data-reveal="fade-up" data-palabras>
           Antes de <span class="pill">ir</span>
         </h2>
         <ul class="consejos" data-stagger>
@@ -174,7 +184,7 @@
       <!-- ===================== OTROS EVENTOS (las mismas cartas del inicio) ===================== -->
       <section class="section eventos" aria-labelledby="otros-titulo">
         <div class="container">
-          <h2 class="section__title" id="otros-titulo" data-reveal="fade-up">
+          <h2 class="section__title" id="otros-titulo" data-reveal="fade-up" data-palabras>
             Otros <span class="pill">eventos</span>
           </h2>
           <div class="eventos__lista eventos__lista--otros" data-stagger>
@@ -275,7 +285,7 @@
             <p>Más historias, más Biblián. Directo a ti.</p>
             <div class="footer-socials">
               <a
-                href="https://w.app/0drsrd"
+                href="https://wa.me/593983723673"
                 target="_blank"
                 rel="noopener"
                 aria-label="WhatsApp"
