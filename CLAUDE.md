@@ -1,4 +1,4 @@
-# PERTENECES — Instrucciones para Claude Code
+# biveme — Instrucciones para Claude Code
 
 Proyecto de tesis (TICU, Diseño Gráfico, Universidad de Cuenca): sitio web estático (HTML/CSS/JS, GitHub Pages) sobre el patrimonio de las cinco parroquias del cantón Biblián para jóvenes de 16 a 23 años.
 

@@ -1,5 +1,5 @@
 /* ============================================================
-   main.js — Interacciones del sitio Biblián Vive
+   main.js — Interacciones del sitio biveme
    ============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

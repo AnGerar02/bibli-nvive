@@ -1,4 +1,4 @@
-# Design System — PERTENECES (v2 · base Material Design 3)
+# Design System — biveme (v2 · base Material Design 3)
 
 Sitio web sobre el patrimonio de las cinco parroquias del cantón Biblián (Biblián, Nazón, Turupamba, Sageo, Jerusalén) para jóvenes de 16 a 23 años.
 Este documento es la **fuente única de verdad**. Todo cambio de código debe respetarlo.

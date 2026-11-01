@@ -1,4 +1,4 @@
-# 🎓 Guía de defensa técnica — Biblián Vive (4 min de preguntas)
+# 🎓 Guía de defensa técnica — biveme (4 min de preguntas)
 
 ## 1. ¿Con qué está construida la página?
 
