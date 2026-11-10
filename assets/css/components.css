@@ -363,7 +363,8 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
 .nav__parroquia--amarillo  { --np-fondo: var(--md-accent);   --np-texto: var(--md-on-accent); }
 .nav__parroquia--crema     { --np-fondo: var(--md-surface-container-high); --np-texto: var(--md-primary); } /* el crema de la página no se distinguiría */
 .nav__parroquia--terracota { --np-fondo: var(--md-tertiary); --np-texto: var(--md-on-tertiary); }
-/* la parroquia en la que se está: en negrita y subrayada (no solo color) */
+/* la parroquia en la que se está, en el celular: subrayada (ahí todas las
+   filas llevan su color, así que el color solo no la distingue) */
 .nav__parroquia[aria-current="page"] span {
   text-decoration: underline;
   text-decoration-thickness: var(--stroke);
@@ -484,6 +485,9 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
     background-color: var(--np-fondo);
     color: var(--np-texto);
   }
+  /* en el panel, la actual se marca solo con su color: el subrayado era
+     una segunda marca de más (nov-2026, pedido del autor) */
+  .nav__parroquia[aria-current="page"] span { text-decoration: none; }
 }
 
 /* ============================================================

@@ -166,6 +166,7 @@
   --carta-inclina: 10deg;        /* entrada: arranca inclinada (las de los lados hacia afuera) */
   --carta-vuelta: 50deg;         /* entrada: arranca girada en 3D (de canto) y se endereza */
   --evento-foto: 10rem;          /* alto de la imagen de cada carta de evento (160 px) */
+  --evento-acerca: var(--voz-acerca); /* eventos: al pasar el mouse la imagen se acerca como en las voces (4 %) */
   --evento-ancho: 64rem;         /* ancho del contenido en las subpáginas de eventos (1024 px, según el diseño) */
   --consejo-icono: 2.5rem;       /* cuadro azul del ícono en "Antes de ir" (40 px) */
   --voz-blur: 12px;              /* SIN USO desde oct-2026 (la cita ya no aparece sobre la foto desenfocada) */
@@ -225,6 +226,7 @@
   --dur-btn:     0.25s;  /* hover de los botones (sube, sombra y color) */
   --dur-press:   0.15s;  /* botón presionado (escala 0.97) */
   --dur-hero:    1s;     /* portada: la foto se abre sola al empezar a bajar (como armenia.travel) */
+  --dur-evento:  var(--dur-voz); /* eventos: la imagen se acerca al ritmo de las voces */
   --dur-voz:     0.45s;  /* voces locales: la foto se acerca al pasar el mouse (al cambiar de persona la ficha entra como carta, --dur-fan) */
   --dur-dato:    var(--dur-fan); /* SIN USO desde oct-2026 (la rueda de Datos se cambió por las cartas que suben con el scroll) */
   --dur-empujon: 1.4s;   /* SIN USO desde oct-2026 (se quitó el empujoncito de la rueda) */

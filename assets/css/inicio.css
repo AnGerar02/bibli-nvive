@@ -39,6 +39,9 @@
 .inicio:has(.site-header.is-hidden) .hero-wrap { --hdr: 0; }
 .inicio .hero-frame {
   top: calc(var(--header-alto) * (1 - var(--p)) * var(--hdr));
+  /* Sin la sombra de elevación (nov-2026, pedido del autor): bajo la curva
+     del video se leía como una línea negra sobre el crema */
+  box-shadow: none;
 }
 /* El video mide siempre la pantalla completa y se queda quieto: la ventana
    lo va descubriendo al crecer. Antes cambiaba de tamaño en cada cuadro de
@@ -576,6 +579,10 @@
   object-fit: cover;
   border-radius: var(--radius-chico);
 }
+/* Nov-2026: las fotos son verticales y la franja 2:1 solo muestra el
+   centro; estas dos se encuadran en lo importante (pedido del autor) */
+.dato-carta__foto--sombrero { object-position: 50% 56%; } /* el sombrero casi entero */
+.dato-carta__foto--minas    { object-position: 50% 25%; } /* los mineros junto a las vagonetas */
 @media (min-width: 840px) {
   .datos__cartas { grid-template-columns: repeat(2, 1fr); }
 }
@@ -661,11 +668,15 @@
 /* Caja de la imagen: mide lo mismo que la carta de ancho y es "contenedor"
    para que la franja se ajuste a ese ancho (unidad cqi). Va en esta caja y
    no en la carta, porque un contenedor no puede compartir filas (subgrid). */
-.evento__media { container-type: inline-size; }
+.evento__media {
+  container-type: inline-size;
+  overflow: hidden; /* la foto se acerca dentro de su caja, sin montarse sobre el texto */
+}
 .evento__foto {
   width: 100%;
   height: var(--evento-foto);
   object-fit: cover;
+  transition: scale var(--dur-evento) var(--ease-out);
 }
 /* Qué parte de cada afiche se ve en la franja */
 .evento__foto--shuriray    { object-position: 50% 15%; }
@@ -760,6 +771,8 @@
   }
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  /* como en las voces: la foto se acerca un poco (nov-2026, pedido del autor) */
+  .evento:hover .evento__foto { scale: var(--evento-acerca); }
   .evento:hover .evento__btn {
     translate: 0 calc(-1 * var(--btn-sube));
     scale: var(--btn-crece);
