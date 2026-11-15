@@ -1,0 +1,6 @@
+# GitHub Pages (Jekyll): documentos de trabajo que no se publican como páginas
+# del sitio. Siguen en el repositorio.
+exclude:
+  - CLAUDE.md
+  - DESIGN_SYSTEM.md
+  - AUDITORIA.md

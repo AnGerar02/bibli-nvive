@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Te perdiste en el páramo — biveme</title>
+    <!-- Página de error (§7.19). GitHub Pages la muestra en cualquier dirección
+         que no existe, sin importar la carpeta: por eso las rutas empiezan en
+         /bibli-nvive/ (la raíz del sitio publicado) y no son relativas. -->
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#056287" />
+    <link rel="icon" type="image/svg+xml" href="/bibli-nvive/assets/img/ui/favicon.svg" />
+    <link rel="apple-touch-icon" href="/bibli-nvive/assets/img/ui/apple-touch-icon.png" />
+
+    <!-- Tipografías (Google Fonts): Momo Trust Display para los títulos y
+         Montserrat 400, 500 y 700 para el texto. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Montserrat:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Estilos del sitio -->
+    <link rel="stylesheet" href="/bibli-nvive/assets/css/reset.css" />
+    <link rel="stylesheet" href="/bibli-nvive/assets/css/variables.css" />
+    <link rel="stylesheet" href="/bibli-nvive/assets/css/base.css" />
+    <link rel="stylesheet" href="/bibli-nvive/assets/css/components.css" />
+  </head>
+  <body>
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+    <!-- ===================== HEADER / MENÚ ===================== -->
+    <!-- Sin foto arriba: header compacto desde el tope (data-solid), con su velo -->
+    <header class="site-header scrolled" id="site-header" data-solid>
+      <!-- Logo: assets/img/ui/logo.svg (se pinta del color del header, ver .logo en components.css) -->
+      <a
+        class="site-header__logo"
+        href="/bibli-nvive/index.html"
+        aria-label="Inicio — biveme"
+        ><span class="logo" aria-hidden="true"></span></a>
+
+      <div class="site-header__nav">
+        <!-- En móvil: tarjetas escalonadas de colores, solo con texto.
+             En tablet/escritorio: barra de texto. -->
+        <nav class="nav" id="nav" aria-label="Navegación principal">
+          <a class="nav__link" href="/bibli-nvive/index.html#inicio">
+            <span class="nav__label">Inicio</span>
+          </a>
+          <!-- "Parroquias" abre un desplegable con las cinco parroquias (foto, nombre y su color) (main.js, 2a) -->
+          <button class="nav__link nav__desplegar" type="button" aria-expanded="false" aria-controls="nav-parroquias">
+            <span class="nav__label">Parroquias</span>
+            <svg class="nav__chevron" viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" /></svg>
+          </button>
+          <ul class="nav__parroquias" id="nav-parroquias" hidden>
+            <li><a class="nav__parroquia nav__parroquia--azul" href="/bibli-nvive/pages/parroquias/turupamba.html"><img src="/bibli-nvive/assets/img/ui/parroquias/turupamba.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Turupamba</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--amarillo" href="/bibli-nvive/pages/parroquias/jerusalen.html"><img src="/bibli-nvive/assets/img/ui/parroquias/jerusalen.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Jerusalén</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--crema" href="/bibli-nvive/pages/parroquias/sageo.html"><img src="/bibli-nvive/assets/img/ui/parroquias/sageo.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>San Francisco de Sageo</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--terracota" href="/bibli-nvive/pages/parroquias/nazon.html"><img src="/bibli-nvive/assets/img/ui/parroquias/nazon.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Nazón</span></a></li>
+            <li><a class="nav__parroquia nav__parroquia--azul" href="/bibli-nvive/pages/parroquias/biblian.html"><img src="/bibli-nvive/assets/img/ui/parroquias/biblian.jpg" alt="" width="120" height="120" loading="lazy" decoding="async" /><span>Biblián</span></a></li>
+          </ul>
+          <a class="nav__link" href="/bibli-nvive/index.html#datos">
+            <span class="nav__label">Datos</span>
+          </a>
+          <a class="nav__link" href="/bibli-nvive/index.html#voces">
+            <span class="nav__label">Voces</span>
+          </a>
+          <a class="nav__link" href="/bibli-nvive/index.html#activate">
+            <span class="nav__label">Actívate</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Botón del menú (solo móvil): pastilla crema con la palabra "Menú"
+           (solo texto) -->
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="nav"
+      >
+        <span class="nav-toggle__label" aria-hidden="true">Menú</span>
+      </button>
+    </header>
+
+    <main id="contenido" class="error-404">
+      <h1 class="section__title">Te perdiste en el <span class="pill">páramo</span></h1>
+      <p class="error-404__texto">Esta página no existe, pero Biblián tiene mucho más por descubrir.</p>
+      <a class="btn" href="/bibli-nvive/index.html">Volver al inicio</a>
+    </main>
+
+    <script src="/bibli-nvive/assets/js/main.js"></script>
+  </body>
+</html>

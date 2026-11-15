@@ -8,10 +8,16 @@ Proyecto de tesis (TICU, Diseño Gráfico, Universidad de Cuenca): sitio web est
 
 ## Estructura
 
-- `assets/css/variables.css` → tokens (color, tipografía, espaciado, forma, elevación). Todos los valores salen de aquí.
-- `assets/css/components.css` → header, navegación, botones, footer.
-- `assets/css/parroquia.css` → secciones de las páginas de parroquia.
-- `pages/parroquias/` → una página por parroquia (Jerusalén es la referencia).
+- `assets/css/variables.css` → tokens (color, tipografía, espaciado, forma, elevación, movimiento). Todos los valores salen de aquí.
+- `assets/css/reset.css` y `base.css` → normalización y estilos globales.
+- `assets/css/components.css` → header, hero, navegación, botones, footer y página 404.
+- `assets/css/inicio.css`, `parroquia.css`, `voz.css` y `evento.css` → secciones de cada tipo de página.
+- `assets/js/main.js` → todas las interacciones.
+- `index.html`, `pages/parroquias/`, `pages/voces/` y `pages/eventos/` → las 16 páginas (Jerusalén es la referencia de las parroquias).
+- `404.html` → página de error (sus rutas empiezan en `/bibli-nvive/`).
+- `sitemap.xml` y `_config.yml` → mapa del sitio y documentos que GitHub Pages no publica.
+- `assets/img/og/` → fotos de la vista previa al compartir (una por página).
+- `AUDITORIA.md` → registro de la auditoría del sitio (nov-2026).
 
 ## Cómo trabajar
 

@@ -4,6 +4,23 @@
 document.addEventListener("DOMContentLoaded", () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ---------- 0b) ENLACE "SALTAR AL CONTENIDO" ----------
+     Nov-2026 (auditoría, WCAG 2.4.1). Lleva el foco a <main>, que recibe
+     tabindex="-1" solo mientras tiene ese foco: si lo tuviera siempre, un
+     clic en cualquier texto mandaba el foco a <main> y el siguiente Tab
+     volvía al principio de la página. Sin JavaScript el enlace también
+     sirve: el navegador sigue el Tab desde el contenido. */
+  const saltar = document.querySelector(".saltar");
+  if (saltar) {
+    saltar.addEventListener("click", () => {
+      const destino = document.getElementById(decodeURIComponent(saltar.hash.slice(1)));
+      if (!destino) return;
+      destino.setAttribute("tabindex", "-1");
+      destino.addEventListener("blur", () => destino.removeAttribute("tabindex"), { once: true });
+      destino.focus({ preventScroll: true }); // el desplazamiento lo hace el propio enlace
+    });
+  }
+
   /* ---------- 0) PASTILLAS DE LOS TÍTULOS: centrado óptico ----------
      La caja de la palabra está recortada a la altura de las mayúsculas
      (base.css). Aquí se mide la tinta real de cada palabra (minúsculas,
@@ -88,8 +105,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ---------- 1) HEADER: tipo armenia.travel ----------
-     En el tope: transparente con texto blanco.
-     Al bajar: se esconde. Al subir: reaparece con fondo crema. */
+     Transparente, con el velo detrás del logo y el menú (components.css §1).
+     Al bajar: se esconde. Al subir: reaparece, más compacto (.scrolled). */
   const header = document.getElementById("site-header");
   if (header) {
     // entrada desde los lados (pequeña pausa para que la animación se aprecie)
@@ -103,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const updateHeader = () => {
       const y = window.scrollY;
       const menuOpen = document.body.classList.contains("menu-open");
-      // data-solid (inicio): siempre en crema, porque en el tope no hay foto debajo
+      // data-solid (voces y eventos, sin portada arriba): compacto desde el tope
       header.classList.toggle("scrolled", header.hasAttribute("data-solid") || y > TOP_ZONE);
 
       if (menuOpen || y <= TOP_ZONE) {
@@ -203,14 +220,34 @@ document.addEventListener("DOMContentLoaded", () => {
   const desktop = window.matchMedia("(min-width: 600px)");
 
   if (navToggle && nav) {
+    // Lo que queda tapado detrás del menú abierto: el enlace de salto, el
+    // contenido y el footer. Mientras está abierto quedan "inertes" (nov-2026,
+    // auditoría: WCAG 2.4.3): ni el teclado ni los lectores de pantalla
+    // llegan a ellos.
+    const fondoMenu = document.querySelectorAll(".saltar, main, .site-footer");
     const setMenu = (open) => {
       nav.classList.toggle("is-open", open);
       document.body.classList.toggle("menu-open", open);
       navToggle.setAttribute("aria-expanded", String(open));
       navToggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+      fondoMenu.forEach((el) => el.toggleAttribute("inert", open));
       if (!open) cerrarParroquias(); // al cerrar el menú, el desplegable vuelve a cerrarse
     };
-    navToggle.addEventListener("click", () => setMenu(!nav.classList.contains("is-open")));
+    // Al abrir, el foco pasa al primer ítem: en la página los ítems van antes
+    // que el botón, así que desde ahí Tab los recorre en el orden en que se
+    // ven y termina en "Cerrar menú". El menú aparece con una transición y
+    // recién se puede enfocar un cuadro después: por eso se reintenta.
+    const enfocarMenu = (intentos) => {
+      const primero = nav.querySelector(".nav__link");
+      if (!primero || !nav.classList.contains("is-open")) return;
+      primero.focus({ preventScroll: true });
+      if (document.activeElement !== primero && intentos > 0) requestAnimationFrame(() => enfocarMenu(intentos - 1));
+    };
+    navToggle.addEventListener("click", () => {
+      const abrir = !nav.classList.contains("is-open");
+      setMenu(abrir);
+      if (abrir) enfocarMenu(3);
+    });
     // Los enlaces cierran el menú (también los del desplegable de Parroquias)
     nav.querySelectorAll("a.nav__link, .nav__parroquias a").forEach((link) =>
       link.addEventListener("click", () => setMenu(false))
@@ -742,7 +779,8 @@ document.addEventListener("DOMContentLoaded", () => {
      el avance real con inercia (la rueda del mouse avanza a saltos), igual
      que la niebla. Solo cambia "translate" y "rotate".
      En pantallas táctiles, tocar una carta la pone al frente para leerla
-     entera (con mouse lo hace el CSS al pasar por encima).
+     entera (con mouse lo hace el CSS al pasar por encima; con el teclado,
+     al recibir el foco).
      Con "reducir movimiento" no hay escena: las cartas quedan en grilla. */
   const pistaDatos = document.querySelector("[data-datos-pista]");
   const cartasDato = pistaDatos ? Array.from(pistaDatos.querySelectorAll(".dato-carta")) : [];
@@ -812,6 +850,39 @@ document.addEventListener("DOMContentLoaded", () => {
         })
       );
     }
+
+    // Con el teclado (nov-2026, auditoría: WCAG 2.1.1): cada carta recibe el
+    // foco y, mientras lo tiene, pasa al frente (CSS). Su nombre es su
+    // título. Solo en la escena: en la grilla ninguna carta tapa a otra.
+    // Al enfocarla, la página va al punto del tramo fijo en que esa carta
+    // acaba de llegar a su lugar: así queda entera en pantalla, sin importar
+    // desde dónde se venga (el navegador solo la buscaría donde todavía está
+    // subiendo, y dejaría la escena a medio camino).
+    cartasDato.forEach((carta, i) => {
+      const titulo = carta.querySelector(".dato-carta__titulo");
+      if (titulo) {
+        if (!titulo.id) titulo.id = `dato-titulo-${i + 1}`;
+        carta.setAttribute("aria-labelledby", titulo.id);
+      }
+      carta.tabIndex = 0;
+      carta.addEventListener("focus", () => {
+        let conTeclado = true;
+        try {
+          conTeclado = carta.matches(":focus-visible");
+        } catch (error) {
+          /* navegadores sin :focus-visible: se trata como teclado */
+        }
+        if (!conTeclado) return;
+        // un cuadro después: el navegador primero hace su propio desplazamiento hacia el foco
+        requestAnimationFrame(() => {
+          const inicio = pistaDatos.getBoundingClientRect().top + window.scrollY;
+          const recorrido = pistaDatos.offsetHeight - escenaDatos.offsetHeight;
+          const llegada = i === 0 ? 0 : (i - 1) * PASO + TRAMO; // avance en que esta carta ya llegó a su lugar
+          const destino = Math.ceil(inicio + recorrido * llegada);
+          if (Math.abs(window.scrollY - destino) > 1) window.scrollTo(0, destino);
+        });
+      });
+    });
   }
 
   /* ---------- 4) APARICIÓN AL HACER SCROLL (fade-in) ---------- */
@@ -839,19 +910,6 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     revealEls.forEach((el) => el.classList.add("is-visible"));
   }
-
-  /* ---------- 5) TARJETAS GIRATORIAS: tap/clic y teclado (Enter o Espacio) ---------- */
-  document.querySelectorAll(".flip").forEach((card) => {
-    card.setAttribute("tabindex", "0");
-    card.setAttribute("role", "button");
-    card.setAttribute("aria-pressed", "false");
-    // En "¿Qué podemos hacer?" ya no giran: cada tarjeta resalta su foto (6c)
-    if (card.closest("[data-filas-conectadas]")) {
-      card.setAttribute("aria-label", card.querySelector(".flip__front").textContent.trim().replace(/\s+/g, " ") || card.querySelector("img")?.alt || "Foto");
-      return;
-    }
-    card.setAttribute("aria-label", `${card.querySelector(".flip__front").textContent.trim().replace(/\s+/g, " ") || card.querySelector("img")?.alt || "Tarjeta"}. Girar para ver #MásBiblián`);
-  });
 
   /* ---------- 5b) VISOR DE FOTOS (páginas de parroquia) ----------
      Oct-2026 (test de usabilidad: hacían clic en las fotos esperando que
@@ -984,186 +1042,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ---------- 6) MARQUEE: bucle continuo sin huecos y a velocidad constante ----------
-     1. Repite el set original hasta cubrir al menos una pantalla.
-     2. Duplica el conjunto exacto → la animación a -50% empalma perfecto.
-     3. Las copias se ocultan a lectores de pantalla y al teclado.
-     Con "reducir movimiento" no se duplica: la fila queda quieta y se desliza a mano. */
-  const MARQUEE_PX_PER_SECOND = 40;
-  document.querySelectorAll("[data-marquee]").forEach((track) => {
-    if (reduceMotion) return;
-    const originals = Array.from(track.children);
-    const original = track.innerHTML;
-    let guard = 0;
-    while (track.scrollWidth < window.innerWidth && guard < 10) {
-      track.insertAdjacentHTML("beforeend", original);
-      guard++;
-    }
-    track.insertAdjacentHTML("beforeend", track.innerHTML);
-    Array.from(track.children).forEach((el) => {
-      if (!originals.includes(el)) {
-        el.setAttribute("aria-hidden", "true");
-        el.setAttribute("tabindex", "-1");
-      }
-    });
-    track.style.setProperty("--marquee-speed", `${track.scrollWidth / 2 / MARQUEE_PX_PER_SECOND}s`);
-  });
-
-  // Pausa al tocar la fila (en escritorio ya pausa con hover)
-  document.querySelectorAll(".marquee").forEach((row) => {
-    row.addEventListener("pointerdown", (e) => {
-      if (e.pointerType === "touch") row.classList.toggle("is-paused");
-    });
-  });
-
-  // Giro por tap/clic y teclado (delegado: también funciona en las copias)
-  const toggleFlip = (card) => {
-    const flipped = card.classList.toggle("is-flipped");
-    card.setAttribute("aria-pressed", String(flipped));
-  };
-  document.querySelectorAll(".marquee__track").forEach((track) => {
-    track.addEventListener("click", (e) => {
-      const card = e.target.closest(".flip");
-      if (card && !card.closest("[data-filas-conectadas]")) toggleFlip(card);
-    });
-    track.addEventListener("keydown", (e) => {
-      const card = e.target.closest(".flip");
-      if (card && !card.closest("[data-filas-conectadas]") && (e.key === "Enter" || e.key === " ")) {
-        e.preventDefault();
-        toggleFlip(card);
-      }
-    });
-  });
-
-  /* ---------- 6c) FILAS CONECTADAS ("¿Qué podemos hacer?") ----------
-     Oct-2026 (test de usabilidad: las tarjetas solo giraban y mostraban
-     #MásBiblián; esperaban algo más). Cada tarjeta de arriba (actividad o
-     palabra) tiene su foto en la fila de abajo (data-foto). Al tocarla, las
-     dos filas se detienen, la de abajo se desliza hasta dejar esa foto
-     debajo de la tarjeta y la pareja se resalta (CSS 7b). Tocar una foto hace
-     lo mismo al revés. Se suelta tocando otra vez, tocando afuera, con Esc o
-     al salir de la sección. */
-  const filas = document.querySelector("[data-filas-conectadas]");
-  if (filas) {
-    const [filaTarjetas, filaFotos] = filas.querySelectorAll(".marquee");
-    const archivo = (foto) => foto.querySelector("img").getAttribute("src").split("/").pop();
-    const centro = (el) => { const r = el.getBoundingClientRect(); return r.left + r.width / 2; };
-    const aviso = document.createElement("p"); // lo que se resalta, para lectores de pantalla
-    aviso.className = "sr-only";
-    aviso.setAttribute("aria-live", "polite");
-    filas.append(aviso);
-    let elegida = null;
-    let resaltada = null;
-    let desliz = 0;
-
-    // Desliza la fila hasta que una de las copias (candidatas) quede centrada
-    // en x, y la devuelve. Mueve el tiempo de su animación (no la posición),
-    // así el bucle sigue sin cortes. Sirven las copias que llegan sin pasar
-    // por el punto donde el bucle vuelve a empezar (ahí la fila salta y
-    // quedaría debajo otra copia); de esas, la que menos se mueve.
-    const llevar = (fila, candidatas, x) => {
-      const track = fila.querySelector(".marquee__track");
-      const anim = track.getAnimations()[0];
-      if (!anim) { // movimiento reducido: la fila se desliza a mano
-        const destino = candidatas.reduce((a, b) => (Math.abs(centro(b) - x) < Math.abs(centro(a) - x) ? b : a));
-        fila.scrollLeft -= x - centro(destino);
-        return destino;
-      }
-      const ciclo = anim.effect.getComputedTiming().duration;
-      const recorrido = track.getBoundingClientRect().width / 2;
-      const sentido = fila.classList.contains("marquee--reverse") ? 1 : -1;
-      const desde = anim.currentTime ?? 0;
-      const vuelta = Math.floor(desde / ciclo) * ciclo;
-      const dentro = (t) => Math.min(Math.max(t, vuelta), vuelta + ciclo - 1);
-      const opciones = candidatas.map((el) => {
-        const t = desde + ((sentido * (x - centro(el))) / recorrido) * ciclo;
-        return { el, hasta: dentro(t), fuera: Math.abs(t - dentro(t)) };
-      });
-      const mejor = opciones.reduce((a, b) =>
-        b.fuera < a.fuera || (b.fuera === a.fuera && Math.abs(b.hasta - desde) < Math.abs(a.hasta - desde)) ? b : a
-      );
-      const dura = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--dur-flip")) * 1000;
-      const t0 = performance.now();
-      cancelAnimationFrame(desliz);
-      const paso = (t) => {
-        const k = Math.min(1, (t - t0) / dura);
-        anim.currentTime = desde + (mejor.hasta - desde) * (1 - (1 - k) ** 3);
-        if (k < 1) desliz = requestAnimationFrame(paso);
-      };
-      desliz = requestAnimationFrame(paso);
-      return mejor.el;
-    };
-
-    // La pareja se resalta con el color de la tarjeta (CSS 7b)
-    const marcar = (tarjeta, foto) => {
-      const frente = getComputedStyle(tarjeta.querySelector(".qfront"));
-      [tarjeta, foto].forEach((el) => {
-        el.style.setProperty("--pareja", frente.backgroundColor);
-        el.style.setProperty("--pareja-texto", frente.color);
-      });
-      tarjeta.classList.add("is-elegida");
-      foto.classList.add("is-resaltada");
-      foto.querySelector(".flip__front").dataset.etiqueta = tarjeta.querySelector(".qfront__title, .qword").textContent.trim();
-      elegida = tarjeta;
-      resaltada = foto;
-    };
-
-    const soltar = () => {
-      cancelAnimationFrame(desliz);
-      [elegida, resaltada].forEach((el) => {
-        if (!el) return;
-        el.classList.remove("is-elegida", "is-resaltada");
-        el.setAttribute("aria-pressed", "false");
-        el.style.removeProperty("--pareja");
-        el.style.removeProperty("--pareja-texto");
-      });
-      resaltada?.querySelector(".flip__front").removeAttribute("data-etiqueta");
-      elegida = resaltada = null;
-      filas.classList.remove("is-conectando");
-      filas.querySelectorAll(".marquee").forEach((fila) => fila.classList.remove("is-paused"));
-      aviso.textContent = "";
-    };
-
-    const conectar = (origen) => {
-      if (origen === elegida || origen === resaltada) return soltar(); // tocarla otra vez la suelta
-      soltar();
-      const esFoto = origen.classList.contains("q-photo");
-      const nombre = esFoto ? archivo(origen) : origen.dataset.foto;
-      const candidatas = esFoto
-        ? Array.from(filaTarjetas.querySelectorAll(".q-item")).filter((t) => t.dataset.foto === nombre)
-        : Array.from(filaFotos.querySelectorAll(".q-photo")).filter((f) => archivo(f) === nombre);
-      if (!candidatas.length) return;
-      filas.classList.add("is-conectando");
-      const destino = llevar(esFoto ? filaTarjetas : filaFotos, candidatas, centro(origen));
-      if (esFoto) marcar(destino, origen);
-      else marcar(origen, destino);
-      origen.setAttribute("aria-pressed", "true");
-      aviso.textContent = esFoto ? elegida.getAttribute("aria-label") : resaltada.querySelector("img").alt;
-    };
-
-    filas.addEventListener("click", (e) => {
-      const pieza = e.target.closest(".q-item[data-foto], .q-photo");
-      if (pieza) conectar(pieza);
-      else if (elegida) soltar();
-    });
-    filas.addEventListener("keydown", (e) => {
-      const pieza = e.target.closest(".q-item[data-foto], .q-photo");
-      if (pieza && (e.key === "Enter" || e.key === " ")) {
-        e.preventDefault();
-        conectar(pieza);
-      }
-      if (e.key === "Escape" && elegida) soltar();
-    });
-    document.addEventListener("click", (e) => {
-      if (elegida && !filas.contains(e.target)) soltar();
-    });
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(([entrada]) => {
-        if (!entrada.isIntersecting && elegida) soltar();
-      }).observe(filas);
-    }
-  }
-
   /* ---------- 6f) TÍTULOS PALABRA POR PALABRA (data-palabras: los títulos de sección de todo el sitio) ----------
      Oct-2026 (referencia: juanmora.co, con sus mismos valores): las palabras
      del título empiezan tenues y en el color de acento, y se encienden en
@@ -1275,20 +1153,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ---------- 6b) ESQUINA QUE SE DESPEGA: abrir/cerrar al tocar ----------
-     En escritorio se abre con hover o con foco de teclado (CSS);
-     en táctil, cada toque la abre o la cierra. Con la esquina abierta,
-     "Cómo llegar" abre Google Maps (y no la cierra). */
+     En escritorio se abre con hover (CSS); con el teclado, al llegar al
+     enlace "Cómo llegar" (CSS). En táctil, cada toque la abre o la cierra.
+     Con la esquina abierta, "Cómo llegar" abre Google Maps (y no la cierra).
+     Nov-2026 (auditoría): la foto ya no recibe el foco ni tiene teclas
+     propias; era una parada de teclado de más, sin nombre. */
   const peel = document.getElementById("peel");
   if (peel) {
     peel.addEventListener("pointerup", (e) => {
       if (e.pointerType !== "mouse" && !e.target.closest(".peel__mapa")) peel.classList.toggle("is-open");
-    });
-    peel.addEventListener("keydown", (e) => {
-      if (e.target !== peel) return; // en "Cómo llegar", Enter sigue el enlace
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        peel.classList.toggle("is-open");
-      }
     });
   }
 

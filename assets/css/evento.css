@@ -23,7 +23,7 @@
   font-size: var(--fs-display-lg);
   margin-bottom: var(--space-l);
 }
-.evento-intro__texto { max-width: 65ch; }
+.evento-intro__texto { max-width: var(--medida-texto); }
 .evento-intro__foto {
   display: block;
   width: 100%;
@@ -67,7 +67,6 @@
   font-family: var(--font-titulo);
   font-size: var(--fs-title-lg);
   font-weight: var(--peso-bold);
-  font-variation-settings: "wght" var(--wght-titulo);
   line-height: var(--lh-tight);
 }
 /* WhatsApp: círculo crema con el ícono azul + el número */
@@ -169,7 +168,7 @@
   height: var(--consejo-icono);
   border-radius: var(--radius-chico);
   background-color: var(--md-primary);
-  color: var(--md-surface);
+  color: var(--md-on-primary);
 }
 /* El dibujo (SVG de assets/img/eventos/<evento>/iconos/) se usa como
    máscara: toma el color crema sin importar el color del archivo. La

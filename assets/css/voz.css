@@ -2,7 +2,6 @@
    voz.css — Subpágina de cada voz local (§7.17), pages/voces/
    Una entrevista en una sola franja azul (foto + nombre + frase +
    historia + preguntas y respuestas) y debajo "Otras voces".
-   La silueta de John viene de inicio.css (.voz__silueta).
    ============================================================ */
 
 /* ---------- 1) LA ENTREVISTA: franja azul ----------
@@ -37,12 +36,6 @@
   border-radius: var(--radius);
   box-shadow: var(--elev-2);
 }
-/* Sin foto todavía (John): la misma silueta de "Voces" */
-.voz-perfil__foto--pendiente {
-  display: grid;
-  place-items: center;
-  background-color: var(--md-surface-container-high);
-}
 .voz-perfil__datos {
   display: grid;
   gap: var(--space-m);
@@ -75,12 +68,11 @@
   font-family: var(--font-titulo);
   font-size: var(--fs-headline-md);
   font-weight: var(--peso-bold);
-  font-variation-settings: "wght" var(--wght-titulo);
   line-height: var(--lh-tight);
-  max-width: 30ch;
+  max-width: var(--medida-cita);
 }
 /* Relato: historia y preguntas */
-.voz-relato__historia { max-width: 65ch; }
+.voz-relato__historia { max-width: var(--medida-texto); }
 
 /* Preguntas y respuestas, separadas por líneas crema al 24 %.
    Cada pregunta lleva encima una rayita amarilla. */
@@ -93,7 +85,6 @@
 .voz-pregunta dt {
   font-family: var(--font-titulo);
   font-weight: var(--peso-bold);
-  font-variation-settings: "wght" var(--wght-titulo);
   line-height: var(--lh-tight);
 }
 .voz-pregunta dt::before {
@@ -107,7 +98,7 @@
 }
 .voz-pregunta dd {
   margin: var(--space-xs) 0 0;
-  max-width: 65ch;
+  max-width: var(--medida-texto);
 }
 
 @media (min-width: 840px) {
@@ -157,19 +148,13 @@
   border-radius: var(--radius);
   box-shadow: var(--elev-1);
   transition: box-shadow var(--dur-btn) var(--ease-out),
-    translate var(--dur-btn) var(--ease-out);
-}
-/* Sin foto (John): silueta centrada */
-.voz-mini__foto--pendiente {
-  display: grid;
-  place-items: center;
-  background-color: var(--md-surface-container-high);
+    translate var(--dur-btn) var(--ease-out),
+    scale var(--dur-btn) var(--ease-rebote);
 }
 .voz-mini__nombre {
   font-family: var(--font-titulo);
   font-size: var(--fs-title-lg);
   font-weight: var(--peso-bold);
-  font-variation-settings: "wght" var(--wght-titulo);
   line-height: var(--lh-tight);
 }
 .voz-mini__lugar {
@@ -182,6 +167,8 @@
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .voz-mini:hover .voz-mini__foto { translate: 0 calc(-1 * var(--space-xxs)); }
 }
+/* Presionada: la foto baja al 97 %, como los botones (§7.0) */
+.voz-mini:active .voz-mini__foto { scale: var(--btn-presion); }
 @media (min-width: 840px) {
   .voces-mini { grid-template-columns: repeat(4, 1fr); }
 }

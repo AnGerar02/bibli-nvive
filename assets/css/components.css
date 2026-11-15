@@ -1,8 +1,44 @@
 /* ============================================================
    components.css — Piezas reutilizables (DESIGN_SYSTEM §7)
-   Header · Navegación · Botón · Marquee · Tarjeta giratoria · Footer
+   Enlace de salto · Header · Hero · Navegación · Botón · Footer · Página 404
    Mobile-first: estilos base = móvil; se amplían en ≥ 600 / ≥ 840 px.
    ============================================================ */
+
+/* ============================================================
+   0) ENLACE DE SALTO (§7.0c) — "Saltar al contenido"
+   Primer elemento de cada página (nov-2026, auditoría: WCAG 2.4.1).
+   Solo se ve al llegar a él con el teclado: baja desde arriba, por
+   encima del header, y lleva a <main> sin pasar por el menú. Misma
+   pastilla crema que el botón "Menú".
+   ============================================================ */
+.saltar {
+  position: fixed;
+  top: var(--space-xs);
+  left: var(--gutter);
+  z-index: 1100; /* por encima del header (1000) */
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch);
+  padding: 0 var(--space-m);
+  border-radius: var(--radius);
+  background: var(--md-surface);
+  color: var(--md-primary);
+  font-family: var(--font-titulo);
+  font-weight: var(--peso-bold);
+  font-size: var(--fs-label-lg);
+  letter-spacing: var(--tracking-label);
+  box-shadow: var(--elev-2);
+  /* escondido arriba de la pantalla hasta que recibe el foco */
+  translate: 0 calc(-100% - var(--space-m));
+  transition: translate var(--dur-btn) var(--ease-out);
+}
+.saltar:focus { translate: 0 0; }
+/* Contorno por dentro, del color del texto: se ve igual sobre la barra
+   azul, sobre una foto o sobre el crema de la página */
+.saltar:focus-visible {
+  outline: var(--focus-ring) solid currentColor;
+  outline-offset: calc(var(--focus-ring) * -3);
+}
 
 /* ============================================================
    1) HEADER (§7.1) — fijo, transparente sobre el hero
@@ -16,60 +52,65 @@
   align-items: center;
   gap: var(--space-m);
   padding: var(--space-m) var(--gutter);
-  transition: transform 0.35s var(--ease-out), background-color 0.3s ease,
-    box-shadow 0.3s ease, padding 0.3s ease;
+  transition: transform var(--dur-cascade) var(--ease-out), background-color var(--dur-estado) var(--ease-estado),
+    padding var(--dur-estado) var(--ease-estado);
 }
-/* En el tope: sin fondo, con un degradado #0A3447 para que el texto
-   blanco se lea sobre la foto (§8: texto sobre foto con degradado) */
+/* Velo #0A3447 detrás del logo y el menú, en todas las páginas y en todo
+   momento (§8: texto sobre foto con degradado). Baja en una sola curva
+   suave (smootherstep en 11 puntos): oscuro arriba (--header-velo) y en 0
+   a --header-velo-baja por debajo del header. Empieza y termina sin
+   quiebres, así no se ve ninguna línea (nov-2026, pedido del autor: antes
+   iba parejo al 70 % y caía en línea recta). El menú da 4.9:1 o más
+   aunque debajo pase algo blanco (auditoría, WCAG 1.4.3: el degradado
+   original, del 50 % a 0, lo dejaba entre 1.95:1 y 3.17:1). */
 .site-header::before {
   content: "";
   position: absolute;
   inset: 0 0 auto 0;
   z-index: -1;
-  height: calc(100% + var(--space-xl));
-  background: linear-gradient(rgba(var(--md-scrim-rgb), 0.5), rgba(var(--md-scrim-rgb), 0));
+  height: calc(100% + var(--header-velo-baja));
+  background: linear-gradient(
+    rgba(var(--md-scrim-rgb), var(--header-velo)),
+    rgba(var(--md-scrim-rgb), calc(var(--header-velo) * 0.991)) 10%,
+    rgba(var(--md-scrim-rgb), calc(var(--header-velo) * 0.942)) 20%,
+    rgba(var(--md-scrim-rgb), calc(var(--header-velo) * 0.837)) 30%,
+    rgba(var(--md-scrim-rgb), calc(var(--header-velo) * 0.683)) 40%,
+    rgba(var(--md-scrim-rgb), calc(var(--header-velo) * 0.5)) 50%,
+    rgba(var(--md-scrim-rgb), calc(var(--header-velo) * 0.317)) 60%,
+    rgba(var(--md-scrim-rgb), calc(var(--header-velo) * 0.163)) 70%,
+    rgba(var(--md-scrim-rgb), calc(var(--header-velo) * 0.058)) 80%,
+    rgba(var(--md-scrim-rgb), calc(var(--header-velo) * 0.009)) 90%,
+    rgba(var(--md-scrim-rgb), 0)
+  );
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--dur-estado) var(--ease-estado);
 }
-/* Fuera del tope (al volver a aparecer): azul translúcido + elevación 2
-   (oct-2026: colores invertidos; antes crema). Sin desenfoque del fondo
-   (oct-2026, revisión del scroll): se recalculaba en cada cuadro mientras
-   se sube y trababa el scroll; con el azul al 92 % casi no se notaba. */
-.site-header.scrolled {
-  background: color-mix(in srgb, var(--md-primary) 92%, transparent);
-  box-shadow: var(--elev-2);
-  padding-block: var(--space-xs);
-}
-.site-header.scrolled::before { opacity: 0; }
-/* Se esconde al bajar y reaparece al subir (lo decide main.js) */
-.site-header.is-hidden {
-  transform: translateY(-100%);
-  box-shadow: none;
-}
-/* Con el menú móvil abierto el header no puede tener backdrop-filter
-   (encerraría al menú de pantalla completa dentro del header) */
-body.menu-open { overflow: hidden; }
+/* Fuera del tope (al volver a aparecer): el mismo velo, más compacto.
+   Antes (oct-2026) era una barra azul al 92 % con elevación 2. */
+.site-header.scrolled { padding-block: var(--space-xs); }
+/* Se esconde al bajar y reaparece al subir (lo decide main.js). Sube
+   también lo que el velo baja por debajo del header: si no, quedaba una
+   franja oscura arriba de la pantalla. */
+.site-header.is-hidden { transform: translateY(calc(-100% - var(--header-velo-baja))); }
 /* Con el menú abierto la página de atrás no se desplaza. Donde se puede,
    se bloquea en html (el que hace scroll) y body sigue con "clip": si
    body pasara a "hidden" se volvería contenedor de scroll y los
    escenarios fijos (sticky) se soltarían por un momento. */
+body.menu-open { overflow: hidden; }
 @supports selector(:has(*)) {
   html:has(> body.menu-open) { overflow: hidden; }
   body.menu-open { overflow: visible; overflow-x: hidden; overflow-x: clip; }
 }
 body.menu-open .site-header {
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
   background: var(--md-surface);
-  box-shadow: none;
   transform: none;
   transition: none; /* si se deslizara, el menú (que vive dentro) se movería con él */
 }
 body.menu-open .site-header::before { opacity: 0; }
 
 /* Logo (símbolo + "biveme"). El SVG se usa como máscara: toma el color del
-   texto donde está. En el tope, sobre la foto: blanco; con la barra crema
-   (o el menú móvil abierto): azul. Área táctil de 48 px de alto. */
+   texto donde está: crema sobre el velo y azul con el menú móvil abierto
+   (fondo crema). Área táctil de 48 px de alto. */
 .logo {
   display: block;
   height: var(--logo-alto);
@@ -83,15 +124,21 @@ body.menu-open .site-header::before { opacity: 0; }
   z-index: 2;
   display: flex;
   align-items: center;
+  min-width: var(--size-touch);  /* en tablet se ve solo el símbolo (32 px): el área táctil sigue en 48 px */
   min-height: var(--size-touch);
   flex-shrink: 0;
   color: var(--md-on-primary);
 }
-.site-header.scrolled .site-header__logo { color: var(--md-surface); }
-body.menu-open .site-header.site-header .site-header__logo { color: var(--md-primary); } /* sobre el menú móvil crema (gana a .scrolled) */
-/* Anillo de foco visible sobre la barra azul */
-.site-header.scrolled :focus-visible { outline-color: var(--md-surface); }
-body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md-primary); }
+body.menu-open .site-header__logo { color: var(--md-primary); } /* sobre el menú móvil crema */
+/* Contorno de foco del logo y del botón "Menú": crema sobre el velo y azul
+   sobre el menú móvil abierto. Las tarjetas del menú usan el color de su
+   texto y las filas de "Parroquias", el azul de siempre (nov-2026: antes
+   el azul se aplicaba a todo el header con el menú abierto y no se veía
+   sobre las tarjetas azules). */
+.site-header__logo:focus-visible,
+.nav-toggle:focus-visible { outline-color: var(--md-surface); }
+body.menu-open .site-header__logo:focus-visible,
+body.menu-open .nav-toggle:focus-visible { outline-color: var(--md-primary); }
 /* Tablet (600–1023 px): el logo completo no cabe junto al menú centrado,
    así que se ve solo el símbolo (el cuadrado de la izquierda del logo) */
 @media (min-width: 600px) and (max-width: 1023px) {
@@ -103,8 +150,8 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
 }
 
 /* --- Entrada desde los lados: nav desde la izquierda · logo desde la derecha --- */
-.site-header__logo { transform: translateX(60vw); opacity: 0; transition: transform 1s var(--ease-out), opacity 0.9s ease, color 0.3s ease; }
-.site-header__nav  { transform: translateX(-60vw); opacity: 0; transition: transform 1s var(--ease-out), opacity 0.9s ease; }
+.site-header__logo { transform: translateX(60vw); opacity: 0; transition: transform var(--dur-hero) var(--ease-out), opacity var(--dur-reveal) var(--ease-estado), color var(--dur-estado) var(--ease-estado), scale var(--dur-btn) var(--ease-rebote); }
+.site-header__nav  { transform: translateX(-60vw); opacity: 0; transition: transform var(--dur-hero) var(--ease-out), opacity var(--dur-reveal) var(--ease-estado); }
 .site-header.is-ready .site-header__logo,
 .site-header.is-ready .site-header__nav { transform: none; opacity: 1; }
 
@@ -221,11 +268,11 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   letter-spacing: var(--tracking-label);
   box-shadow: var(--elev-2);
   opacity: 0; /* entra junto con el logo (ver .is-ready) */
-  transition: opacity 0.9s ease, transform 0.15s ease;
+  transition: opacity var(--dur-reveal) var(--ease-estado), transform var(--dur-press) var(--ease-estado);
 }
 .site-header.is-ready .nav-toggle { opacity: 1; }
 .nav-toggle:hover  { background-image: linear-gradient(var(--layer-on-surface-hover), var(--layer-on-surface-hover)); }
-.nav-toggle:active { transform: scale(0.97); }
+.nav-toggle:active { transform: scale(var(--btn-presion)); }
 
 /* --- Móvil: menú de pantalla completa con tarjetas escalonadas ---
    Cada tarjeta alterna de lado y lleva solo su texto (oct-2026: se
@@ -251,7 +298,7 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   overflow-y: auto;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.25s ease, visibility 0.25s ease;
+  transition: opacity var(--dur-btn) var(--ease-estado), visibility var(--dur-btn) var(--ease-estado);
 }
 .nav.is-open { opacity: 1; visibility: visible; }
 
@@ -272,7 +319,7 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   white-space: nowrap;
   /* estado inicial de la entrada en cascada */
   opacity: 0;
-  transition: opacity var(--dur-cascade) ease, transform var(--dur-cascade) var(--ease-out);
+  transition: opacity var(--dur-cascade) var(--ease-estado), transform var(--dur-cascade) var(--ease-out);
 }
 /* Los selectores usan ":nth-child(… of .nav__link)" para contar solo los
    ítems del menú: el submenú de Parroquias vive entre ellos y no debe
@@ -370,18 +417,24 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   text-decoration-thickness: var(--stroke);
   text-underline-offset: var(--space-xxs);
 }
+/* Presionada: capa del 10 % del color de su texto (§7.0) */
+.nav__parroquia:active {
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--np-texto) var(--state-pressed), transparent),
+    color-mix(in srgb, var(--np-texto) var(--state-pressed), transparent)
+  );
+}
 
 .nav.is-open .nav__link:nth-child(n of .nav__link) { opacity: 1; transform: none; }
-.nav.is-open .nav__link:nth-child(1 of .nav__link) { transition-delay: 0.05s; }
-.nav.is-open .nav__link:nth-child(2 of .nav__link) { transition-delay: 0.12s; }
-.nav.is-open .nav__link:nth-child(3 of .nav__link) { transition-delay: 0.19s; }
-.nav.is-open .nav__link:nth-child(4 of .nav__link) { transition-delay: 0.26s; }
-.nav.is-open .nav__link:nth-child(5 of .nav__link) { transition-delay: 0.33s; }
+.nav.is-open .nav__link:nth-child(1 of .nav__link) { transition-delay: var(--delay-menu); }
+.nav.is-open .nav__link:nth-child(2 of .nav__link) { transition-delay: calc(var(--delay-menu) + var(--delay-menu-paso)); }
+.nav.is-open .nav__link:nth-child(3 of .nav__link) { transition-delay: calc(var(--delay-menu) + var(--delay-menu-paso) * 2); }
+.nav.is-open .nav__link:nth-child(4 of .nav__link) { transition-delay: calc(var(--delay-menu) + var(--delay-menu-paso) * 3); }
+.nav.is-open .nav__link:nth-child(5 of .nav__link) { transition-delay: calc(var(--delay-menu) + var(--delay-menu-paso) * 4); }
 
 /* --- Tablet y escritorio: logo a la izquierda (margen del contenido)
-       y menú centrado.
-       En el tope: solo tipografía blanca, sin fondo.
-       Al reaparecer: barra crema, texto azul y activo en pastilla azul. --- */
+       y menú centrado: tipografía crema sin fondo, sobre el velo del
+       header, y el activo subrayado. --- */
 @media (min-width: 600px) {
   .site-header {
     display: grid;
@@ -407,7 +460,7 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
     visibility: visible;
   }
 
-  /* En el tope: tipografía blanca sobre la foto.
+  /* Tipografía crema sobre el velo.
      (Anula el formato de tarjetas del menú móvil: sin sombra, ancho
      automático y sin escalonado.) */
   .nav .nav__link:nth-child(n of .nav__link) {
@@ -426,42 +479,25 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
     color: var(--md-on-primary);
     opacity: 1;
     transform: none;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition: background-color var(--dur-btn) var(--ease-estado), color var(--dur-btn) var(--ease-estado);
   }
   .nav .nav__link:hover  { background-image: linear-gradient(var(--layer-on-primary-hover), var(--layer-on-primary-hover)); }
   .nav .nav__link:active { background-image: linear-gradient(var(--layer-on-primary-pressed), var(--layer-on-primary-pressed)); }
-  /* Activo en el tope: subrayado (el estado no se comunica solo con color) */
+  /* Activo: subrayado (el estado no se comunica solo con color) */
   .nav .nav__link.is-active .nav__label {
     text-decoration: underline;
     text-decoration-thickness: var(--stroke);
     text-underline-offset: var(--space-xs);
   }
 
-  /* Al reaparecer (barra azul): texto crema, activo en pastilla crema con
-     texto azul (oct-2026: colores invertidos; antes barra crema y texto azul).
-     La pastilla es un crema suavizado con un 15 % del azul de la barra, para
-     que no resalte tanto (el texto azul sigue con contraste ≈ 5:1). */
-  .site-header.scrolled .nav .nav__link:nth-child(n) { color: var(--md-surface); }
-  .site-header.scrolled .nav .nav__link:hover  { background-image: linear-gradient(var(--layer-on-primary-hover), var(--layer-on-primary-hover)); }
-  .site-header.scrolled .nav .nav__link:active { background-image: linear-gradient(var(--layer-on-primary-pressed), var(--layer-on-primary-pressed)); }
-  .site-header.scrolled .nav .nav__link.is-active {
-    background-color: color-mix(in srgb, var(--md-surface) 85%, var(--md-primary));
-    color: var(--md-primary);
-  }
-  .site-header.scrolled .nav .nav__link.is-active .nav__label { text-decoration: none; }
-  .site-header.scrolled .nav .nav__link.is-active:hover { background-image: linear-gradient(var(--layer-on-surface-hover), var(--layer-on-surface-hover)); }
-
   /* "Parroquias": panel crema bajo el ítem (main.js lo alinea con el
      botón); cada fila toma el color de su parroquia al pasar el mouse */
   /* La flecha no suma ancho al ítem: ocupa el aire de la derecha, así la
      palabra "Parroquias" queda centrada entre sus vecinos como los demás
      ítems (oct-2026: con la flecha sumando ancho se veía corrida a la
-     izquierda, sobre todo junto a la pastilla del activo). Cuando
-     "Parroquias" es la pastilla activa, la flecha va dentro de la pastilla
-     con el mismo aire a los dos lados. */
+     izquierda). */
   .nav__chevron { width: var(--space-s); height: var(--space-s); }
   .nav__desplegar .nav__chevron { margin-right: calc(-1 * (var(--space-s) + var(--space-xxs))); }
-  .site-header.scrolled .nav__desplegar.is-active .nav__chevron { margin-right: 0; }
   .nav__parroquias {
     position: absolute;
     top: calc(100% + var(--space-xs));
@@ -594,105 +630,24 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
 .btn:active,
 .footer-socials a:active,
 .ficha__whatsapp:active .ficha__whatsapp-icono { scale: var(--btn-presion); }
-/* Secundario: contorno azul, sin relleno ni sombra (el contorno es una
-   sombra interior, así no cambia el tamaño del botón) */
-.btn--outlined {
-  --btn-color: transparent;
-  --btn-on: var(--md-primary);
-  box-shadow: inset 0 0 0 var(--stroke) var(--md-primary);
-}
+
+/* Logos del header y del footer (nov-2026, pedido del autor): al pasar el
+   mouse se vuelven amarillos y crecen un 4 %, sin subir ni sombra (no
+   tienen fondo). Con el menú móvil abierto, el del header sigue azul (esa
+   regla pesa más). Presionados: 97 %, como los botones (§7.0). */
 @media (hover: hover) {
-  .btn--outlined:hover { box-shadow: inset 0 0 0 var(--stroke) var(--md-primary); }
+  .site-header__logo:hover,
+  .footer-contact__logo:hover { color: var(--md-accent); }
 }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .site-header__logo:hover,
+  .footer-contact__logo:hover { scale: var(--btn-crece); }
+}
+.site-header__logo:active,
+.footer-contact__logo:active { scale: var(--btn-presion); }
 
 /* ============================================================
-   4) MARQUEE (§7.10) — filas lentas, dirección alterna
-   La duración la calcula main.js para que la velocidad sea
-   la misma en todas las filas.
-   ============================================================ */
-/* El overflow: hidden recortaba la sombra en recto. Se da aire arriba y
-   abajo para que la sombra (hasta elevación 2 en hover) se vea completa, y
-   el margen negativo devuelve la misma distancia entre filas. Como ese aire
-   se superpone con la fila vecina, solo las tarjetas reciben el mouse. */
-.marquee {
-  overflow: hidden;
-  width: 100%;
-  padding-block: var(--space-2xl);
-  margin-block: calc(-1 * var(--space-2xl));
-  pointer-events: none;
-}
-.marquee__track {
-  display: flex;
-  gap: var(--space-grid);
-  width: max-content;
-  animation: marquee-left var(--marquee-speed, 60s) linear infinite;
-  pointer-events: auto;
-}
-.marquee--reverse .marquee__track { animation-name: marquee-right; }
-/* Pausa en hover, con foco de teclado y al tocar (clase de main.js) */
-.marquee:hover .marquee__track,
-.marquee:focus-within .marquee__track,
-.marquee.is-paused .marquee__track { animation-play-state: paused; }
-
-@keyframes marquee-left  { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
-@keyframes marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-
-/* Movimiento reducido: filas quietas y deslizables a mano */
-@media (prefers-reduced-motion: reduce) {
-  .marquee {
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    pointer-events: auto; /* la barra de desplazamiento debe poder usarse */
-  }
-  .marquee__track { animation: none !important; transform: none !important; }
-  .marquee__track > * { scroll-snap-align: start; }
-}
-
-/* ============================================================
-   5) TARJETA GIRATORIA (§7.9)
-   ============================================================ */
-.flip {
-  perspective: 1200px;
-  flex-shrink: 0;
-  border-radius: var(--radius-xl);
-  cursor: pointer;
-}
-.flip__inner {
-  position: relative;
-  height: 100%;
-  transition: transform var(--dur-flip) var(--ease-out);
-  transform-style: preserve-3d;
-}
-.flip.is-flipped .flip__inner { transform: rotateX(180deg); }
-/* Hover solo en dispositivos con puntero (en táctil gira al tocar) */
-@media (hover: hover) {
-  .flip:hover .flip__inner { transform: rotateX(180deg); }
-  .flip:hover .flip__front,
-  .flip:hover .flip__back { box-shadow: var(--elev-2); }
-}
-
-.flip__front,
-.flip__back {
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  box-shadow: var(--elev-1);
-  transition: box-shadow 0.3s ease;
-}
-.flip__front { position: relative; z-index: 2; height: 100%; }
-.flip__back {
-  position: absolute;
-  inset: 0;
-  transform: rotateX(180deg);
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: var(--space-m);
-}
-
-/* ============================================================
-   6) FOOTER (§7.11) — panel amarillo (collage) | panel azul (contacto)
+   4) FOOTER (§7.11) — panel amarillo (collage) | panel azul (contacto)
    ============================================================ */
 .site-footer {
   background: var(--md-accent);
@@ -716,7 +671,7 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   grid-template-columns: 1fr 1fr;
   gap: var(--space-m);
   width: 100%;
-  max-width: 480px;
+  max-width: var(--footer-fotos);
 }
 .footer-photos img {
   width: 100%;
@@ -731,7 +686,7 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
 }
 .footer-copy {
   width: 100%;
-  max-width: 480px;
+  max-width: var(--footer-fotos);
   margin-top: auto;
   font-size: var(--fs-body-sm);
   color: var(--md-on-accent);
@@ -749,7 +704,7 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   gap: var(--space-m);
   font-size: var(--fs-body-lg);
 }
-.footer-contact > * { width: 100%; max-width: 600px; }
+.footer-contact > * { width: 100%; max-width: var(--footer-contacto); }
 .footer-contact :focus-visible { outline-color: var(--md-accent); }
 
 /* Logo del footer: en crema sobre el panel azul */
@@ -758,11 +713,10 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   align-items: center;
   width: fit-content;
   min-height: var(--size-touch);
-  color: var(--md-surface);
-  transition: transform 0.15s ease, opacity var(--dur-reveal) var(--ease-out); /* presionado + aparición */
+  color: var(--md-on-primary);
+  transition: color var(--dur-estado) var(--ease-estado), scale var(--dur-btn) var(--ease-rebote), opacity var(--dur-reveal) var(--ease-out); /* hover, presionado (§3b) y aparición */
 }
 .footer-contact__logo .logo { height: var(--logo-alto-footer); }
-.footer-contact__logo:active { transform: scale(0.97); }
 
 .footer-contact h3 {
   color: var(--md-on-primary);
@@ -848,3 +802,22 @@ body.menu-open .site-header.site-header :focus-visible { outline-color: var(--md
   .footer-left { order: 0; padding: var(--space-2xl) var(--space-2xl) var(--space-l); }
   .footer-contact { order: 0; padding: var(--space-2xl) var(--space-2xl) var(--space-xl); }
 }
+
+/* ============================================================
+   5) PÁGINA 404 (§7.19) — dirección que no existe
+   El mensaje, centrado en la pantalla, con el header de siempre.
+   ============================================================ */
+.error-404 {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-l);
+  min-height: 100svh;
+  padding: calc(var(--header-alto) + var(--space-section)) var(--gutter) var(--space-section);
+  text-align: center;
+}
+.error-404 .section__title {
+  margin-bottom: 0; /* el aire lo da el gap */
+  font-size: var(--fs-display-lg);
+}
+.error-404__texto { max-width: var(--medida-texto); }

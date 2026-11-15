@@ -9,19 +9,19 @@
 
 :root {
   /* ================= COLOR (roles M3) =================
-     PRUEBA "Paleta A" (sep-2026): mismos tonos, más saturación.
-     Valores anteriores anotados al lado para poder volver. */
+     Paleta A (sep-2026: mismos tonos, más saturación), definitiva desde
+     nov-2026. Los valores anteriores quedan anotados al lado. */
   --md-primary:             #056287;  /* Azul (antes #3B5F73) */
   --md-on-primary:          var(--md-surface);  /* crema, como RAÍCES (antes blanco #FFFFFF; oct-2026) */
-  /* PRUEBA: verde reemplazado por el azul.
-     Verde original: #627742 · verde paleta A: #597C03 */
+  /* Secondary no tiene color propio: usa el azul (definitivo, nov-2026).
+     Antes fue verde: original #627742 · paleta A #597C03 */
   --md-secondary:           var(--md-primary);
   --md-on-secondary:        var(--md-surface);  /* crema (antes #FFFFFF) */
   --md-tertiary:            #C24E00;  /* Terracota con texto (antes #AC4B10) */
   --md-on-tertiary:         var(--md-surface);  /* crema (antes #FFFFFF) */
   --md-tertiary-deco:       #D55A01;  /* Terracota decorativa (antes #CC6228) */
   --md-accent:              #FE9C29;  /* Amarillo (antes #F99F3F) */
-  --md-on-accent:           var(--md-primary);  /* un solo azul para todo el texto */
+  --md-on-accent:           var(--md-primary);  /* un solo azul para todo el texto, también sobre amarillo (3.22:1: cumple en texto grande e íconos). Nov-2026, auditoría: se probó #044762 (4.8:1) y el autor prefirió este azul */
   --md-surface:             #FFF9ED;  /* Crema */
   --md-on-surface:          var(--md-primary);
   --md-on-surface-variant:  #4A473D;
@@ -42,26 +42,28 @@
 
   /* Canal RGB del azul profundo (#0A3447) para sombras y degradados */
   --md-scrim-rgb: 10, 52, 71;
+  /* Velo del header (todas las páginas): opacidad del azul profundo arriba
+     (una curva suave la baja hasta 0) y cuánto se extiende por debajo del
+     header. Con 0.82 el menú da 4.9:1 o más aunque debajo pase algo blanco
+     (nov-2026: antes 0.7 parejo y 64 px; al principio 0.5, solo en el tope) */
+  --header-velo: 0.82;
+  --header-velo-baja: calc(var(--space-3xl) + var(--space-xl));  /* 96 px */
 
   /* ================= TIPOGRAFÍA ================= */
-  /* Títulos: Please Bold (fuente variable de Adobe Fonts, kit hjp6vej).
-     Eje de grosor 300–900; el grosor se fija con --wght-titulo (base.css),
-     porque el kit declara la fuente como si fuera solo 300.
-     Alternativa de la misma familia para títulos grandes: "please-display-vf".
-     Historial: Poppins → Gala → Please. */
-  /* PRUEBA (10-oct-2026): Momo Trust Display (Google Fonts, un solo grosor 400).
-     Probadas antes: Bourbon Lines, El Paso, Wigwag Deluxe, JAF Zalamander,
-     Confiteria Script, Tarif, Mochiy Pop P One, Asimovian, Galindo
-     (1-oct-2026; para volver a ella: "Galindo").
-     Para volver a la original: "please-vf". */
-  --font-titulo: "Momo Trust Display", "please-vf", system-ui, -apple-system, sans-serif;
-  --wght-titulo: 700;  /* Bold (solo actúa en fuentes variables como Please) */
+  /* Títulos: Momo Trust Display (Google Fonts, un solo grosor 400). En uso
+     desde el 10-oct-2026 y definitiva desde nov-2026.
+     Historial: Poppins → Gala → Please (Adobe Fonts, kit hjp6vej, variable
+     300–900; se retiró junto con su kit en nov-2026) → Momo Trust Display.
+     Probadas en el camino: Bourbon Lines, El Paso, Wigwag Deluxe,
+     JAF Zalamander, Confiteria Script, Tarif, Mochiy Pop P One, Asimovian
+     y Galindo. */
+  --font-titulo: "Momo Trust Display", system-ui, -apple-system, sans-serif;
   --font-texto:  "Montserrat", system-ui, -apple-system, sans-serif;
 
   --peso-regular:   400;
   --peso-medium:    500;
   --peso-bold:      700;
-  --peso-extrabold: 700;  /* Gala solo tiene 400 y 700 (antes 800 con Poppins) */
+  --peso-extrabold: 700;  /* igual que bold: Montserrat se pide en 400, 500 y 700 (antes 800 con Poppins) */
 
   /* Escala M3 (valores móviles).
      Display ampliado para Gala, que es condensada y se ve más chica
@@ -81,7 +83,6 @@
   /* Interletrado: Gala es condensada y en tamaños chicos las letras se juntan */
   --tracking-label: 0.08em;  /* menú y etiquetas (Label Large) */
 
-  --pill-cola: 0.3em;  /* SIN USO desde oct-2026: main.js centra cada palabra (ver .pill) */
   /* Pastilla de los títulos: aire proporcional a la letra (igual en 44, 48 o 72 px) */
   --pill-aire-y: 0.17em;  /* arriba y abajo de la palabra (12 px a 72 px) */
   --pill-aire-x: 0.3em;   /* a los lados (22 px a 72 px) */
@@ -106,14 +107,16 @@
   /* ================= LAYOUT ================= */
   --container:  1200px;
   --gutter:     var(--space-m);  /* margen lateral (móvil) */
+  --medida-texto: 52ch;          /* ancho máximo de un párrafo: unas 70 letras por línea (§3; antes 65ch, que daba unas 85) */
+  --medida-cita:  30ch;          /* ancho máximo de la frase destacada de cada voz */
   --size-touch: 48px;            /* área táctil mínima */
   --size-icon:  24px;            /* íconos de interfaz */
   --btn-alto: var(--size-touch); /* alto de los botones: 48 px (antes 52) */
   --logo-alto: 2rem;             /* alto del logo en el header (32 px; el logo es 4 veces más ancho que alto) */
   --logo-alto-footer: 2.5rem;    /* alto del logo en el footer (40 px) */
-  --size-icon-card: 48px;        /* SIN USO (oct-2026): el menú móvil ya no lleva íconos; se conserva por compatibilidad */
+  --footer-fotos:    480px;      /* footer: ancho máximo del collage de fotos y del copyright */
+  --footer-contacto: 600px;      /* footer: ancho máximo de la columna de contacto */
   --nav-badge:      64px;        /* menú móvil: las tarjetas son la mitad de esto (32 px) más angostas que la pantalla, para el escalonado (antes era el círculo del ícono) */
-  --nav-badge-ring: 8px;         /* SIN USO (oct-2026): aro del círculo del ícono, que ya no existe */
   --nav-card-max:   128px;       /* alto máximo de cada tarjeta del menú móvil */
   --nav-parroquia-foto: 2.5rem;  /* desplegable de "Parroquias": foto redonda de cada parroquia (40 px) */
   /* Visor de postales (páginas de parroquia, oct-2026) */
@@ -125,7 +128,7 @@
   /* Actividades en cartas ("¿Qué podemos hacer?", las 5 parroquias, oct-2026) */
   --actividad-etiqueta: calc(var(--fs-label-lg) * var(--lh-tight) + var(--space-xxs) * 3); /* lo que ocupa el título encima de cada foto, con su margen (28 px) */
   /* Inicio (landing) */
-  --header-alto: calc(var(--size-touch) + var(--space-xs) * 2); /* header en crema: logo 48 px + 8 px arriba y abajo */
+  --header-alto: calc(var(--size-touch) + var(--space-xs) * 2); /* header compacto: logo 48 px + 8 px arriba y abajo */
   --capas-alto: 100svh;          /* escenario del parallax: llena la pantalla mientras queda fijo */
   --capas-scroll: 100svh;        /* cuánto se baja con el escenario fijo (lo que dura la animación) */
   --capas-reposo: 40svh;         /* al terminar, la escena completa queda quieta este tramo antes de las parroquias (oct-2026) */
@@ -140,13 +143,10 @@
   --hero-reposo: 50vh;           /* inicio: scroll extra con el título del video quieto (para leerlo) antes de la niebla */
   --pq-galeria: calc(var(--container) - var(--gutter) * 2); /* ancho máximo de las 3 fotos de cada parroquia en el inicio: el mismo ancho de contenido que las páginas de parroquia (1152 px en escritorio; antes 896 px) */
   --fs-marca: clamp(2.5rem, 11vw, 12rem); /* palabra grande de la escena de capas ("RAÍCES") */
-  --voz-ancho: 17.5rem;          /* SIN USO desde oct-2026 (antes ancho de la foto de cada voz local) */
   --voz-ficha: 56rem;            /* voces locales: ancho máximo de la ficha destacada (896 px) */
   --voces-avatar: 3.25rem;       /* voces locales: cara de cada pestaña (52 px; 64 px desde 600 px) */
   --voz-acerca: 1.04;            /* voces locales: la foto se acerca un 4 % al pasar el mouse por la ficha */
-  --voces-tabs: 54rem;           /* SIN USO desde oct-2026 (antes la barra azul de pestañas de voces) */
   --voz-foto-grande: 22.5rem;    /* foto de la persona en su subpágina (360 px) */
-  /* Datos interesantes: rueda de cartas (como armenia.travel) */
   /* Datos interesantes: cartas que suben con el scroll (oct-2026, como dontboardme.com) */
   --datos-pantallas: 2.5;        /* alto del tramo fijo, en pantallas: 1 que se ve + 1,5 de scroll para las 3 cartas que suben (oct-2026: antes 4, tardaba mucho) */
   --dato-escena: min(85vw, 26rem); /* ancho de cada carta (416 px como máximo) */
@@ -154,11 +154,6 @@
   --dato-inclina: 2.5deg;        /* inclinación base; cada carta la multiplica (−0,8, 0,4, −1,2, 0,8) */
   --dato-giro-extra: 8deg;       /* inclinación de más mientras sube (se endereza al llegar) */
   --dato-crece: 1.05;            /* al frente (mouse encima o toque) crece un 5 % */
-  /* SIN USO desde oct-2026: rueda de cartas de Datos (se cambió por las cartas que suben con el scroll) */
-  --dato-ancho: min(22.5rem, 70vw); /* ancho de cada carta (360 px; 70 % de la pantalla en móvil) */
-  --dato-radio: 3.6;             /* radio de la rueda, en anchos de carta (móvil: las vecinas se asoman) */
-  --dato-giro: 17;               /* grados entre una carta y la siguiente (las vecinas se inclinan 17°) */
-  --dato-boton: calc(var(--size-touch) + var(--space-xs)); /* botón » (56 px) */
   /* Entrada en cartas (oct-2026, como neutomni.com): las 3 fotos de "Desde la raíz" y la foto de las voces locales */
   --raiz-ancho: 64rem;           /* ancho de las 3 fotos en fila (1024 px) */
   --raiz-carta-movil: 80%;       /* móvil: ancho de cada foto en el zigzag */
@@ -169,7 +164,6 @@
   --evento-acerca: var(--voz-acerca); /* eventos: al pasar el mouse la imagen se acerca como en las voces (4 %) */
   --evento-ancho: 64rem;         /* ancho del contenido en las subpáginas de eventos (1024 px, según el diseño) */
   --consejo-icono: 2.5rem;       /* cuadro azul del ícono en "Antes de ir" (40 px) */
-  --voz-blur: 12px;              /* SIN USO desde oct-2026 (la cita ya no aparece sobre la foto desenfocada) */
 
   /* ================= FORMA (esquinas) ================= */
   /* Oct-2026: una sola curvatura para todo el sitio (fotos, tarjetas,
@@ -180,7 +174,6 @@
      "Voces"): con 16 px quedarían totalmente redondas. Con 2/3 tienen la
      misma proporción que un botón de 48 px con 16 px, así se ven iguales. */
   --radius-chico: calc(var(--radius) * 2 / 3);
-  --radius-m:    var(--radius);  /* antes 12 px (botones, chips) */
   --radius-xl:   var(--radius);  /* antes 28 px (tarjetas y fotos) */
   --radius-2xl:  var(--radius);  /* antes 48 px (hero, footer, secciones) */
   --radius-full: 999px;          /* solo círculos (logo, redes) y puntas de líneas divisorias */
@@ -205,40 +198,38 @@
 
   /* ================= ESTADOS (capas M3) ================= */
   --state-hover:   8%;
-  --state-focus:   10%;
   --state-pressed: 10%;
   --focus-ring:    2px;
   --layer-on-primary-hover:   color-mix(in srgb, var(--md-on-primary) var(--state-hover), transparent);
   --layer-on-primary-pressed: color-mix(in srgb, var(--md-on-primary) var(--state-pressed), transparent);
   --layer-on-surface-hover:   color-mix(in srgb, var(--md-on-surface) var(--state-hover), transparent);
-  --layer-on-surface-pressed: color-mix(in srgb, var(--md-on-surface) var(--state-pressed), transparent);
   --layer-on-accent-hover:    color-mix(in srgb, var(--md-on-accent) var(--state-hover), transparent);
-  --layer-on-accent-pressed:  color-mix(in srgb, var(--md-on-accent) var(--state-pressed), transparent);
 
   /* ================= TRAZOS ================= */
-  --stroke:         2px;  /* bordes (botón outlined) */
+  --stroke:         2px;  /* trazos finos: subrayados y anillos */
   --stroke-divider: 4px;  /* líneas divisorias */
 
   /* ================= MOVIMIENTO ================= */
   --dur-reveal:  0.9s;   /* aparición al hacer scroll */
-  --dur-flip:    0.6s;
-  --dur-cascade: 0.35s;
+  --reveal-sube: 56px;   /* aparición: lo que sube cada elemento al entrar (los que entran de lado recorren --space-3xl) */
+  --dur-flip:    0.6s;   /* esquina que se despega: abrir y cerrar (antes, el giro de las tarjetas) */
+  --dur-cascade: 0.35s;  /* menú móvil: entrada de cada tarjeta; header: esconderse y volver a aparecer */
   --dur-btn:     0.25s;  /* hover de los botones (sube, sombra y color) */
-  --dur-press:   0.15s;  /* botón presionado (escala 0.97) */
-  --dur-hero:    1s;     /* portada: la foto se abre sola al empezar a bajar (como armenia.travel) */
+  --dur-press:   0.15s;  /* botón presionado (escala 0.97); también la espera del texto de la esquina que se despega */
+  --dur-estado:  0.3s;   /* cambios de estado: color, sombra y opacidad (header, tarjetas, esquina) */
+  --dur-hero:    1s;     /* portada: la foto se abre sola al empezar a bajar (como armenia.travel); también la entrada del logo y el menú desde los lados */
   --dur-evento:  var(--dur-voz); /* eventos: la imagen se acerca al ritmo de las voces */
   --dur-voz:     0.45s;  /* voces locales: la foto se acerca al pasar el mouse (al cambiar de persona la ficha entra como carta, --dur-fan) */
-  --dur-dato:    var(--dur-fan); /* SIN USO desde oct-2026 (la rueda de Datos se cambió por las cartas que suben con el scroll) */
-  --dur-empujon: 1.4s;   /* SIN USO desde oct-2026 (se quitó el empujoncito de la rueda) */
   /* Entrada en abanico del carrusel "Desde la raíz" (main.js) */
   --dur-fan-center: 0.6s;  /* aparece la foto del centro */
   --delay-fan:      0.3s;  /* espera antes de que salgan las laterales */
   --dur-fan:        0.9s;  /* las laterales salen desde detrás hacia los lados */
-  --dur-fan-out:    0.4s;  /* SIN USO desde oct-2026 (las parroquias del inicio ya no se desvanecen al salir) */
-  /* SIN USO desde oct-2026: flotación de las fotos de las parroquias del inicio (se quitó) */
-  --float-y:   var(--space-xs);
-  --dur-float: 6s;
+  /* Esperas (nov-2026, auditoría: antes iban escritas a mano en cada regla) */
+  --delay-cascada:   120ms;  /* aparición en cascada: cada elemento espera 120 ms más que el anterior (data-stagger) */
+  --delay-menu:      0.05s;  /* menú móvil: espera de la primera tarjeta */
+  --delay-menu-paso: 0.07s;  /* menú móvil: cada tarjeta entra 0,07 s después de la anterior */
   --ease-out:    cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-estado: ease;   /* curva de los cambios de estado y de los fundidos (color, sombra, opacidad) */
   --ease-hero:   cubic-bezier(0.25, 0.46, 0.45, 0.94); /* portada: sale rápido y frena suave, medida en armenia.travel */
   /* Hover común de todos los botones (no el menú): suben, crecen un poco
      con un leve rebote y se achican al presionar. Ver components.css §3b. */
@@ -246,40 +237,6 @@
   --btn-sube:    var(--space-xxs); /* 4 px */
   --btn-crece:   1.04;
   --btn-presion: 0.97;
-
-  /* ============================================================
-     ALIAS DE COMPATIBILIDAD (nombres anteriores → roles M3)
-     No borrar: mantienen funcionando el código existente.
-     ============================================================ */
-  --color-fondo:    var(--md-surface);
-  --color-azul:     var(--md-primary);
-  --color-naranja:  var(--md-tertiary);
-  --color-verde:    var(--md-secondary);
-  --color-amarillo: var(--md-accent);
-  --color-blanco:   var(--md-on-primary);
-  --bg:             var(--md-surface);
-  --text:           var(--md-on-surface);
-  --acento:         var(--md-accent);
-  --footer-bg:      var(--md-accent);
-
-  --fs-hero:  var(--fs-display-lg);
-  --fs-h2:    var(--fs-display-sm);
-  --fs-h3:    var(--fs-title-lg);
-  --fs-body:  var(--fs-body-lg);
-  --fs-small: var(--fs-body-sm);
-
-  --space-sm: var(--space-m);
-  --space-md: var(--space-xl);
-  --space-lg: var(--space-2xl);
-
-  --radius-sm:   var(--radius-m);
-  --radius-md:   var(--radius-xl);
-  --radius-lg:   var(--radius-2xl);
-  --radius-hero: var(--radius-2xl);
-  --radius-pill: var(--radius-full);
-
-  --shadow-card: var(--elev-1);
-  --shadow-md:   var(--elev-1);
 }
 
 /* Tablet (600–839 px): márgenes y gutters de 24 px */
@@ -301,6 +258,5 @@
     --fs-display-sm: 3rem;       /* 48 px (antes 36) */
     --space-section: var(--space-3xl);
     --capas-foco: 50% 50%; /* inicio: en escritorio la composición entra completa */
-    --dato-radio: 5;       /* rueda más amplia: las vecinas quedan a los lados, como en el diseño */
   }
 }

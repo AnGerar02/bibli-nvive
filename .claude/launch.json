@@ -2,6 +2,16 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "biveme",
+      "runtimeExecutable": "py",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5501"
+      ],
+      "port": 5501
+    },
+    {
       "name": "app-leer",
       "runtimeExecutable": "py",
       "runtimeArgs": [
