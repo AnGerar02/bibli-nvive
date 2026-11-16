@@ -129,10 +129,10 @@
   --actividad-etiqueta: calc(var(--fs-label-lg) * var(--lh-tight) + var(--space-xxs) * 3); /* lo que ocupa el título encima de cada foto, con su margen (28 px) */
   /* Inicio (landing) */
   --header-alto: calc(var(--size-touch) + var(--space-xs) * 2); /* header compacto: logo 48 px + 8 px arriba y abajo */
-  --capas-alto: 100svh;          /* escenario del parallax: llena la pantalla mientras queda fijo */
+  --capas-alto: 100lvh;          /* escenario del parallax: llena la pantalla mientras queda fijo. Nov-2026: pantalla grande (lvh); con svh, al esconderse la barra del navegador en el celular y la tablet quedaba una franja crema abajo */
   --capas-scroll: 100svh;        /* cuánto se baja con el escenario fijo (lo que dura la animación) */
   --capas-reposo: 40svh;         /* al terminar, la escena completa queda quieta este tramo antes de las parroquias (oct-2026) */
-  --capas-cubre: 100svh;         /* al final, las parroquias suben como una cortina sobre la escena quieta (oct-2026: antes la escena subía pegada a la página, "tiesa") */
+  --capas-cubre: var(--capas-alto); /* al final, las parroquias suben como una cortina sobre la escena quieta (oct-2026: antes la escena subía pegada a la página, "tiesa"); mide lo mismo que el escenario para taparlo entero */
   --pq-fundido: 50svh;           /* borde de arriba difuminado de las parroquias sobre el final de RAÍCES (oct-2026; antes 30svh, con degradado lineal) */
   --capas-recorrido: 12%;        /* lo que sobra cada capa arriba y abajo, para que al moverse no deje huecos */
   --capas-foco: 35% 50%;         /* punto de la composición que se conserva al recortar (móvil: el santuario) */

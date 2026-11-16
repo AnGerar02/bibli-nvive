@@ -531,6 +531,7 @@ La auditoría terminó el 14 de noviembre de 2026. Las seis áreas están hechas
 | Ícono "Nada de motos" (`nomoto.svg`) | Rehecho con Material Symbols: el ícono `motorcycle`, Outlined como sus vecinos de la lista, con la barra de prohibido de Google (la de `no_photography`: 80 unidades de grosor y un hueco de 80 del lado de arriba). Tiene el mismo grosor de línea que los otros íconos. |
 | Logos del header y del footer | Al pasar el mouse se vuelven amarillos y crecen un 4 %; presionados bajan al 97 %, como los botones. Con "reducir movimiento" solo cambia el color. |
 | Portada vertical (4:5) para el celular | Descartada por el autor: el celular recorta la misma foto 16:9 (§8 actualizado). |
+| Franja crema debajo de la escena de RAÍCES (16 de noviembre; el autor la vio en iPhone y iPad) | Al bajar, el navegador del celular y de la tablet esconde su barra y la pantalla crece, pero el escenario medía el alto con la barra visible (100svh). Ahora mide la pantalla grande (100lvh) y la cortina de las parroquias, lo mismo. |
 
 **Hallazgo nuevo:** los 15 íconos de "Antes de ir" de los eventos son de Material Symbols Outlined (esquinas rectas) y §9 pide Rounded (esquinas redondeadas). El ícono nuevo se hizo en Outlined para que combine con sus vecinos. Queda por decidir.
 
