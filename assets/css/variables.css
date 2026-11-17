@@ -243,7 +243,7 @@
 @media (min-width: 600px) {
   :root {
     --voces-avatar: 4rem;   /* voces locales: caras de las pestañas más grandes (64 px) */
-    --gutter:     var(--space-l);
+    --gutter:     var(--space-xl); /* tablet: márgenes de 32 px, como la lámina de la retícula y Material Design 2 (nov-2026; antes 24) */
     --space-grid: var(--space-l);
     --space-card: var(--space-l);
   }
@@ -252,6 +252,7 @@
 /* Escritorio (≥ 840 px) */
 @media (min-width: 840px) {
   :root {
+    --gutter:    var(--space-l);  /* escritorio: márgenes de 24 px dentro del contenedor de 1200 px */
     --dato-baja: var(--space-xl); /* datos: en escritorio la cascada baja 32 px por carta */
     --fs-display-lg: 4.5rem;     /* 72 px (antes 57) */
     --fs-display-md: 3.5rem;     /* 56 px (antes 45) */

@@ -120,17 +120,17 @@ Retícula de columnas de Material Design 2 (4, 8 y 12 columnas). Estas son las m
 | Pantalla   | Ancho      | Columnas | Margen | Medianil | Medido                                                              |
 | ---------- | ---------- | -------- | ------ | -------- | ------------------------------------------------------------------- |
 | Celular    | < 600 px   | 4        | 16 px  | 16 px    | A 360 px: columnas de 70 px                                         |
-| Tablet     | 600–839 px | 8        | 24 px  | 24 px    | A 768 px: columnas de 69 px                                         |
+| Tablet     | 600–839 px | 8        | 32 px  | 24 px    | A 768 px: columnas de 67 px                                         |
 | Escritorio | ≥ 840 px   | 12       | 24 px  | 24 px    | A 1920 px: contenido de 1152 px, columnas de 74 px, márgenes de 384 px |
 
 - El contenedor mide 1200 px como máximo con sus márgenes (1152 px de contenido) y va centrado.
 - Fotos del hero y carruseles pueden ir a sangre; el texto nunca.
 
-**Retícula de diseño y retícula del sitio (nov-2026, decisión del autor):** la lámina de la retícula (Illustrator) y la diapositiva 8 conservan las medidas con que se diseñaron las pantallas. A 360 px: 4 columnas de 70 px, medianil y margen de 16 px. A 768 px: 8 columnas de 67 px, medianil de 24 px y margen de 32 px. A 1920 px: 12 columnas de 80 px, medianil de 32 px y márgenes de 304 px (contenido de 1312 px). El sitio coincide con la lámina en el celular; en tablet y escritorio usa las medidas de la tabla de arriba, con el contenido limitado a 1152 px. Se conservan las dos tal como están: ni la lámina ni el sitio se modifican.
+**Retícula de diseño y retícula del sitio (nov-2026, decisión del autor):** la lámina de la retícula (Illustrator) y la diapositiva 8 conservan las medidas con que se diseñaron las pantallas. A 360 px: 4 columnas de 70 px, medianil y margen de 16 px. A 768 px: 8 columnas de 67 px, medianil de 24 px y margen de 32 px. A 1920 px: 12 columnas de 80 px, medianil de 32 px y márgenes de 304 px (contenido de 1312 px). El sitio coincide con la lámina en el celular y en tablet (16-nov-2026, pedido del autor: el margen de tablet pasó de 24 a 32 px). En escritorio usa las medidas de la tabla de arriba, con el contenido limitado a 1152 px, y ahí se conservan las dos como están.
 
 **Adaptaciones frente a Material Design 2:**
 
-- En tablet el margen es de 24 px (la guía pide 32) y en escritorio el contenido llega a 1152 px (la guía lo fija en 1040 px desde 1440).
+- En escritorio el contenido llega a 1152 px (la guía lo fija en 1040 px desde 1440). En tablet el margen ya es el de la guía, 32 px (nov-2026; antes 24).
 - Anchos de lectura: algunos bloques van centrados y son más angostos que el contenedor, así que no ocupan columnas enteras. Son la ficha de Voces (896 px, `--voz-ficha`) y las páginas de evento y "Desde la raíz" (1024 px, `--evento-ancho` y `--raiz-ancho`).
 - Repartos en fracciones: Voces (2 y 3), ficha de evento (8 y 5) y la lista de eventos del inicio, que usa 15 partes para poner arriba 9 + 6 y abajo 5 + 5 + 5. El video sí va en 7 y 5 columnas.
 - En tablet, "Desde la raíz" pone 3 fotos en fila sobre las 8 columnas.

@@ -532,6 +532,7 @@ La auditoría terminó el 14 de noviembre de 2026. Las seis áreas están hechas
 | Logos del header y del footer | Al pasar el mouse se vuelven amarillos y crecen un 4 %; presionados bajan al 97 %, como los botones. Con "reducir movimiento" solo cambia el color. |
 | Portada vertical (4:5) para el celular | Descartada por el autor: el celular recorta la misma foto 16:9 (§8 actualizado). |
 | Franja crema debajo de la escena de RAÍCES (16 de noviembre; el autor la vio en iPhone y iPad) | Al bajar, el navegador del celular y de la tablet esconde su barra y la pantalla crece, pero el escenario medía el alto con la barra visible (100svh). Ahora mide la pantalla grande (100lvh) y la cortina de las parroquias, lo mismo. |
+| Márgenes de tablet (16 de noviembre, pedido del autor) | Pasan de 24 a 32 px, como la lámina de la retícula y Material Design 2: a 768 px las columnas miden 67 px, igual que en la lámina. El escritorio sigue con 24 px dentro del contenedor de 1200 px. Revisado en las 16 páginas a 600 y 768 px: nada se sale de la pantalla y el menú no toca el logo. |
 
 **Hallazgo nuevo:** los 15 íconos de "Antes de ir" de los eventos son de Material Symbols Outlined (esquinas rectas) y §9 pide Rounded (esquinas redondeadas). El ícono nuevo se hizo en Outlined para que combine con sus vecinos. Queda por decidir.
 
