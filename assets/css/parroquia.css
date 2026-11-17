@@ -172,6 +172,14 @@
 .impone__text {
   max-width: var(--medida-texto);
 }
+/* Celular (nov-2026, pedido del autor): título y texto centrados. Desde
+   tablet, alineados a la izquierda como siempre. */
+@media (max-width: 599px) {
+  .impone__title,
+  .impone__text { text-align: center; }
+  .impone__text { margin-inline: auto; }
+  .impone__title .pill { margin-left: 0; }
+}
 .impone__img {
   display: block;
   width: 100%;
@@ -429,6 +437,11 @@
   font-size: var(--fs-display-sm);
   color: var(--md-on-primary);
   margin-bottom: var(--space-l);
+}
+/* Celular (nov-2026, pedido del autor): título y texto centrados */
+@media (max-width: 599px) {
+  .video-feature__text { text-align: center; }
+  .video-feature__text p { margin-inline: auto; }
 }
 .video-feature :focus-visible {
   outline-color: var(--md-accent);

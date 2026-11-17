@@ -88,6 +88,7 @@ Usos de la fuente de títulos fuera de la tabla (nov-2026, auditoría): a 16 px 
 - Párrafos de máximo 60–70 caracteres por línea. Lo fija el token `--medida-texto` (52ch, unas 70 letras). Hasta nov-2026 era 65ch, que en la práctica daba unas 85.
 - Mayúsculas sostenidas solo para palabras gráficas, nunca oraciones.
 - Ningún tamaño fuera de esta escala.
+- En el celular (menos de 600 px), los bloques de título y párrafo van centrados y el párrafo muestra solo lo esencial: el "¿De qué se trata?" de los eventos, y el bloque "Donde…" y la franja del video de las parroquias. Las partes que no van en el celular están envueltas en `.texto-extra` (base.css las oculta); no se reescribe nada. En tablet y escritorio se lee el texto completo, alineado a la izquierda. Nov-2026, pedido del autor, con los textos aprobados por él.
 
 ---
 

@@ -24,6 +24,13 @@
   margin-bottom: var(--space-l);
 }
 .evento-intro__texto { max-width: var(--medida-texto); }
+/* Celular (nov-2026, pedido del autor): título y texto centrados. Desde
+   tablet, alineados a la izquierda como siempre. */
+@media (max-width: 599px) {
+  .evento-intro__titulo,
+  .evento-intro__texto { text-align: center; }
+  .evento-intro__texto { margin-inline: auto; }
+}
 .evento-intro__foto {
   display: block;
   width: 100%;

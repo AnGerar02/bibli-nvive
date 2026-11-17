@@ -533,6 +533,7 @@ La auditoría terminó el 14 de noviembre de 2026. Las seis áreas están hechas
 | Portada vertical (4:5) para el celular | Descartada por el autor: el celular recorta la misma foto 16:9 (§8 actualizado). |
 | Franja crema debajo de la escena de RAÍCES (16 de noviembre; el autor la vio en iPhone y iPad) | Al bajar, el navegador del celular y de la tablet esconde su barra y la pantalla crece, pero el escenario medía el alto con la barra visible (100svh). Ahora mide la pantalla grande (100lvh) y la cortina de las parroquias, lo mismo. |
 | Márgenes de tablet (16 de noviembre, pedido del autor) | Pasan de 24 a 32 px, como la lámina de la retícula y Material Design 2: a 768 px las columnas miden 67 px, igual que en la lámina. El escritorio sigue con 24 px dentro del contenedor de 1200 px. Revisado en las 16 páginas a 600 y 768 px: nada se sale de la pantalla y el menú no toca el logo. |
+| Título y párrafo en el celular (16 de noviembre, pedido del autor) | En los 15 bloques de título y párrafo de las parroquias y los eventos, el celular muestra el título y el texto centrados, y el párrafo con lo esencial: de 200 a 300 letras pasa a unas 50 a 140. No se reescribió nada: se ocultan frases o partes de frase, con los textos aprobados por el autor. En tablet y escritorio, todo como antes. |
 
 **Hallazgo nuevo:** los 15 íconos de "Antes de ir" de los eventos son de Material Symbols Outlined (esquinas rectas) y §9 pide Rounded (esquinas redondeadas). El ícono nuevo se hizo en Outlined para que combine con sus vecinos. Queda por decidir.
 
