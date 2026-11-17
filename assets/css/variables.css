@@ -108,6 +108,7 @@
   --container:  1200px;
   --gutter:     var(--space-m);  /* margen lateral (móvil) */
   --medida-texto: 52ch;          /* ancho máximo de un párrafo: unas 70 letras por línea (§3; antes 65ch, que daba unas 85) */
+  --medida-centrada: 32ch;       /* celular: párrafo centrado bajo un título, angosto como un subtítulo, en Body Medium (nov-2026, pedido del autor con una referencia) */
   --medida-cita:  30ch;          /* ancho máximo de la frase destacada de cada voz */
   --size-touch: 48px;            /* área táctil mínima */
   --size-icon:  24px;            /* íconos de interfaz */

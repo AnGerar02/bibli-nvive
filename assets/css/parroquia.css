@@ -177,7 +177,7 @@
 @media (max-width: 599px) {
   .impone__title,
   .impone__text { text-align: center; }
-  .impone__text { margin-inline: auto; }
+  .impone__text { max-width: var(--medida-centrada); margin-inline: auto; font-size: var(--fs-body-md); text-wrap: balance; }
   .impone__title .pill { margin-left: 0; }
 }
 .impone__img {
@@ -441,7 +441,7 @@
 /* Celular (nov-2026, pedido del autor): título y texto centrados */
 @media (max-width: 599px) {
   .video-feature__text { text-align: center; }
-  .video-feature__text p { margin-inline: auto; }
+  .video-feature__text p { max-width: var(--medida-centrada); margin-inline: auto; font-size: var(--fs-body-md); text-wrap: balance; }
 }
 .video-feature :focus-visible {
   outline-color: var(--md-accent);

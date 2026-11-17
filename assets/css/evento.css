@@ -29,7 +29,7 @@
 @media (max-width: 599px) {
   .evento-intro__titulo,
   .evento-intro__texto { text-align: center; }
-  .evento-intro__texto { margin-inline: auto; }
+  .evento-intro__texto { max-width: var(--medida-centrada); margin-inline: auto; font-size: var(--fs-body-md); text-wrap: balance; }
 }
 .evento-intro__foto {
   display: block;
